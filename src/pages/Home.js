@@ -23,19 +23,36 @@ const HomeContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  padding: 6rem 0;
+  padding: ${props => props.theme.spacing['4xl']} 0;
   background: #0f172a;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
-  margin: 2rem;
-  border-radius: 24px;
+  margin: ${props => props.theme.spacing.xl};
+  border-radius: ${props => props.theme.borderRadius['3xl']};
   box-shadow: 
     0 20px 60px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    margin: ${props => props.theme.spacing.lg};
+    padding: ${props => props.theme.spacing['3xl']} 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    margin: ${props => props.theme.spacing.md};
+    padding: ${props => props.theme.spacing['2xl']} 0;
+    border-radius: ${props => props.theme.borderRadius['2xl']};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    margin: ${props => props.theme.spacing.sm};
+    padding: ${props => props.theme.spacing.xl} 0;
+    border-radius: ${props => props.theme.borderRadius.xl};
+  }
 `;
 
 const HeroBackground = styled.div`
@@ -102,19 +119,29 @@ const CodeLine = styled(motion.div)`
 const HeroContent = styled.div`
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 ${props => props.theme.spacing.xl};
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
   z-index: 2;
   width: 100%;
+  gap: ${props => props.theme.spacing['2xl']};
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    gap: ${props => props.theme.spacing.xl};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     flex-direction: column;
     text-align: center;
-    gap: 3rem;
-    padding: 2rem;
+    gap: ${props => props.theme.spacing['2xl']};
+    padding: 0 ${props => props.theme.spacing.lg};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    gap: ${props => props.theme.spacing.xl};
+    padding: 0 ${props => props.theme.spacing.md};
   }
 `;
 
@@ -142,10 +169,10 @@ const HeroText = styled.div`
 `;
 
 const HeroTitle = styled(motion.h1)`
-  font-size: 4.5rem;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 900;
   line-height: 1.1;
-  margin-bottom: 1.5rem;
+  margin-bottom: ${props => props.theme.spacing.lg};
   background: linear-gradient(135deg, #ffffff 0%, #60a5fa 30%, #a78bfa 70%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -162,20 +189,30 @@ const HeroTitle = styled(motion.h1)`
     height: 4px;
     background: linear-gradient(90deg, #3b82f6, #8b5cf6);
     border-radius: 2px;
+
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    font-size: 3rem;
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: clamp(2rem, 8vw, 2.5rem);
   }
 `;
 
 const HeroSubtitle = styled(motion.p)`
-  font-size: 1.3rem;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
   line-height: 1.6;
-  margin-bottom: 2.5rem;
+  margin-bottom: ${props => props.theme.spacing['2xl']};
   color: rgba(255, 255, 255, 0.8);
   font-weight: 400;
   max-width: 500px;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    max-width: 100%;
+    text-align: center;
+  }
 `;
 
 const HighlightText = styled.span`
@@ -185,11 +222,17 @@ const HighlightText = styled.span`
 
 const HeroButtons = styled(motion.div)`
   display: flex;
-  gap: 1rem;
+  gap: ${props => props.theme.spacing.md};
   flex-wrap: wrap;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     justify-content: center;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    flex-direction: column;
+    align-items: center;
+    gap: ${props => props.theme.spacing.sm};
   }
 `;
 
@@ -355,7 +398,7 @@ const TechCard = styled(motion.div)`
 `;
 
 const ServicesSection = styled.section`
-  padding: 6rem 0;
+  padding: ${props => props.theme.spacing['4xl']} 0;
   background: 
     linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   position: relative;
@@ -373,41 +416,62 @@ const ServicesSection = styled.section`
     -webkit-backdrop-filter: blur(30px);
     z-index: 0;
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: ${props => props.theme.spacing['3xl']} 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: ${props => props.theme.spacing['2xl']} 0;
+  }
 `;
 
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 ${props => props.theme.spacing.xl};
   position: relative;
   z-index: 1;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 0 ${props => props.theme.spacing.lg};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0 ${props => props.theme.spacing.md};
+  }
 `;
 
 const SectionTitle = styled(motion.h2)`
   text-align: center;
-  font-size: 2.5rem;
+  font-size: clamp(1.875rem, 4vw, 2.5rem);
   font-weight: 700;
   color: rgba(0, 0, 0, 0.8);
-  margin-bottom: 1rem;
+  margin-bottom: ${props => props.theme.spacing.md};
 `;
 
 const SectionSubtitle = styled(motion.p)`
   text-align: center;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 4rem;
+  margin-bottom: ${props => props.theme.spacing['3xl']};
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.6;
 `;
 
 const ServicesGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-bottom: 4rem;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: ${props => props.theme.spacing.lg};
+  margin-bottom: ${props => props.theme.spacing['3xl']};
   align-items: stretch;
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    grid-template-columns: 1fr;
+    gap: ${props => props.theme.spacing.md};
+  }
 `;
 
 const ServiceCard = styled(motion.div)`

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favicon Generator</title>
+</head>
+<body>
+    <h1>Favicon Generator for BestechSolz Vision</h1>
+    <p>This page generates a simple favicon for the website.</p>
+    
+    <canvas id="canvas" width="32" height="32" style="border: 1px solid #ccc;"></canvas>
+    
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Draw background
+        ctx.fillStyle = '#2563eb';
+        ctx.fillRect(0, 0, 32, 32);
+        
+        // Draw rounded corners
+        ctx.globalCompositeOperation = 'destination-in';
+        ctx.beginPath();
+        ctx.roundRect(0, 0, 32, 32, 6);
+        ctx.fill();
+        ctx.globalCompositeOperation = 'source-over';
+        
+        // Draw "B" letter
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('B', 16, 16);
+        
+        // Draw small tech element
+        ctx.fillStyle = '#60a5fa';
+        ctx.fillRect(22, 6, 6, 6);
+        
+        // Convert to favicon
+        const link = document.createElement('link');
+        link.type = 'image/x-icon';
+        link.rel = 'shortcut icon';
+        link.href = canvas.toDataURL('image/x-icon');
+        document.getElementsByTagName('head')[0].appendChild(link);
+        
+        console.log('Favicon generated! Right-click on the canvas and save as favicon.ico');
+    </script>
+</body>
+</html>

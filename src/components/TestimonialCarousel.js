@@ -2,15 +2,26 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight, FaQuoteLeft } from 'react-icons/fa';
+import LazyImage from './LazyImage';
 
 const TestimonialCarouselContainer = styled.section`
-  padding: 8rem 0;
+  padding: ${props => props.theme.spacing['4xl']} 0;
   background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3b82f6 100%);
   position: relative;
   overflow: hidden;
   min-height: 80vh;
   display: flex;
   align-items: center;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: ${props => props.theme.spacing['3xl']} 0;
+    min-height: 70vh;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: ${props => props.theme.spacing['2xl']} 0;
+    min-height: 60vh;
+  }
   
   &::before {
     content: '';
@@ -45,17 +56,25 @@ const TestimonialCarouselContainer = styled.section`
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 ${props => props.theme.spacing.xl};
   position: relative;
   z-index: 1;
   width: 100%;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 0 ${props => props.theme.spacing.lg};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0 ${props => props.theme.spacing.md};
+  }
 `;
 
 const SectionTitle = styled(motion.h2)`
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: ${props => props.theme.spacing.md};
   background: linear-gradient(135deg, #60a5fa 0%, #a855f7 50%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -65,14 +84,15 @@ const SectionTitle = styled(motion.h2)`
 `;
 
 const SectionSubtitle = styled(motion.p)`
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   color: rgba(255, 255, 255, 0.9);
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: ${props => props.theme.spacing['3xl']};
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
   font-weight: 400;
+  line-height: 1.6;
 `;
 
 const CarouselWrapper = styled.div`
@@ -80,7 +100,11 @@ const CarouselWrapper = styled.div`
   overflow: visible;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 2rem 4rem 2rem;
+  padding: 0 ${props => props.theme.spacing.xl} ${props => props.theme.spacing['3xl']} ${props => props.theme.spacing.xl};
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0 ${props => props.theme.spacing.md} ${props => props.theme.spacing['2xl']} ${props => props.theme.spacing.md};
+  }
 `;
 
 const TestimonialCard = styled(motion.div)`
@@ -404,11 +428,17 @@ const TestimonialCarousel = () => {
           >
             <ImageSection>
               <ImageContainer>
-                <CustomerImage 
-                  src={testimonials[currentIndex].avatar} 
+                <LazyImage
+                  src={testimonials[currentIndex].avatar}
                   alt={testimonials[currentIndex].author}
-                  onError={(e) => {
-                    e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonials[currentIndex].author)}&size=300&background=3b82f6&color=ffffff&bold=true`;
+                  width="100%"
+                  height="100%"
+                  objectFit="cover"
+                  borderRadius="20px"
+                  placeholder="Loading image..."
+                  onError={() => {
+                    // Fallback to generated avatar
+                    return `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonials[currentIndex].author)}&size=300&background=3b82f6&color=ffffff&bold=true`;
                   }}
                 />
               </ImageContainer>
