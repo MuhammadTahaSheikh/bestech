@@ -10,54 +10,83 @@ const Nav = styled(motion.nav)`
   left: 0;
   right: 0;
   z-index: 1000;
-  background: ${props => props.scrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent'};
-  backdrop-filter: ${props => props.scrolled ? 'blur(20px)' : 'none'};
-  -webkit-backdrop-filter: ${props => props.scrolled ? 'blur(20px)' : 'none'};
+  background: ${props => props.scrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.9)'};
+  backdrop-filter: ${props => props.scrolled ? 'blur(20px)' : 'blur(10px)'};
+  -webkit-backdrop-filter: ${props => props.scrolled ? 'blur(20px)' : 'blur(10px)'};
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-bottom: ${props => props.scrolled ? '1px solid rgba(0, 0, 0, 0.1)' : 'none'};
-  box-shadow: ${props => props.scrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none'};
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: ${props => props.scrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'};
 `;
 
 const NavContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 ${props => props.theme.spacing.xl};
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 80px;
   position: relative;
+  width: 100%;
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 0 ${props => props.theme.spacing.md};
+    padding: 0 1rem;
   }
 `;
 
 const Logo = styled(Link)`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: ${props => props.theme.colors.primary};
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
 `;
 
 const LogoImage = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
-  border-radius: 6px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+
+  &:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    width: 75px;
+    height: 75px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    width: 70px;
+    height: 70px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 65px;
+    height: 65px;
+  }
 `;
 
 const NavLinks = styled.ul`
   display: flex;
   list-style: none;
-  gap: ${props => props.theme.spacing.xl};
+  gap: 2rem;
   align-items: center;
+  flex: 1;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    gap: ${props => props.theme.spacing.lg};
+    gap: 1.5rem;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
@@ -74,25 +103,32 @@ const NavLink = styled(Link)`
   text-decoration: none;
   font-weight: 500;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  position: relative;
 
   &:hover {
-    background: ${props => props.theme.colors.gray[100]};
     color: ${props => props.theme.colors.primary};
+    background: ${props => props.theme.colors.gray[50]};
   }
 
   &.active {
     color: ${props => props.theme.colors.primary};
     background: ${props => props.theme.colors.gray[100]};
+    font-weight: 600;
+  }
+
+  &:focus {
+    outline: 2px solid ${props => props.theme.colors.primary};
+    outline-offset: 2px;
   }
 `;
 
 const CTAButton = styled(Link)`
-  background: ${props => props.theme.colors.primary};
+  background: linear-gradient(135deg, ${props => props.theme.colors.primary} 0%, ${props => props.theme.colors.secondary} 100%);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -102,11 +138,20 @@ const CTAButton = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1), 0 2px 4px -1px rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  white-space: nowrap;
 
   &:hover {
-    background: ${props => props.theme.colors.secondary};
+    background: linear-gradient(135deg, ${props => props.theme.colors.secondary} 0%, ${props => props.theme.colors.primary} 100%);
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+  }
+
+  &:focus {
+    outline: 2px solid ${props => props.theme.colors.primary};
+    outline-offset: 2px;
   }
 `;
 
@@ -117,8 +162,8 @@ const MobileMenuButton = styled.button`
   font-size: 1.5rem;
   color: ${props => props.theme.colors.dark};
   cursor: pointer;
-  padding: ${props => props.theme.spacing.sm};
-  border-radius: ${props => props.theme.borderRadius.md};
+  padding: 0.5rem;
+  border-radius: 8px;
   transition: all 0.3s ease;
 
   &:hover {
@@ -145,8 +190,8 @@ const MobileMenu = styled(motion.div)`
   right: 0;
   background: white;
   border-top: 1px solid ${props => props.theme.colors.gray[200]};
-  padding: ${props => props.theme.spacing.xl};
-  box-shadow: ${props => props.theme.shadows.lg};
+  padding: 2rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   display: none;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -156,7 +201,7 @@ const MobileMenu = styled(motion.div)`
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: ${props => props.theme.spacing.lg};
+    padding: 1.5rem;
   }
 `;
 
@@ -164,15 +209,15 @@ const MobileNavLinks = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
 const MobileNavLink = styled(Link)`
   color: ${props => props.theme.colors.dark};
   text-decoration: none;
   font-weight: 500;
-  padding: ${props => props.theme.spacing.md};
-  border-radius: ${props => props.theme.borderRadius.lg};
+  padding: 1rem;
+  border-radius: 8px;
   transition: all 0.3s ease;
   display: block;
   min-height: 44px;
@@ -211,11 +256,14 @@ const Dropdown = styled(motion.div)`
   top: 100%;
   left: 0;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  padding: 1rem 0;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 0;
   min-width: 200px;
   z-index: 1001;
+  border: 1px solid ${props => props.theme.colors.gray[200]};
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 `;
 
 const DropdownItem = styled(Link)`
@@ -224,10 +272,16 @@ const DropdownItem = styled(Link)`
   color: ${props => props.theme.colors.dark};
   text-decoration: none;
   transition: all 0.3s ease;
+  font-weight: 500;
 
   &:hover {
     background: ${props => props.theme.colors.gray[100]};
     color: ${props => props.theme.colors.primary};
+  }
+
+  &:focus {
+    outline: 2px solid ${props => props.theme.colors.primary};
+    outline-offset: -2px;
   }
 `;
 
@@ -272,8 +326,7 @@ const Navbar = () => {
     <Nav scrolled={scrolled} initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.5 }}>
       <NavContainer>
         <Logo to="/">
-          <LogoImage src="/bestech.jpeg" alt="Bestech Vision" />
-          Bestech Vision
+          <LogoImage src="/bestech.png" alt="Bestech Vision" />
         </Logo>
 
         <NavLinks role="navigation" aria-label="Main navigation">

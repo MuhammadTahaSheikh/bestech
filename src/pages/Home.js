@@ -567,16 +567,36 @@ const StatsContainer = styled.div`
 `;
 
 const StatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: nowrap;
   gap: 2rem;
   align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 1rem 0;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    gap: 1.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 `;
 
 const StatCard = styled(motion.div)`
-  padding: 2rem;
+  padding: 1.5rem;
   text-align: center;
   transition: all 0.3s ease;
+  flex-shrink: 0;
+  min-width: 180px;
 
   &:hover {
     transform: translateY(-5px);
@@ -584,6 +604,16 @@ const StatCard = styled(motion.div)`
     background: #f8f9fa;
     border-radius: 12px;
     border: 1px solid #e9ecef;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 1.25rem;
+    min-width: 160px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 1rem;
+    min-width: 140px;
   }
 `;
 
