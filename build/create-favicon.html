@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Favicon for BestechSolz Vision</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        canvas { border: 1px solid #ccc; margin: 10px; }
+        .instructions { background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>BestechSolz Vision Favicon Generator</h1>
+    
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <ol>
+            <li>Right-click on the canvas below</li>
+            <li>Select "Save image as..."</li>
+            <li>Save as "favicon.ico" in the public folder</li>
+            <li>You can also save as PNG files for different sizes</li>
+        </ol>
+    </div>
+    
+    <h3>32x32 Favicon:</h3>
+    <canvas id="favicon32" width="32" height="32"></canvas>
+    
+    <h3>16x16 Favicon:</h3>
+    <canvas id="favicon16" width="16" height="16"></canvas>
+    
+    <h3>64x64 Favicon:</h3>
+    <canvas id="favicon64" width="64" height="64"></canvas>
+    
+    <script>
+        function createFavicon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Draw background with rounded corners
+            ctx.fillStyle = '#2563eb';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, size * 0.2);
+            ctx.fill();
+            
+            // Draw "B" letter
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.6}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('B', size / 2, size / 2);
+            
+            // Draw small tech element
+            ctx.fillStyle = '#60a5fa';
+            const techSize = size * 0.2;
+            ctx.fillRect(size * 0.7, size * 0.2, techSize, techSize);
+        }
+        
+        // Create different sizes
+        createFavicon('favicon16', 16);
+        createFavicon('favicon32', 32);
+        createFavicon('favicon64', 64);
+        
+        // Auto-download the 32x32 version as favicon.ico
+        const canvas32 = document.getElementById('favicon32');
+        const link = document.createElement('a');
+        link.download = 'favicon.ico';
+        link.href = canvas32.toDataURL('image/x-icon');
+        
+        // Add download button
+        const downloadBtn = document.createElement('button');
+        downloadBtn.textContent = 'Download 32x32 Favicon';
+        downloadBtn.onclick = () => link.click();
+        downloadBtn.style.margin = '10px';
+        downloadBtn.style.padding = '10px 20px';
+        downloadBtn.style.backgroundColor = '#2563eb';
+        downloadBtn.style.color = 'white';
+        downloadBtn.style.border = 'none';
+        downloadBtn.style.borderRadius = '5px';
+        downloadBtn.style.cursor = 'pointer';
+        document.body.appendChild(downloadBtn);
+    </script>
+</body>
+</html>

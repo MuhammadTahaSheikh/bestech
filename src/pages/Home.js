@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
@@ -12,10 +12,14 @@ import {
   FaArrowRight,
   FaCheckCircle,
   FaStar,
-  FaQuoteLeft
+  FaQuoteLeft,
+  FaDatabase,
+  FaChartLine,
+  FaRobot
 } from 'react-icons/fa';
 import WebsiteAuditModal from '../components/WebsiteAuditModal';
 import TestimonialCarousel from '../components/TestimonialCarousel';
+import TeamPreview from '../components/TeamPreview';
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -218,6 +222,18 @@ const HeroSubtitle = styled(motion.p)`
 const HighlightText = styled.span`
   color: #60a5fa;
   font-weight: 600;
+`;
+
+const TypingAnimation = styled.span`
+  color: #60a5fa;
+  font-weight: 600;
+  border-right: 2px solid #60a5fa;
+  animation: blink 1s infinite;
+  
+  @keyframes blink {
+    0%, 50% { border-color: #60a5fa; }
+    51%, 100% { border-color: transparent; }
+  }
 `;
 
 const HeroButtons = styled(motion.div)`
@@ -757,6 +773,39 @@ const CTA = styled(motion.div)`
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentText, setCurrentText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const typingServices = [
+    'Web Development',
+    'App Design & Development',
+    'UI/UX Design',
+    'Digital Marketing & SEO',
+    'Brand & IT Consultancy'
+  ];
+
+  useEffect(() => {
+    const typeSpeed = isDeleting ? 50 : 100;
+    const pauseTime = 2000;
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting && currentText === typingServices[currentIndex]) {
+        setTimeout(() => setIsDeleting(true), pauseTime);
+      } else if (isDeleting && currentText === '') {
+        setIsDeleting(false);
+        setCurrentIndex((prev) => (prev + 1) % typingServices.length);
+      } else {
+        setCurrentText((prev) => 
+          isDeleting 
+            ? prev.slice(0, -1)
+            : typingServices[currentIndex].slice(0, prev.length + 1)
+        );
+      }
+    }, typeSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [currentText, currentIndex, isDeleting, typingServices]);
 
   const openModal = () => {
     console.log('Opening modal...');
@@ -770,33 +819,38 @@ const Home = () => {
   const services = [
     {
       icon: <FaCode />,
-      title: 'Custom Software Development',
-      description: 'Full-stack application development using modern frameworks, microservices architecture, and agile methodologies for scalable enterprise solutions.'
-    },
-    {
-      icon: <FaMobile />,
-      title: 'Mobile & Cross-Platform Development',
-      description: 'Native iOS/Android and cross-platform mobile applications with enterprise security, offline capabilities, and seamless integration.'
-    },
-    {
-      icon: <FaCloud />,
-      title: 'Cloud Computing & DevOps Cloud Solutions',
-      description: 'AWS, Azure, and GCP cloud solutions with automated CI/CD pipelines, containerization, and infrastructure as code implementation.'
-    },
-    {
-      icon: <FaShieldAlt />,
-      title: 'IT Security & Risk Management',
-      description: 'Comprehensive cybersecurity services including penetration testing, vulnerability assessments, compliance audits, and security design.'
-    },
-    {
-      icon: <FaUsers />,
-      title: 'IT Strategy & IT Development Consulting',
-      description: 'Technology roadmap development, system architecture design, IT governance, and digital transformation strategy for enterprise organizations.'
+      title: 'Software Development',
+      description: 'Custom software solutions built with modern technologies. From desktop applications to enterprise software, we create scalable and efficient solutions tailored to your business needs.'
     },
     {
       icon: <FaRocket />,
-      title: 'System Integration & Modernization',
-      description: 'Legacy system modernization, API development, data migration, and enterprise system integration using industry best practices.'
+      title: 'Web Development',
+      description: 'Responsive, modern websites and web applications. We build fast, SEO-optimized websites using the latest frameworks and technologies to enhance your online presence.'
+    },
+    {
+      icon: <FaMobile />,
+      title: 'App Development',
+      description: 'Native and cross-platform mobile applications for iOS and Android. We create user-friendly, feature-rich apps that engage your customers and drive business growth.'
+    },
+    {
+      icon: <FaUsers />,
+      title: 'Social Media Management',
+      description: 'Complete social media strategy and management services. We help you build your brand, engage with your audience, and grow your social media presence across all platforms.'
+    },
+    {
+      icon: <FaDatabase />,
+      title: 'CRM Solutions',
+      description: 'Customer Relationship Management systems to streamline your business processes. We implement and customize CRM solutions to improve customer satisfaction and sales efficiency.'
+    },
+    {
+      icon: <FaChartLine />,
+      title: 'Graphic Design',
+      description: 'Creative visual solutions including logos, branding, marketing materials, and UI/UX design. We create compelling visuals that represent your brand and attract customers.'
+    },
+    {
+      icon: <FaRobot />,
+      title: 'AI Bot Development',
+      description: 'Intelligent chatbots and AI-powered solutions to automate customer service, improve user experience, and streamline business operations with cutting-edge AI technology.'
     }
   ];
 
@@ -890,7 +944,7 @@ const Home = () => {
               >
                 Premier IT Solutions
                 <br />
-                <HighlightText>Empowering Digital Future</HighlightText>
+                <HighlightText>Empowering Digital <TypingAnimation>{currentText}</TypingAnimation></HighlightText>
               </HeroTitle>
               <HeroSubtitle
                 initial={{ opacity: 0, y: 30 }}
@@ -1119,6 +1173,8 @@ const Home = () => {
       </ServicesSection>
 
       <TestimonialCarousel />
+
+      <TeamPreview />
 
       <Container>
         <CTA

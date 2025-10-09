@@ -311,10 +311,13 @@ const Navbar = () => {
       name: 'Services', 
       path: '/services',
       dropdown: [
+        { name: 'Software Development', path: '/services#software-development' },
         { name: 'Web Development', path: '/services#web-development' },
-        { name: 'Mobile Apps', path: '/services#mobile-apps' },
-        { name: 'Cloud Solutions', path: '/services#cloud-solutions' },
-        { name: 'Consulting', path: '/services#consulting' }
+        { name: 'App Development', path: '/services#app-development' },
+        { name: 'Social Media Management', path: '/services#social-media' },
+        { name: 'CRM Solutions', path: '/services#crm-solutions' },
+        { name: 'Graphic Design', path: '/services#graphic-design' },
+        { name: 'AI Bot Development', path: '/services#ai-bot-development' }
       ]
     },
     { name: 'Portfolio', path: '/portfolio' },
@@ -381,7 +384,7 @@ const Navbar = () => {
         </NavLinks>
 
         <CTAButton to="/appointment">
-          Book Meeting
+          Book Free Meeting
         </CTAButton>
 
         <MobileMenuButton 

@@ -17,7 +17,8 @@ import {
   FaLaptopCode,
   FaServer,
   FaLock,
-  FaChartLine
+  FaChartLine,
+  FaRobot
 } from 'react-icons/fa';
 
 const ServicesContainer = styled.div`
@@ -373,85 +374,99 @@ const Services = () => {
     {
       id: 'software-development',
       icon: <FaCode />,
-      title: 'Custom Software Development',
-      description: 'Full-stack software development services using modern programming languages, frameworks, and methodologies to build scalable enterprise applications.',
+      title: 'Software Development',
+      description: 'Custom software solutions built with modern technologies. From desktop applications to enterprise software, we create scalable and efficient solutions tailored to your business needs.',
       features: [
-        'Web Application Development',
-        'Desktop Software Solutions',
+        'Custom Desktop Applications',
+        'Enterprise Software Solutions',
         'API Development & Integration',
-        'Database Design & Optimization',
-        'Microservices Architecture',
+        'Database Design & Management',
+        'Software Maintenance & Support',
         'Code Review & Quality Assurance'
       ]
     },
     {
-      id: 'mobile-development',
-      icon: <FaMobile />,
-      title: 'Mobile Application Development',
-      description: 'Native and cross-platform mobile app development for iOS and Android with enterprise-grade security and performance optimization.',
+      id: 'web-development',
+      icon: <FaRocket />,
+      title: 'Web Development',
+      description: 'Responsive, modern websites and web applications. We build fast, SEO-optimized websites using the latest frameworks and technologies to enhance your online presence.',
       features: [
-        'Native iOS & Android Development',
-        'React Native & Flutter Apps',
+        'Responsive Website Design',
+        'E-commerce Solutions',
+        'Web Application Development',
+        'SEO Optimization',
+        'Performance Optimization',
+        'Content Management Systems'
+      ]
+    },
+    {
+      id: 'app-development',
+      icon: <FaMobile />,
+      title: 'App Development',
+      description: 'Native and cross-platform mobile applications for iOS and Android. We create user-friendly, feature-rich apps that engage your customers and drive business growth.',
+      features: [
+        'Native iOS & Android Apps',
+        'Cross-Platform Development',
         'Mobile UI/UX Design',
         'App Store Deployment',
-        'Mobile Security Implementation',
-        'Performance Optimization'
+        'Push Notifications',
+        'App Performance Optimization'
       ]
     },
     {
-      id: 'cloud-infrastructure',
-      icon: <FaCloud />,
-      title: 'Cloud Infrastructure & DevOps',
-      description: 'Cloud migration, infrastructure automation, and DevOps implementation using AWS, Azure, and Google Cloud Platform.',
-      features: [
-        'Cloud Migration & Strategy',
-        'Infrastructure as Code (IaC)',
-        'CI/CD Pipeline Implementation',
-        'Container Orchestration (Kubernetes)',
-        'Cloud Security & Compliance',
-        '24/7 Infrastructure Monitoring'
-      ]
-    },
-    {
-      id: 'cybersecurity',
-      icon: <FaShieldAlt />,
-      title: 'IT Security & Compliance',
-      description: 'Comprehensive cybersecurity services including vulnerability assessments, penetration testing, and compliance management.',
-      features: [
-        'Security Risk Assessment',
-        'Penetration Testing & Auditing',
-        'Security Architecture Design',
-        'Compliance Management (SOC 2, ISO 27001)',
-        'Incident Response Planning',
-        'Security Training & Awareness'
-      ]
-    },
-    {
-      id: 'it-consulting',
+      id: 'social-media',
       icon: <FaUsers />,
-      title: 'IT Strategy & Consulting',
-      description: 'Strategic IT consulting services to help organizations optimize their technology investments and align IT with business goals.',
+      title: 'Social Media Management',
+      description: 'Complete social media strategy and management services. We help you build your brand, engage with your audience, and grow your social media presence across all platforms.',
       features: [
-        'IT Strategy Development',
-        'Technology Roadmap Planning',
-        'System Architecture Design',
-        'Vendor Selection & Management',
-        'IT Governance & Best Practices',
-        'Digital Transformation Planning'
+        'Social Media Strategy',
+        'Content Creation & Curation',
+        'Community Management',
+        'Social Media Advertising',
+        'Analytics & Reporting',
+        'Brand Building & Engagement'
       ]
     },
     {
-      id: 'system-integration',
-      icon: <FaRocket />,
-      title: 'System Integration & Modernization',
-      description: 'Legacy system modernization, enterprise integration, and data migration services to improve operational efficiency.',
+      id: 'crm-solutions',
+      icon: <FaDatabase />,
+      title: 'CRM Solutions',
+      description: 'Customer Relationship Management systems to streamline your business processes. We implement and customize CRM solutions to improve customer satisfaction and sales efficiency.',
       features: [
-        'Legacy System Modernization',
-        'Enterprise System Integration',
-        'Data Migration & ETL Services',
-        'API Development & Management',
-        'Workflow Automation',
-        'System Performance Optimization'
+        'CRM Implementation & Setup',
+        'Custom CRM Development',
+        'Data Migration & Integration',
+        'Sales Pipeline Management',
+        'Customer Analytics',
+        'Training & Support'
+      ]
+    },
+    {
+      id: 'graphic-design',
+      icon: <FaChartLine />,
+      title: 'Graphic Design',
+      description: 'Creative visual solutions including logos, branding, marketing materials, and UI/UX design. We create compelling visuals that represent your brand and attract customers.',
+      features: [
+        'Logo & Brand Identity',
+        'Marketing Materials Design',
+        'UI/UX Design',
+        'Print Design Services',
+        'Digital Graphics',
+        'Brand Guidelines Development'
+      ]
+    },
+    {
+      id: 'ai-bot-development',
+      icon: <FaRobot />,
+      title: 'AI Bot Development',
+      description: 'Intelligent chatbots and AI-powered solutions to automate customer service, improve user experience, and streamline business operations with cutting-edge AI technology.',
+      features: [
+        'Chatbot Development',
+        'AI-Powered Customer Service',
+        'Natural Language Processing',
+        'Voice Assistant Integration',
+        'Machine Learning Solutions',
+        'Automation & Workflow Optimization'
       ]
     }
   ];
@@ -536,7 +551,7 @@ const Services = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            From web development to cloud solutions, we provide end-to-end IT services
+            From software development to AI solutions, we provide comprehensive digital services
           </SectionSubtitle>
           <ServicesGrid>
             {services.map((service, index) => (
