@@ -101,13 +101,13 @@ const TeamGrid = styled.div`
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
     max-width: 400px;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: ${props => props.theme.spacing.md};
   }
 
   @media (max-width: 360px) {
     max-width: 320px;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: ${props => props.theme.spacing.sm};
   }
 `;

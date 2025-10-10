@@ -265,13 +265,16 @@ const HeroButtons = styled(motion.div)`
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: ${props => props.theme.spacing.sm};
+    flex-wrap: nowrap;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
     gap: ${props => props.theme.spacing.xs};
+    flex-wrap: wrap;
   }
 `;
 
@@ -878,12 +881,30 @@ const StatsGrid = styled.div`
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+    
+    /* Center the third item if it exists */
+    & > *:nth-child(3) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      max-width: 200px;
+    }
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
+    max-width: 400px;
+    
+    & > *:nth-child(3) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      max-width: 180px;
+    }
   }
 `;
 

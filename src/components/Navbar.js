@@ -80,8 +80,8 @@ const LogoImage = styled.img`
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    width: 65px;
-    height: 65px;
+    width: 165px;
+    height: 165px;
   }
 `;
 
