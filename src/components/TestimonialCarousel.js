@@ -466,10 +466,28 @@ const NavigationButton = styled.button`
     color: rgba(96, 165, 250, 0.3);
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    width: 48px;
+    height: 48px;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     width: 45px;
     height: 45px;
     font-size: 1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 42px;
+    height: 42px;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
   }
 `;
 

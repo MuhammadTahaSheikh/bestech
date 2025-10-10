@@ -34,6 +34,16 @@ const NavContainer = styled.div`
   }
 `;
 
+const RightSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    gap: 0.5rem;
+  }
+`;
+
 const Logo = styled(Link)`
   text-decoration: none;
   display: flex;
@@ -152,6 +162,28 @@ const CTAButton = styled(Link)`
   &:focus {
     outline: 2px solid ${props => props.theme.colors.primary};
     outline-offset: 2px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.75rem;
+    border-radius: 5px;
   }
 `;
 
@@ -383,18 +415,20 @@ const Navbar = () => {
           ))}
         </NavLinks>
 
-        <CTAButton to="/appointment">
-          Book Free Meeting
-        </CTAButton>
+        <RightSection>
+          <CTAButton to="/appointment">
+            Book Free Meeting
+          </CTAButton>
 
-        <MobileMenuButton 
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          aria-expanded={mobileMenuOpen}
-          aria-controls="mobile-menu"
-        >
-          {mobileMenuOpen ? <FaTimes /> : <FaBars />}
-        </MobileMenuButton>
+          <MobileMenuButton 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+          >
+            {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+          </MobileMenuButton>
+        </RightSection>
       </NavContainer>
 
       <AnimatePresence>
