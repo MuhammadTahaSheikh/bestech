@@ -36,6 +36,22 @@ const HeroSection = styled.section`
   text-align: center;
   position: relative;
   overflow: hidden;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 4rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 3rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 2.5rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 2rem 0;
+  }
 `;
 
 const HeroBackground = styled.div`
@@ -54,6 +70,18 @@ const Container = styled.div`
   padding: 0 2rem;
   position: relative;
   z-index: 2;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 0 1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0 0.75rem;
+  }
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -62,8 +90,20 @@ const HeroTitle = styled(motion.h1)`
   margin-bottom: 1.5rem;
   line-height: 1.2;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 3rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     font-size: 2.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 2.2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 2rem;
   }
 `;
 
@@ -73,11 +113,39 @@ const HeroSubtitle = styled(motion.p)`
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 0.95rem;
+  }
 `;
 
 const TeamSection = styled.section`
   padding: 6rem 0;
   background: white;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 4rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 3rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 2.5rem 0;
+  }
 `;
 
 const SectionTitle = styled(motion.h2)`
@@ -86,6 +154,22 @@ const SectionTitle = styled(motion.h2)`
   font-weight: 700;
   color: ${props => props.theme.colors.dark};
   margin-bottom: 1rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 2.2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 1.6rem;
+  }
 `;
 
 const SectionSubtitle = styled(motion.p)`
@@ -96,6 +180,26 @@ const SectionSubtitle = styled(motion.p)`
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const TeamGrid = styled.div`
@@ -103,6 +207,29 @@ const TeamGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin-bottom: 4rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const TeamCard = styled(motion.div)`
@@ -129,6 +256,26 @@ const TeamCard = styled(motion.div)`
     right: 0;
     height: 4px;
     background: linear-gradient(135deg, #3730a3, #581c87);
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 1.75rem;
+    border-radius: 18px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 1.25rem;
+    border-radius: 14px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 1rem;
+    border-radius: 12px;
   }
 `;
 
@@ -166,6 +313,30 @@ const MemberAvatar = styled.div`
   @keyframes shine {
     0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
     100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    width: 110px;
+    height: 110px;
+    font-size: 2.8rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    width: 100px;
+    height: 100px;
+    font-size: 2.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 90px;
+    height: 90px;
+    font-size: 2.2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
   }
 `;
 

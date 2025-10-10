@@ -57,6 +57,12 @@ const HeroSection = styled.section`
     padding: ${props => props.theme.spacing.xl} 0;
     border-radius: ${props => props.theme.borderRadius.xl};
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    margin: ${props => props.theme.spacing.xs};
+    padding: ${props => props.theme.spacing.lg} 0;
+    border-radius: ${props => props.theme.borderRadius.lg};
+  }
 `;
 
 const HeroBackground = styled.div`
@@ -147,6 +153,11 @@ const HeroContent = styled.div`
     gap: ${props => props.theme.spacing.xl};
     padding: 0 ${props => props.theme.spacing.md};
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    gap: ${props => props.theme.spacing.lg};
+    padding: 0 ${props => props.theme.spacing.sm};
+  }
 `;
 
 const HeroLeft = styled.div`
@@ -163,7 +174,7 @@ const HeroRight = styled.div`
   position: relative;
   z-index: 3;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     order: -1;
   }
 `;
@@ -203,6 +214,11 @@ const HeroTitle = styled(motion.h1)`
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     font-size: clamp(2rem, 8vw, 2.5rem);
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: clamp(1.8rem, 10vw, 2.2rem);
+    margin-bottom: ${props => props.theme.spacing.md};
+  }
 `;
 
 const HeroSubtitle = styled(motion.p)`
@@ -216,6 +232,16 @@ const HeroSubtitle = styled(motion.p)`
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     max-width: 100%;
     text-align: center;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    margin-bottom: ${props => props.theme.spacing.xl};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: clamp(0.85rem, 3.5vw, 1rem);
+    margin-bottom: ${props => props.theme.spacing.lg};
   }
 `;
 
@@ -242,6 +268,10 @@ const HeroButtons = styled(motion.div)`
     flex-direction: column;
     align-items: center;
     gap: ${props => props.theme.spacing.sm};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    gap: ${props => props.theme.spacing.xs};
   }
 `;
 
@@ -272,6 +302,16 @@ const PrimaryButton = styled(Link)`
       0 8px 20px rgba(88, 28, 135, 0.4);
     background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+  }
 `;
 
 const PrimaryButtonAsButton = styled.button`
@@ -299,6 +339,16 @@ const PrimaryButtonAsButton = styled.button`
       0 8px 20px rgba(88, 28, 135, 0.4);
     background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+  }
 `;
 
 const SecondaryButton = styled(Link)`
@@ -321,6 +371,16 @@ const SecondaryButton = styled(Link)`
     border-color: rgba(255, 255, 255, 0.4);
     transform: translateY(-2px);
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+  }
 `;
 
 const TechVisualization = styled.div`
@@ -331,9 +391,24 @@ const TechVisualization = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    width: 400px;
+    height: 400px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    width: 350px;
+    height: 350px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
     width: 300px;
     height: 300px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    width: 250px;
+    height: 250px;
   }
 `;
 
@@ -358,6 +433,46 @@ const CentralHub = styled(motion.div)`
     border-radius: 50%;
     opacity: 0.8;
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    width: 160px;
+    height: 160px;
+
+    &::before {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    width: 140px;
+    height: 140px;
+
+    &::before {
+      width: 70px;
+      height: 70px;
+    }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 120px;
+    height: 120px;
+
+    &::before {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    width: 100px;
+    height: 100px;
+
+    &::before {
+      width: 50px;
+      height: 50px;
+    }
+  }
 `;
 
 const HubIcon = styled.div`
@@ -365,6 +480,22 @@ const HubIcon = styled.div`
   color: white;
   z-index: 2;
   position: relative;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 2.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 1.5rem;
+  }
 `;
 
 const OrbitingElement = styled(motion.div)`
@@ -378,11 +509,47 @@ const OrbitingElement = styled(motion.div)`
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(10px);
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    width: 65px;
+    height: 65px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    width: 55px;
+    height: 55px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 45px;
+    height: 45px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const ElementIcon = styled.div`
   font-size: 1.5rem;
   color: #10b981;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 0.9rem;
+  }
 `;
 
 const ConnectionLine = styled(motion.div)`
@@ -477,9 +644,23 @@ const ServicesGrid = styled.div`
   margin-bottom: ${props => props.theme.spacing['3xl']};
   align-items: stretch;
 
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: ${props => props.theme.spacing.md};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: ${props => props.theme.spacing.md};
+  }
+
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     grid-template-columns: 1fr;
     gap: ${props => props.theme.spacing.md};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    gap: ${props => props.theme.spacing.sm};
   }
 `;
 
@@ -509,6 +690,28 @@ const ServiceCard = styled(motion.div)`
       inset 0 1px 0 rgba(255, 255, 255, 0.5);
     background: rgba(255, 255, 255, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 1.75rem;
+    min-width: 260px;
+    max-width: 320px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 1.5rem;
+    min-width: 240px;
+    max-width: 300px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 1.25rem;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 1rem;
   }
 `;
 
@@ -548,6 +751,30 @@ const ServiceIcon = styled.div`
     position: relative;
     z-index: 2;
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    width: 65px;
+    height: 65px;
+    font-size: 1.6rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    width: 60px;
+    height: 60px;
+    font-size: 1.4rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 55px;
+    height: 55px;
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
 `;
 
 const ServiceTitle = styled.h3`
@@ -556,23 +783,79 @@ const ServiceTitle = styled.h3`
   color: rgba(0, 0, 0, 0.7);
   margin-bottom: 0.8rem;
   line-height: 1.3;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 0.95rem;
+  }
 `;
 
 const ServiceDescription = styled.p`
   color: rgba(0, 0, 0, 0.5);
   line-height: 1.5;
   font-size: 0.95rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 0.75rem;
+  }
 `;
 
 const StatsSection = styled.section`
   padding: 6rem 0;
   background: white;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 4rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 3rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 2rem 0;
+  }
 `;
 
 const StatsContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 0 1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0 0.75rem;
+  }
 `;
 
 const StatsGrid = styled.div`
@@ -597,6 +880,10 @@ const StatsGrid = styled.div`
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     flex-direction: column;
     gap: 1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    gap: 0.75rem;
   }
 `;
 
@@ -624,6 +911,16 @@ const StatCard = styled(motion.div)`
     padding: 1rem;
     min-width: 140px;
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.875rem;
+    min-width: 120px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 0.75rem;
+    min-width: 100px;
+  }
 `;
 
 const StatNumber = styled.h3`
@@ -631,6 +928,22 @@ const StatNumber = styled.h3`
   font-weight: 700;
   margin-bottom: 0.5rem;
   color: #1f2937;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 2.2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 1.6rem;
+  }
 `;
 
 const StatLabel = styled.p`
@@ -638,12 +951,44 @@ const StatLabel = styled.p`
   color: #6b7280;
   margin: 0;
   font-weight: 500;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 0.8rem;
+  }
 `;
 
 const StatSubLabel = styled.p`
   font-size: 0.9rem;
   color: #9ca3af;
   margin: 0.25rem 0 0 0;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 0.7rem;
+  }
 `;
 
 const RatingCard = styled(motion.div)`
@@ -760,6 +1105,60 @@ const CTA = styled(motion.div)`
     opacity: 0.95;
     position: relative;
     z-index: 1;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 3rem 1.5rem;
+    margin: 3rem 0;
+
+    h2 {
+      font-size: 2.2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 2.5rem 1.25rem;
+    margin: 2.5rem 0;
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 2rem 1rem;
+    margin: 2rem 0;
+    border-radius: 20px;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 1.5rem 0.75rem;
+    margin: 1.5rem 0;
+    border-radius: 16px;
+
+    h2 {
+      font-size: 1.6rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
   }
 `;
 

@@ -22,6 +22,16 @@ const TestimonialCarouselContainer = styled.section`
     padding: ${props => props.theme.spacing['2xl']} 0;
     min-height: 60vh;
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: ${props => props.theme.spacing.xl} 0;
+    min-height: 50vh;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: ${props => props.theme.spacing.lg} 0;
+    min-height: 45vh;
+  }
   
   &::before {
     content: '';
@@ -135,10 +145,24 @@ const TestimonialCard = styled(motion.div)`
     pointer-events: none;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    min-height: 450px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     flex-direction: column;
     min-height: 600px;
     overflow: visible;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    min-height: 550px;
+    border-radius: 20px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    min-height: 500px;
+    border-radius: 16px;
   }
 `;
 
@@ -151,9 +175,23 @@ const ImageSection = styled.div`
   padding: 2rem;
   background: rgba(255, 255, 255, 0.05);
   
-  @media (max-width: 768px) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 1.75rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     padding: 1.5rem;
     min-height: 300px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 1.25rem;
+    min-height: 250px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 1rem;
+    min-height: 200px;
   }
 `;
 
@@ -179,9 +217,24 @@ const ImageContainer = styled.div`
     z-index: 1;
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    width: 280px;
+    height: 280px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     width: 250px;
     height: 250px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 220px;
+    height: 220px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    width: 200px;
+    height: 200px;
   }
 `;
 
@@ -223,13 +276,38 @@ const TestimonialSection = styled.div`
     pointer-events: none;
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 2.5rem;
+    min-height: 450px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     padding: 2rem;
     min-height: 400px;
     border-radius: 0 0 24px 24px;
     
     &::before {
       border-radius: 0 0 24px 24px;
+    }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 1.75rem;
+    min-height: 350px;
+    border-radius: 0 0 20px 20px;
+    
+    &::before {
+      border-radius: 0 0 20px 20px;
+    }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    padding: 1.5rem;
+    min-height: 300px;
+    border-radius: 0 0 16px 16px;
+    
+    &::before {
+      border-radius: 0 0 16px 16px;
     }
   }
 `;
@@ -240,6 +318,22 @@ const CustomerName = styled.h3`
   color: white;
   margin-bottom: 0.5rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 1.6rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.4rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 1.2rem;
+  }
 `;
 
 const CustomerTitle = styled.p`
@@ -247,6 +341,22 @@ const CustomerTitle = styled.p`
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 2rem;
   font-weight: 400;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 0.85rem;
+  }
 `;
 
 const TestimonialContent = styled.div`
@@ -269,10 +379,27 @@ const TestimonialText = styled.p`
   overflow-y: auto;
   max-height: 200px;
   
-  @media (max-width: 768px) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 1.15rem;
+    line-height: 1.75;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     font-size: 1.1rem;
     line-height: 1.7;
     max-height: 150px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-height: 120px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-height: 100px;
   }
 `;
 

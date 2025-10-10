@@ -104,6 +104,12 @@ const TeamGrid = styled.div`
     grid-template-columns: 1fr;
     gap: ${props => props.theme.spacing.md};
   }
+
+  @media (max-width: 360px) {
+    max-width: 320px;
+    grid-template-columns: 1fr;
+    gap: ${props => props.theme.spacing.sm};
+  }
 `;
 
 const TeamMember = styled(motion.div)`
@@ -151,6 +157,12 @@ const MemberPhoto = styled(motion.div)`
     height: 120px;
     font-size: 1.6rem;
   }
+
+  @media (max-width: 360px) {
+    width: 100px;
+    height: 100px;
+    font-size: 1.4rem;
+  }
 `;
 
 const MemberImage = styled.img`
@@ -193,6 +205,10 @@ const MemberName = styled.h4`
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
     font-size: 0.8rem;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 0.75rem;
   }
 `;
 
