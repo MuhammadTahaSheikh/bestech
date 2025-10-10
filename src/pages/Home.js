@@ -227,13 +227,6 @@ const HighlightText = styled.span`
 const TypingAnimation = styled.span`
   color: #60a5fa;
   font-weight: 600;
-  border-right: 2px solid #60a5fa;
-  animation: blink 1s infinite;
-  
-  @keyframes blink {
-    0%, 50% { border-color: #60a5fa; }
-    51%, 100% { border-color: transparent; }
-  }
 `;
 
 const HeroButtons = styled(motion.div)`
@@ -944,7 +937,7 @@ const Home = () => {
               >
                 Premier IT Solutions
                 <br />
-                <HighlightText>Empowering Digital <TypingAnimation>{currentText}</TypingAnimation></HighlightText>
+                <HighlightText>Empowering <TypingAnimation>{currentText}</TypingAnimation></HighlightText>
               </HeroTitle>
               <HeroSubtitle
                 initial={{ opacity: 0, y: 30 }}
@@ -1151,7 +1144,7 @@ const Home = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            Comprehensive IT solutions tailored to your business needs
+            Comprehensive IT solutions to your business needs
           </SectionSubtitle>
           <ServicesGrid>
             {services.map((service, index) => (

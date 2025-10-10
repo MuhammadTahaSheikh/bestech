@@ -169,6 +169,24 @@ const MemberAvatar = styled.div`
   }
 `;
 
+const MemberImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: transparent;
+  filter: 
+    contrast(1.2) 
+    brightness(1.1) 
+    saturate(1.1)
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  mix-blend-mode: normal;
+`;
+
 const MemberName = styled.h3`
   font-size: 1.5rem;
   font-weight: 600;
@@ -190,20 +208,25 @@ const MemberBio = styled.p`
 `;
 
 const MemberSkills = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
-  justify-content: center;
   margin-bottom: 1.5rem;
+  max-width: 100%;
 `;
 
 const SkillTag = styled.span`
   background: ${props => props.theme.colors.gray[100]};
   color: ${props => props.theme.colors.gray[700]};
-  padding: 0.25rem 0.75rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 15px;
   font-size: 0.8rem;
   font-weight: 500;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
 `;
 
 const SocialLinks = styled.div`
@@ -441,86 +464,157 @@ const Team = () => {
   const teamMembers = [
     {
       id: 1,
-      name: 'Sarah Johnson',
-      role: 'Chief Technology Officer',
-      bio: '20+ years in software engineering and IT leadership. Former IBM Distinguished Engineer with expertise in enterprise architecture, cloud computing, and large-scale system design. PhD in Computer Science.',
-      avatar: 'SJ',
+      name: 'Muhammad Taha',
+      role: 'Software Engineer',
+      bio: 'Experienced software engineer with expertise in full-stack development and system architecture. Passionate about creating efficient and scalable solutions.',
+      avatar: 'MT',
+      image: '/taha.png',
       skills: ['Enterprise Architecture', 'Cloud Computing', 'System Design', 'Team Leadership', 'Technical Strategy'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'sarah@bestechsolz.com'
+        email: 'muhammad@bestechsolz.com'
       }
     },
     {
       id: 2,
-      name: 'Michael Chen',
-      role: 'VP of Software Development',
-      bio: '15+ years in software engineering and team leadership. Former Microsoft Senior Principal Engineer with expertise in full-stack development, mobile applications, and enterprise software architecture.',
-      avatar: 'MC',
-      skills: ['Software Development', 'Mobile Development', 'Team Leadership', 'Agile Methodologies', 'Code Architecture'],
+      name: 'Sumair Fraz',
+      role: 'CRM Specialist',
+      bio: 'CRM specialist focused on customer relationship management and business process optimization. Expert in streamlining customer workflows and improving business efficiency.',
+      avatar: 'SF',
+      skills: ['CRM Systems', 'Business Process', 'Customer Management', 'Data Analysis', 'Workflow Optimization'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'michael@bestechsolz.com'
+        email: 'sumair@bestechsolz.com'
       }
     },
     {
       id: 3,
-      name: 'Emily Rodriguez',
-      role: 'Director of Cloud Infrastructure',
-      bio: '12+ years in cloud computing and infrastructure management. AWS and Azure certified architect specializing in enterprise cloud migration, DevOps, and infrastructure automation.',
-      avatar: 'ER',
-      skills: ['Cloud Architecture', 'DevOps', 'Infrastructure Automation', 'Migration Strategy', 'Cost Optimization'],
+      name: 'Asif Saeed',
+      role: 'CRM Specialist',
+      bio: 'CRM specialist with expertise in customer data management and sales automation systems. Dedicated to improving customer experience through technology.',
+      avatar: 'AS',
+      skills: ['Customer Data', 'Sales Automation', 'CRM Development', 'Process Improvement', 'System Integration'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'emily@bestechsolz.com'
+        email: 'asif@bestechsolz.com'
       }
     },
     {
       id: 4,
-      name: 'David Kim',
-      role: 'Chief Information Security Officer',
-      bio: '18+ years in cybersecurity and IT risk management. CISSP, CISM certified with extensive experience in enterprise security architecture, compliance, and incident response.',
-      avatar: 'DK',
-      skills: ['Cybersecurity', 'Risk Management', 'Compliance', 'Security Architecture', 'Incident Response'],
+      name: 'Salar Kamran',
+      role: 'Social Media Manager',
+      bio: 'Social media manager responsible for digital marketing and brand presence across platforms. Creative strategist focused on engaging content and community building.',
+      avatar: 'SK',
+      skills: ['Social Media', 'Digital Marketing', 'Content Strategy', 'Brand Management', 'Community Engagement'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'david@bestechsolz.com'
+        email: 'salar@bestechsolz.com'
       }
     },
     {
       id: 5,
-      name: 'Lisa Thompson',
-      role: 'Director of IT Operations',
-      bio: '14+ years in IT operations and system administration. Expert in enterprise infrastructure management, network administration, and IT service delivery optimization.',
-      avatar: 'LT',
-      skills: ['IT Operations', 'System Administration', 'Network Management', 'Service Delivery', 'Process Optimization'],
+      name: 'Hafiz Mubsher',
+      role: 'App Developer',
+      bio: 'Mobile app developer specializing in cross-platform applications and user experience design. Passionate about creating intuitive and engaging mobile experiences.',
+      avatar: 'HM',
+      skills: ['Mobile Development', 'Cross-Platform', 'User Experience', 'App Design', 'Performance Optimization'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'lisa@bestechsolz.com'
+        email: 'hafiz@bestechsolz.com'
       }
     },
     {
       id: 6,
-      name: 'James Wilson',
-      role: 'Head of Database & Integration',
-      bio: '16+ years in database administration and system integration. Oracle and Microsoft SQL Server certified with expertise in data architecture, ETL processes, and enterprise integration.',
-      avatar: 'JW',
-      skills: ['Database Administration', 'Data Architecture', 'System Integration', 'ETL Processes', 'Performance Tuning'],
+      name: 'Abdul Rafay',
+      role: 'Full Stack Developer',
+      bio: 'Full stack developer with expertise in both frontend and backend technologies. Committed to building robust and scalable web applications.',
+      avatar: 'AR',
+      skills: ['Full Stack', 'Web Development', 'Database Design', 'API Development', 'System Architecture'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'james@bestechsolz.com'
+        email: 'abdul@bestechsolz.com'
+      }
+    },
+    {
+      id: 7,
+      name: 'Aqib Saeed',
+      role: 'Social Media',
+      bio: 'Social media specialist focused on content creation and community engagement. Expert in building brand awareness and driving user engagement.',
+      avatar: 'AQ',
+      skills: ['Content Creation', 'Social Media', 'Community Management', 'Digital Strategy', 'Brand Awareness'],
+      social: {
+        linkedin: '#',
+        twitter: '#',
+        github: '#',
+        email: 'aqib@bestechsolz.com'
+      }
+    },
+    {
+      id: 8,
+      name: 'Hasan Suhail',
+      role: 'CRM Developer',
+      bio: 'CRM developer specializing in custom CRM solutions and database integration. Focused on creating tailored solutions for business needs.',
+      avatar: 'HS',
+      skills: ['CRM Development', 'Database Integration', 'Custom Solutions', 'Business Logic', 'System Customization'],
+      social: {
+        linkedin: '#',
+        twitter: '#',
+        github: '#',
+        email: 'hasan@bestechsolz.com'
+      }
+    },
+    {
+      id: 9,
+      name: 'Ahmed Niaz',
+      role: 'Software Engineer',
+      bio: 'Software engineer with expertise in system development and technical problem solving. Dedicated to writing clean, efficient code and solving complex challenges.',
+      avatar: 'AN',
+      skills: ['Software Development', 'Problem Solving', 'Code Architecture', 'System Design', 'Technical Analysis'],
+      social: {
+        linkedin: '#',
+        twitter: '#',
+        github: '#',
+        email: 'ahmed@bestechsolz.com'
+      }
+    },
+    {
+      id: 10,
+      name: 'Humayun Shahid',
+      role: 'Business Executive',
+      bio: 'Business executive responsible for strategic planning and client relationship management. Focused on driving business growth and maintaining strong client partnerships.',
+      avatar: 'HS',
+      skills: ['Strategic Planning', 'Client Relations', 'Business Development', 'Project Management', 'Team Leadership'],
+      social: {
+        linkedin: '#',
+        twitter: '#',
+        github: '#',
+        email: 'humayun@bestechsolz.com'
+      }
+    },
+    {
+      id: 11,
+      name: 'Muhammad Rameez',
+      role: 'Business Executive',
+      bio: 'Business executive focused on business development and operational excellence. Committed to driving organizational success through strategic initiatives.',
+      avatar: 'MR',
+      skills: ['Business Development', 'Operational Excellence', 'Strategic Planning', 'Client Management', 'Performance Optimization'],
+      social: {
+        linkedin: '#',
+        twitter: '#',
+        github: '#',
+        email: 'rameez@bestechsolz.com'
       }
     }
   ];
@@ -643,7 +737,19 @@ const Team = () => {
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
               >
-                <MemberAvatar>{member.avatar}</MemberAvatar>
+                <MemberAvatar>
+                  {member.image ? (
+                    <MemberImage 
+                      src={member.image} 
+                      alt={member.name}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    member.avatar
+                  )}
+                </MemberAvatar>
                 <MemberName>{member.name}</MemberName>
                 <MemberRole>{member.role}</MemberRole>
                 <MemberBio>{member.bio}</MemberBio>

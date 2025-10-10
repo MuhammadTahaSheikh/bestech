@@ -353,24 +353,31 @@ const TestimonialCarousel = () => {
 
   const testimonials = [
     {
-      text: "BestechSolz Vision's IT infrastructure modernization transformed our entire technology stack. Their expertise in cloud migration and system integration was exceptional, resulting in 40% cost reduction and improved performance.",
-      author: "Sarah Mitchell",
-      position: "Chief Information Officer, Global Financial Services",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face&auto=format",
+      text: "Honestly, I was skeptical at first but these guys really know their stuff. They fixed our entire IT mess and saved us a ton of money. The team was always available when we needed them and explained everything in simple terms.",
+      author: "Nic Christofis",
+      position: "IT Manager, Local Business Solutions",
+      avatar: "/client1.jpeg",
       rating: 5
     },
     {
-      text: "The custom software development project exceeded all expectations. Their agile methodology and technical depth delivered a robust solution that scaled seamlessly with our business growth.",
-      author: "David Chen",
-      position: "VP of Technology, Fortune 500 Manufacturing Company",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format",
+      text: "Working with this team was amazing! They built our custom software exactly how we wanted it, and it actually works better than we expected. The whole process was smooth and they kept us updated every step of the way.",
+      author: "Voila",
+      position: "Project Manager, Tech Startup",
+      avatar: "/client2.jpeg",
       rating: 5
     },
     {
-      text: "Their cybersecurity assessment and implementation helped us achieve SOC 2 compliance while strengthening our security posture. The team's attention to detail and industry expertise was outstanding.",
-      author: "Dr. Maria Rodriguez",
-      position: "Chief Information Security Officer, Healthcare Technology Corp",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face&auto=format",
+      text: "I can't recommend them enough! They helped us get our security up to standard and made sure we were compliant. The team was professional, patient, and really understood our needs. Worth every penny!",
+      author: "Negin",
+      position: "Operations Director, Healthcare Services",
+      avatar: "/client3.jpeg",
+      rating: 5
+    },
+    {
+      text: "These guys are absolutely amazing! They took our outdated systems and completely modernized everything. The transformation was incredible and our productivity has skyrocketed. Couldn't be happier!",
+      author: "Xavien",
+      position: "IT Director, Tech Solutions Inc",
+      avatar: "/client4.jpeg",
       rating: 5
     },
     {

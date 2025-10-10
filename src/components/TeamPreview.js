@@ -118,7 +118,6 @@ const MemberPhoto = styled(motion.div)`
   width: 150px;
   height: 150px;
   border-radius: 0;
-  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,38 +126,7 @@ const MemberPhoto = styled(motion.div)`
   font-weight: 700;
   position: relative;
   overflow: hidden;
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.2),
-    0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: scale(1.1);
-    box-shadow: 
-      0 12px 35px rgba(0, 0, 0, 0.3),
-      0 6px 16px rgba(0, 0, 0, 0.2);
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transform: rotate(45deg);
-    transition: all 0.5s ease;
-  }
-
-  ${TeamMember}:hover &::before {
-    animation: shine 0.8s ease-in-out;
-  }
-
-  @keyframes shine {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-  }
+ 
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     width: 130px;
@@ -194,6 +162,13 @@ const MemberImage = styled.img`
   top: 0;
   left: 0;
   z-index: 2;
+  background: transparent;
+  filter: 
+    contrast(1.2) 
+    brightness(1.1) 
+    saturate(1.1)
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  mix-blend-mode: normal;
 `;
 
 const MemberName = styled.h4`
@@ -410,57 +385,102 @@ const TeamPreview = () => {
   const teamMembers = [
     {
       id: 1,
-      name: 'Sarah Johnson',
-      role: 'CTO',
-      avatar: 'SJ',
-      image: '/60506EF5-1F49-4E42-AC62-034FAD4B3B34.png',
-      shortName: 'Sarah',
-      description: '20+ years in software engineering and IT leadership. Former IBM Distinguished Engineer with expertise in enterprise architecture and cloud computing.'
+      name: 'Muhammad Taha',
+      role: 'Software Engineer',
+      avatar: 'MT',
+      image: '/taha.png',
+      shortName: 'Muhammad Taha',
+      description: 'Experienced software engineer with expertise in full-stack development and system architecture.'
     },
     {
       id: 2,
-      name: 'Michael Chen',
-      role: 'VP Development',
-      avatar: 'MC',
-      image: null,
-      shortName: 'Michael',
-      description: '15+ years in software engineering and team leadership. Former Microsoft Senior Principal Engineer with expertise in full-stack development.'
+      name: 'Sumair Fraz',
+      role: 'CRM Specialist',
+      avatar: 'SF',
+      image: '/60506EF5-1F49-4E42-AC62-034FAD4B3B34.png',
+      shortName: 'Sumair',
+      description: 'CRM specialist focused on customer relationship management and business process optimization.'
     },
     {
       id: 3,
-      name: 'Emily Rodriguez',
-      role: 'Cloud Director',
-      avatar: 'ER',
+      name: 'Asif Saeed',
+      role: 'CRM Specialist',
+      avatar: 'AS',
       image: null,
-      shortName: 'Emily',
-      description: '12+ years in cloud computing and infrastructure management. AWS and Azure certified architect specializing in enterprise cloud migration.'
+      shortName: 'Asif',
+      description: 'CRM specialist with expertise in customer data management and sales automation systems.'
     },
     {
       id: 4,
-      name: 'David Kim',
-      role: 'CISO',
-      avatar: 'DK',
+      name: 'Salar Kamran',
+      role: 'Social Media Manager',
+      avatar: 'SK',
       image: null,
-      shortName: 'David',
-      description: '18+ years in cybersecurity and IT risk management. CISSP, CISM certified with extensive experience in enterprise security architecture.'
+      shortName: 'Salar',
+      description: 'Social media manager responsible for digital marketing and brand presence across platforms.'
     },
     {
       id: 5,
-      name: 'Lisa Thompson',
-      role: 'IT Operations',
-      avatar: 'LT',
+      name: 'Hafiz Mubsher',
+      role: 'App Developer',
+      avatar: 'HM',
       image: null,
-      shortName: 'Lisa',
-      description: '14+ years in IT operations and system administration. Expert in enterprise infrastructure management and IT service delivery.'
+      shortName: 'Hafiz',
+      description: 'Mobile app developer specializing in cross-platform applications and user experience design.'
     },
     {
       id: 6,
-      name: 'James Wilson',
-      role: 'Database Head',
-      avatar: 'JW',
+      name: 'Abdul Rafay',
+      role: 'Full Stack Developer',
+      avatar: 'AR',
       image: null,
-      shortName: 'James',
-      description: '16+ years in database administration and system integration. Oracle and Microsoft SQL Server certified with expertise in data architecture.'
+      shortName: 'Abdul',
+      description: 'Full stack developer with expertise in both frontend and backend technologies.'
+    },
+    {
+      id: 7,
+      name: 'Aqib Saeed',
+      role: 'Social Media',
+      avatar: 'AQ',
+      image: null,
+      shortName: 'Aqib',
+      description: 'Social media specialist focused on content creation and community engagement.'
+    },
+    {
+      id: 8,
+      name: 'Hasan Suhail',
+      role: 'CRM Developer',
+      avatar: 'HS',
+      image: null,
+      shortName: 'Hasan',
+      description: 'CRM developer specializing in custom CRM solutions and database integration.'
+    },
+    {
+      id: 9,
+      name: 'Ahmed Niaz',
+      role: 'Software Engineer',
+      avatar: 'AN',
+      image: null,
+      shortName: 'Ahmed',
+      description: 'Software engineer with expertise in system development and technical problem solving.'
+    },
+    {
+      id: 10,
+      name: 'Humayun Shahid',
+      role: 'Business Executive',
+      avatar: 'HS',
+      image: null,
+      shortName: 'Humayun',
+      description: 'Business executive responsible for strategic planning and client relationship management.'
+    },
+    {
+      id: 11,
+      name: 'Muhammad Rameez',
+      role: 'Business Executive',
+      avatar: 'MR',
+      image: null,
+      shortName: 'Rameez',
+      description: 'Business executive focused on business development and operational excellence.'
     }
   ];
 
@@ -473,7 +493,7 @@ const TeamPreview = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          Meet Our Team
+          Meet Our Key Players
         </SectionTitle>
         <SectionSubtitle
           initial={{ opacity: 0, y: 30 }}
@@ -481,7 +501,7 @@ const TeamPreview = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           viewport={{ once: true }}
         >
-          Talented professionals dedicated to delivering exceptional IT solutions
+          Expert professionals delivering exceptional IT solutions
         </SectionSubtitle>
         <TeamGrid>
           {teamMembers.map((member, index) => (
@@ -494,10 +514,7 @@ const TeamPreview = () => {
               onMouseEnter={() => setHoveredMember(member)}
               onMouseLeave={() => setHoveredMember(null)}
             >
-              <MemberPhoto
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.2 }}
-              >
+              <MemberPhoto>
                 {member.image ? (
                   <MemberImage 
                     src={member.image} 
