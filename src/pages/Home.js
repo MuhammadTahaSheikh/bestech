@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { 
   FaRocket, 
   FaCode, 
@@ -886,25 +886,12 @@ const StatsGrid = styled.div`
     gap: 1rem;
     max-width: 500px;
     margin: 0 auto;
-    
-    /* Center the third item if it exists */
-    & > *:nth-child(3) {
-      grid-column: 1 / -1;
-      justify-self: center;
-      max-width: 200px;
-    }
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
     max-width: 400px;
-    
-    & > *:nth-child(3) {
-      grid-column: 1 / -1;
-      justify-self: center;
-      max-width: 180px;
-    }
   }
 `;
 
@@ -913,34 +900,53 @@ const StatCard = styled(motion.div)`
   text-align: center;
   transition: all 0.3s ease;
   flex-shrink: 0;
-  min-width: 180px;
+  width: 200px;
+  height: 160px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     background: #f8f9fa;
     border-radius: 12px;
     border: 1px solid #e9ecef;
   }
 
+  /* Hide customer count card on mobile */
+  &.hide-on-mobile {
+    @media (max-width: ${props => props.theme.breakpoints.sm}) {
+      display: none;
+    }
+  }
+
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     padding: 1.25rem;
-    min-width: 160px;
+    width: 180px;
+    height: 150px;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     padding: 1rem;
-    min-width: 140px;
+    width: 160px;
+    height: 140px;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     padding: 0.875rem;
-    min-width: 120px;
+    width: 140px;
+    height: 130px;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
     padding: 0.75rem;
-    min-width: 100px;
+    width: 120px;
+    height: 120px;
   }
 `;
 
@@ -1016,10 +1022,19 @@ const RatingCard = styled(motion.div)`
   text-align: center;
   padding: 1.5rem;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  background: white;
+  width: 200px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   }
 `;
 
@@ -1046,16 +1061,35 @@ const PlatformName = styled.div`
   font-size: 0.9rem;
   color: #6b7280;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+`;
+
+const PlatformIcon = styled.img`
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 `;
 
 const AwardCard = styled(motion.div)`
   text-align: center;
   padding: 1.5rem;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  background: white;
+  width: 200px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   }
 `;
 
@@ -1083,6 +1117,10 @@ const AwardTitle = styled.div`
 const AwardPlatform = styled.div`
   font-size: 0.9rem;
   color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 `;
 
 
@@ -1184,11 +1222,46 @@ const CTA = styled(motion.div)`
 `;
 
 
+// Counter component for mobile animation
+const Counter = ({ end, duration = 2000, isVisible }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTime;
+    const startCount = 0;
+    const endCount = parseInt(end.replace('+', ''));
+
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentCount = Math.floor(startCount + (endCount - startCount) * easeOutQuart);
+      
+      setCount(currentCount);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setCount(endCount);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [isVisible, end, duration]);
+
+  return <span>{count}+</span>;
+};
+
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentText, setCurrentText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const statsRef = React.useRef(null);
+  const isStatsInView = useInView(statsRef, { once: true, threshold: 0.3 });
 
   const typingServices = [
     'Web Development',
@@ -1267,10 +1340,20 @@ const Home = () => {
     }
   ];
 
+  // Function to get platform icon
+  const getPlatformIcon = (platform) => {
+    const iconMap = {
+      'G2': '/icons/46D5A65F-973A-4EBC-BA61-33FCA8CB8DBD.png',
+      'Trustpilot': '/icons/4229BD35-6CD4-44EE-BB47-A6B62E0AFE9B.png',
+      'Clutch': '/icons/54C18EC2-8827-4474-83D7-0AEE57E3E2AF.png'
+    };
+    return iconMap[platform] || null;
+  };
+
   const stats = [
     { 
       type: 'card',
-      number: '500+', 
+      number: '500+',
       label: 'Customers',
       subLabel: '13 countries'
     },
@@ -1491,20 +1574,23 @@ const Home = () => {
         </HeroContent>
       </HeroSection>
 
-      <StatsSection>
+      <StatsSection ref={statsRef}>
         <StatsContainer>
           <StatsGrid>
-            {stats.map((stat, index) => {
+              {stats.map((stat, index) => {
               if (stat.type === 'card') {
                 return (
                   <StatCard
                     key={stat.label}
+                    className="hide-on-mobile"
                     initial={{ opacity: 0, scale: 0.5 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
                   >
-                    <StatNumber>{stat.number}</StatNumber>
+                    <StatNumber>
+                      <Counter end={stat.number} isVisible={isStatsInView} />
+                    </StatNumber>
                     <StatLabel>{stat.label}</StatLabel>
                     <StatSubLabel>{stat.subLabel}</StatSubLabel>
                   </StatCard>
@@ -1520,7 +1606,14 @@ const Home = () => {
                   >
                     <AwardIcon>{stat.icon}</AwardIcon>
                     <AwardTitle>{stat.title}</AwardTitle>
-                    <AwardPlatform>{stat.platform}</AwardPlatform>
+                    <AwardPlatform>
+                      {getPlatformIcon(stat.platform) && (
+                        <PlatformIcon 
+                          src={getPlatformIcon(stat.platform)} 
+                          alt={stat.platform}
+                        />
+                      )}
+                    </AwardPlatform>
                   </AwardCard>
                 );
               } else if (stat.type === 'rating') {
@@ -1538,7 +1631,14 @@ const Home = () => {
                         <Star key={i}>★</Star>
                       ))}
                     </StarsContainer>
-                    <PlatformName>{stat.platform}</PlatformName>
+                    <PlatformName>
+                      {getPlatformIcon(stat.platform) && (
+                        <PlatformIcon 
+                          src={getPlatformIcon(stat.platform)} 
+                          alt={stat.platform}
+                        />
+                      )}
+                    </PlatformName>
                   </RatingCard>
                 );
               }

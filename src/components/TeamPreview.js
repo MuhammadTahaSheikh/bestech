@@ -219,6 +219,9 @@ const CloudTooltip = styled(motion.div)`
   height: 150px;
   z-index: 10;
   pointer-events: none;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     width: 130px;
@@ -233,11 +236,17 @@ const CloudTooltip = styled(motion.div)`
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     width: 100px;
     height: 100px;
+    top: 50%;
+    left: -60px;
+    transform: translateY(-50%);
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
     width: 120px;
     height: 120px;
+    top: 50%;
+    left: -50px;
+    transform: translateY(-50%);
   }
 `;
 
@@ -544,6 +553,7 @@ const TeamPreview = () => {
                 )}
               </MemberPhoto>
               <MemberName>{member.name}</MemberName>
+
 
               <AnimatePresence>
                 {hoveredMember && hoveredMember.id === member.id && (
