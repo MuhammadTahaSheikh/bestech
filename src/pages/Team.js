@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   FaLinkedin, 
   FaTwitter, 
@@ -19,7 +20,8 @@ import {
   FaLock,
   FaChartLine,
   FaChevronLeft,
-  FaChevronRight
+  FaChevronRight,
+  FaBriefcase
 } from 'react-icons/fa';
 
 const TeamContainer = styled.div`
@@ -229,6 +231,40 @@ const SocialLink = styled.a`
   }
 `;
 
+const HireNowButton = styled(motion.button)`
+  background: linear-gradient(135deg, #3730a3, #581c87);
+  color: white;
+  border: none;
+  padding: 0.875rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.5rem auto 0;
+  min-width: 140px;
+  box-shadow: 0 4px 15px rgba(55, 48, 163, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(55, 48, 163, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    min-width: 120px;
+  }
+`;
+
 const LeadershipSection = styled.section`
   padding: 6rem 0;
   background: ${props => props.theme.colors.light};
@@ -393,6 +429,14 @@ const DepartmentMembers = styled.p`
 
 const Team = () => {
   const [selectedMember, setSelectedMember] = useState(null);
+  const navigate = useNavigate();
+
+  const handleHireNow = (member) => {
+    console.log('Navigating to hire page with member:', member);
+    navigate('/hire', { 
+      state: { teamMember: member } 
+    });
+  };
 
   const teamMembers = [
     {
@@ -598,7 +642,6 @@ const Team = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
-                onClick={() => setSelectedMember(member)}
               >
                 <MemberAvatar>{member.avatar}</MemberAvatar>
                 <MemberName>{member.name}</MemberName>
@@ -623,13 +666,21 @@ const Team = () => {
                     <FaEnvelope />
                   </SocialLink>
                 </SocialLinks>
+                <HireNowButton
+                  onClick={() => handleHireNow(member)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FaBriefcase />
+                  Hire Now
+                </HireNowButton>
               </TeamCard>
             ))}
           </TeamGrid>
         </Container>
       </TeamSection>
 
-      <LeadershipSection>
+      {/* <LeadershipSection>
         <Container>
           <SectionTitle
             initial={{ opacity: 0, y: 30 }}
@@ -686,7 +737,7 @@ const Team = () => {
             ))}
           </LeadershipGrid>
         </Container>
-      </LeadershipSection>
+      </LeadershipSection> */}
 
       <DepartmentsSection>
         <Container>
@@ -725,6 +776,7 @@ const Team = () => {
           </DepartmentsGrid>
         </Container>
       </DepartmentsSection>
+
     </TeamContainer>
   );
 };

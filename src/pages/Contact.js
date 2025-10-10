@@ -425,33 +425,33 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: <FaMapMarkerAlt />,
-      title: 'Corporate Headquarters',
-      details: 'One Technology Plaza, Suite 2500, San Francisco, CA 94105, United States'
+      title: 'Office Address',
+      details: '375 Airline Housing Society, Lahore, Pakistan'
     },
     {
       icon: <FaPhone />,
-      title: 'Business Line',
-      details: '+1 (415) 555-0123'
+      title: 'Phone Number',
+      details: '03114315611'
     },
     {
       icon: <FaEnvelope />,
-      title: 'General Inquiries',
+      title: 'Email Address',
       details: 'contact@bestechsolz.com'
     },
     {
       icon: <FaClock />,
       title: 'Business Hours',
-      details: 'Monday - Friday: 8:00 AM - 7:00 PM PST'
+      details: 'Monday - Friday: 9:00 AM - 6:00 PM PKT'
     }
   ];
 
   const socialLinks = [
-    { icon: <FaLinkedin />, url: '#', label: 'LinkedIn' },
-    { icon: <FaTwitter />, url: '#', label: 'Twitter' },
-    { icon: <FaFacebook />, url: '#', label: 'Facebook' },
-    { icon: <FaInstagram />, url: '#', label: 'Instagram' },
-    { icon: <FaWhatsapp />, url: '#', label: 'WhatsApp' },
-    { icon: <FaTelegram />, url: '#', label: 'Telegram' }
+    { icon: <FaLinkedin />, url: 'https://www.linkedin.com/company/bestechsolz', label: 'LinkedIn' },
+    { icon: <FaTwitter />, url: 'https://www.twitter.com/bestechsolz', label: 'Twitter' },
+    { icon: <FaFacebook />, url: 'https://www.facebook.com/bestechsolz/', label: 'Facebook' },
+    { icon: <FaInstagram />, url: 'https://www.instagram.com/bestechsolz/', label: 'Instagram' },
+    { icon: <FaWhatsapp />, url: 'https://wa.me/923114315611', label: 'WhatsApp' },
+    { icon: <FaTelegram />, url: 'https://t.me/bestechsolz', label: 'Telegram' }
   ];
 
   const faqs = [
@@ -727,7 +727,15 @@ const Contact = () => {
             Visit our office or get directions
           </motion.p>
           <MapContainer>
-            <div>Interactive Map Coming Soon</div>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3403.8665921632!2d74.25909387638207!3d31.445339474248406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3919019ef46a8b83%3A0xac7173a28804fd26!2s375%2C%20Airline%20Society%2C%20Lahore%2C%2054782%2C%20Pakistan!5e0!3m2!1sen!2s!4v1760126024801!5m2!1sen!2s" 
+              width="100%" 
+              height="100%" 
+              style={{border: 0}} 
+              allowFullScreen="" 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </MapContainer>
         </Container>
       </MapSection>

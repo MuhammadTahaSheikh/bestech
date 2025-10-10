@@ -17,6 +17,7 @@ import Portfolio from './pages/Portfolio';
 import Team from './pages/Team';
 import Contact from './pages/Contact';
 import Appointment from './pages/Appointment';
+import HireTeamMember from './pages/HireTeamMember';
 
 // Theme
 const theme = {
@@ -262,6 +263,7 @@ function App() {
               <Route path="/services" element={<Services />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/team" element={<Team />} />
+              <Route path="/hire" element={<HireTeamMember />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/appointment" element={<Appointment />} />
             </Routes>

@@ -224,16 +224,16 @@ const Footer = () => {
               business growth for Fortune 500 companies worldwide.
             </p>
             <SocialLinks>
-              <SocialLink href="#" aria-label="Facebook">
+              <SocialLink href="https://www.facebook.com/bestechsolz/" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                 <FaFacebook />
               </SocialLink>
-              <SocialLink href="#" aria-label="Twitter">
+              <SocialLink href="https://www.twitter.com/bestechsolz" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
                 <FaTwitter />
               </SocialLink>
-              <SocialLink href="#" aria-label="LinkedIn">
+              <SocialLink href="https://www.linkedin.com/company/bestechsolz" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin />
               </SocialLink>
-              <SocialLink href="#" aria-label="Instagram">
+              <SocialLink href="https://www.instagram.com/bestechsolz/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                 <FaInstagram />
               </SocialLink>
             </SocialLinks>
@@ -270,11 +270,11 @@ const Footer = () => {
             <ContactInfo>
               <ContactItem>
                 <FaMapMarkerAlt />
-                <span>One Technology Plaza, Suite 2500, San Francisco, CA 94105</span>
+                <span>375 Airline Housing Society, Lahore, Pakistan</span>
               </ContactItem>
               <ContactItem>
                 <FaPhone />
-                <span>+1 (415) 555-0123</span>
+                <span>03114315611</span>
               </ContactItem>
               <ContactItem>
                 <FaEnvelope />
