@@ -27,7 +27,9 @@ const HomeContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  padding: ${props => props.theme.spacing['4xl']} 0;
+  height: 100vh;
+  min-height: 600px;
+  max-height: 800px;
   background: #0f172a;
   display: flex;
   align-items: center;
@@ -43,24 +45,32 @@ const HeroSection = styled.section`
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     margin: ${props => props.theme.spacing.lg};
-    padding: ${props => props.theme.spacing['3xl']} 0;
+    height: 90vh;
+    min-height: 500px;
+    max-height: 700px;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     margin: ${props => props.theme.spacing.md};
-    padding: ${props => props.theme.spacing['2xl']} 0;
+    height: 85vh;
+    min-height: 450px;
+    max-height: 600px;
     border-radius: ${props => props.theme.borderRadius['2xl']};
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     margin: ${props => props.theme.spacing.sm};
-    padding: ${props => props.theme.spacing.xl} 0;
+    height: 80vh;
+    min-height: 400px;
+    max-height: 550px;
     border-radius: ${props => props.theme.borderRadius.xl};
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
     margin: ${props => props.theme.spacing.xs};
-    padding: ${props => props.theme.spacing.lg} 0;
+    height: 75vh;
+    min-height: 350px;
+    max-height: 500px;
     border-radius: ${props => props.theme.borderRadius.lg};
   }
 `;
@@ -136,7 +146,9 @@ const HeroContent = styled.div`
   position: relative;
   z-index: 2;
   width: 100%;
+  height: 100%;
   gap: ${props => props.theme.spacing['2xl']};
+  overflow: hidden;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     gap: ${props => props.theme.spacing.xl};
@@ -147,6 +159,7 @@ const HeroContent = styled.div`
     text-align: center;
     gap: ${props => props.theme.spacing['2xl']};
     padding: 0 ${props => props.theme.spacing.lg};
+    justify-content: center;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
@@ -164,6 +177,11 @@ const HeroLeft = styled.div`
   flex: 1;
   max-width: 600px;
   z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  overflow: hidden;
 `;
 
 const HeroRight = styled.div`
@@ -173,6 +191,8 @@ const HeroRight = styled.div`
   align-items: center;
   position: relative;
   z-index: 3;
+  height: 100%;
+  overflow: hidden;
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     order: -1;
@@ -862,48 +882,40 @@ const StatsContainer = styled.div`
 `;
 
 const StatsGrid = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 2rem;
-  align-items: center;
-  justify-content: center;
-  overflow-x: auto;
+  align-items: stretch;
   padding: 1rem 0;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    max-width: 500px;
-    margin: 0 auto;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
-    max-width: 400px;
   }
 `;
 
 const StatCard = styled(motion.div)`
-  padding: 1.5rem;
+  padding: 2rem;
   text-align: center;
   transition: all 0.3s ease;
-  flex-shrink: 0;
-  width: 200px;
-  height: 160px;
+  min-height: 220px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-radius: 8px;
+  border-radius: 12px;
   background: white;
   display: flex;
   flex-direction: column;
@@ -1020,13 +1032,12 @@ const StatSubLabel = styled.p`
 
 const RatingCard = styled(motion.div)`
   text-align: center;
-  padding: 1.5rem;
+  padding: 2rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-radius: 8px;
+  border-radius: 12px;
   background: white;
-  width: 200px;
-  height: 160px;
+  min-height: 220px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1068,20 +1079,19 @@ const PlatformName = styled.div`
 `;
 
 const PlatformIcon = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
 `;
 
 const AwardCard = styled(motion.div)`
   text-align: center;
-  padding: 1.5rem;
+  padding: 2rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-radius: 8px;
+  border-radius: 12px;
   background: white;
-  width: 200px;
-  height: 160px;
+  min-height: 220px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1260,6 +1270,7 @@ const Home = () => {
   const [currentText, setCurrentText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const statsRef = React.useRef(null);
   const isStatsInView = useInView(statsRef, { once: true, threshold: 0.3 });
 
@@ -1271,7 +1282,26 @@ const Home = () => {
     'Brand & IT Consultancy'
   ];
 
+  // Detect mobile devices
   useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
+  // Typing animation effect - only run on desktop
+  useEffect(() => {
+    if (isMobile) {
+      // On mobile, show the first service statically
+      setCurrentText(typingServices[0]);
+      return;
+    }
+
     const typeSpeed = isDeleting ? 50 : 100;
     const pauseTime = 2000;
 
@@ -1291,7 +1321,7 @@ const Home = () => {
     }, typeSpeed);
 
     return () => clearTimeout(timeout);
-  }, [currentText, currentIndex, isDeleting, typingServices]);
+  }, [currentText, currentIndex, isDeleting, typingServices, isMobile]);
 
   const openModal = () => {
     console.log('Opening modal...');
@@ -1439,8 +1469,12 @@ const Home = () => {
                 transition={{ duration: 0.8 }}
               >
                 Premier IT Solutions
-                <br />
-                <HighlightText>Empowering <TypingAnimation>{currentText}</TypingAnimation></HighlightText>
+                {!isMobile && (
+                  <>
+                    <br />
+                    <HighlightText>Empowering <TypingAnimation>{currentText}</TypingAnimation></HighlightText>
+                  </>
+                )}
               </HeroTitle>
               <HeroSubtitle
                 initial={{ opacity: 0, y: 30 }}

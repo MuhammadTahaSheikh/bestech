@@ -431,7 +431,7 @@ const TeamPreview = () => {
       name: 'Asif Saeed',
       role: 'CRM Specialist',
       avatar: 'AS',
-      image: null,
+      image: '/team/1.png',
       shortName: 'Asif',
       description: 'CRM specialist with expertise in customer data management and sales automation systems.'
     },
@@ -440,7 +440,7 @@ const TeamPreview = () => {
       name: 'Salar Kamran',
       role: 'Social Media Manager',
       avatar: 'SK',
-      image: null,
+      image: '/team/2.png',
       shortName: 'Salar',
       description: 'Social media manager responsible for digital marketing and brand presence across platforms.'
     },
@@ -449,7 +449,7 @@ const TeamPreview = () => {
       name: 'Hafiz Mubsher',
       role: 'App Developer',
       avatar: 'HM',
-      image: null,
+      image: '/team/3.png',
       shortName: 'Hafiz',
       description: 'Mobile app developer specializing in cross-platform applications and user experience design.'
     },
@@ -458,7 +458,7 @@ const TeamPreview = () => {
       name: 'Abdul Rafay',
       role: 'Full Stack Developer',
       avatar: 'AR',
-      image: null,
+      image: '/team/4.png',
       shortName: 'Abdul',
       description: 'Full stack developer with expertise in both frontend and backend technologies.'
     },
@@ -467,7 +467,7 @@ const TeamPreview = () => {
       name: 'Aqib Saeed',
       role: 'Social Media',
       avatar: 'AQ',
-      image: null,
+      image: '/team/5.png',
       shortName: 'Aqib',
       description: 'Social media specialist focused on content creation and community engagement.'
     },
@@ -476,7 +476,7 @@ const TeamPreview = () => {
       name: 'Hasan Suhail',
       role: 'CRM Developer',
       avatar: 'HS',
-      image: null,
+      image: '/team/6.png',
       shortName: 'Hasan',
       description: 'CRM developer specializing in custom CRM solutions and database integration.'
     },
@@ -485,7 +485,7 @@ const TeamPreview = () => {
       name: 'Ahmed Niaz',
       role: 'Software Engineer',
       avatar: 'AN',
-      image: null,
+      image: '/team/7.png',
       shortName: 'Ahmed',
       description: 'Software engineer with expertise in system development and technical problem solving.'
     },
@@ -494,7 +494,7 @@ const TeamPreview = () => {
       name: 'Humayun Shahid',
       role: 'Business Executive',
       avatar: 'HS',
-      image: null,
+      image: '/team/8.png',
       shortName: 'Humayun',
       description: 'Business executive responsible for strategic planning and client relationship management.'
     },
@@ -503,7 +503,7 @@ const TeamPreview = () => {
       name: 'Muhammad Rameez',
       role: 'Business Executive',
       avatar: 'MR',
-      image: null,
+      image: '/team/9.png',
       shortName: 'Rameez',
       description: 'Business executive focused on business development and operational excellence.'
     }

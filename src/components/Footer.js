@@ -215,7 +215,7 @@ const Footer = () => {
             viewport={{ once: true }}
           >
             <Logo>
-              <LogoImage src="/bestech.png" alt="Bestech Vision" />
+              {/* <LogoImage src="/bestech.png" alt="Bestech Vision" /> */}
               Bestech Vision
             </Logo>
             <p>

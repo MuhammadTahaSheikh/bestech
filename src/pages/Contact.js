@@ -438,11 +438,7 @@ const Contact = () => {
       title: 'Email Address',
       details: 'contact@bestechsolz.com'
     },
-    {
-      icon: <FaClock />,
-      title: 'Business Hours',
-      details: 'Monday - Friday: 9:00 AM - 6:00 PM PKT'
-    }
+    
   ];
 
   const socialLinks = [

@@ -19,28 +19,63 @@ const Nav = styled(motion.nav)`
 `;
 
 const NavContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
   padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 80px;
   position: relative;
-  width: 100%;
+
+  @media (max-width: 1440px) {
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 0 1.25rem;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 0 1rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 0 1rem;
+    justify-content: space-between;
+  }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 0 1rem;
+    padding: 0 0.75rem;
+    justify-content: space-between;
   }
 `;
 
 const RightSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
+  flex-shrink: 0;
+  min-width: 200px;
+  justify-content: flex-end;
+
+  @media (max-width: 1440px) {
+    gap: 1.2rem;
+    min-width: 180px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    gap: 1rem;
+    min-width: 160px;
+  }
+
+  @media (max-width: 1024px) {
+    gap: 0.8rem;
+    min-width: 140px;
+  }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    gap: 0.5rem;
+    gap: 0.6rem;
+    min-width: 120px;
   }
 `;
 
@@ -48,40 +83,48 @@ const Logo = styled(Link)`
   text-decoration: none;
   display: flex;
   align-items: center;
-  transition: all 0.3s ease;
   flex-shrink: 0;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 
   &:hover {
-    transform: translateY(-1px);
+    transform: none;
+  }
+
+  &:focus {
+    outline: none !important;
+    border: none !important;
   }
 `;
 
 const LogoImage = styled.img`
-  width: 120px;
-  height: 120px;
+  width: 180px;
+  height: 60px;
   object-fit: contain;
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  border-radius: 8px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  border: none !important;
+  outline: none !important;
 
   &:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    transform: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   }
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    width: 75px;
-    height: 75px;
+    width: 160px;
+    height: 55px;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    width: 70px;
-    height: 70px;
+    width: 140px;
+    height: 50px;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    width: 165px;
-    height: 165px;
+    width: 120px;
+    height: 45px;
   }
 `;
 
@@ -94,13 +137,27 @@ const NavLinks = styled.ul`
   justify-content: center;
   margin: 0;
   padding: 0;
+  margin-left: 2rem;
+  min-width: 0;
+
+  @media (max-width: 1440px) {
+    gap: 1.8rem;
+    margin-left: 1.5rem;
+  }
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    gap: 1.5rem;
+    gap: 1.6rem;
+    margin-left: 1rem;
+  }
+
+  @media (max-width: 1024px) {
+    gap: 1.4rem;
+    margin-left: 0.5rem;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     display: none;
+    margin-left: 0;
   }
 `;
 
@@ -112,7 +169,7 @@ const NavLink = styled(Link)`
   color: ${props => props.theme.colors.dark};
   text-decoration: none;
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.25rem;
   border-radius: 8px;
   transition: all 0.3s ease;
   display: flex;
@@ -125,15 +182,29 @@ const NavLink = styled(Link)`
     background: ${props => props.theme.colors.gray[50]};
   }
 
-  &.active {
-    color: ${props => props.theme.colors.primary};
-    background: ${props => props.theme.colors.gray[100]};
-    font-weight: 600;
-  }
-
   &:focus {
     outline: 2px solid ${props => props.theme.colors.primary};
     outline-offset: 2px;
+  }
+`;
+
+const ActiveNavLink = styled(NavLink)`
+  color: ${props => props.theme.colors.primary};
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: ${props => props.theme.colors.primary};
+    border-radius: 1px;
   }
 `;
 
@@ -152,6 +223,7 @@ const CTAButton = styled(Link)`
   border: 1px solid rgba(255, 255, 255, 0.1);
   flex-shrink: 0;
   white-space: nowrap;
+  min-width: fit-content;
 
   &:hover {
     background: linear-gradient(135deg, ${props => props.theme.colors.secondary} 0%, ${props => props.theme.colors.primary} 100%);
@@ -164,25 +236,35 @@ const CTAButton = styled(Link)`
     outline-offset: 2px;
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    padding: 0.6rem 1.2rem;
+  @media (max-width: 1440px) {
+    padding: 0.7rem 1.2rem;
     font-size: 0.9rem;
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 0.5rem 1rem;
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 0.6rem 1rem;
     font-size: 0.85rem;
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 0.4rem 0.8rem;
+  @media (max-width: 1024px) {
+    padding: 0.55rem 0.9rem;
     font-size: 0.8rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.7rem;
     border-radius: 6px;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    padding: 0.35rem 0.7rem;
-    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.65rem;
     border-radius: 5px;
   }
 `;
@@ -194,9 +276,11 @@ const MobileMenuButton = styled.button`
   font-size: 1.5rem;
   color: ${props => props.theme.colors.dark};
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.75rem;
   border-radius: 8px;
   transition: all 0.3s ease;
+  min-width: 44px;
+  min-height: 44px;
 
   &:hover {
     background: ${props => props.theme.colors.gray[100]};
@@ -230,10 +314,11 @@ const MobileMenu = styled(motion.div)`
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     display: block;
+    padding: 1.5rem 2rem;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 1.5rem;
+    padding: 1.25rem 1.5rem;
   }
 `;
 
@@ -271,15 +356,28 @@ const MobileNavLink = styled(Link)`
     transform: scale(0.98);
   }
 
-  &.active {
-    color: ${props => props.theme.colors.primary};
-    background: ${props => props.theme.colors.gray[100]};
-    font-weight: 600;
-  }
-
   &:focus-visible {
     outline: 2px solid ${props => props.theme.colors.primary};
     outline-offset: 2px;
+  }
+`;
+
+const ActiveMobileNavLink = styled(MobileNavLink)`
+  color: ${props => props.theme.colors.primary};
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: ${props => props.theme.colors.primary};
+    border-radius: 1px;
   }
 `;
 
@@ -361,7 +459,7 @@ const Navbar = () => {
     <Nav scrolled={scrolled} initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.5 }}>
       <NavContainer>
         <Logo to="/">
-          <LogoImage src="/bestech.png" alt="Bestech Vision" />
+          <LogoImage src="/logo.jpeg" alt="Bestech Vision" />
         </Logo>
 
         <NavLinks role="navigation" aria-label="Main navigation">
@@ -407,9 +505,15 @@ const Navbar = () => {
                   </AnimatePresence>
                 </div>
               ) : (
-                <NavLink to={item.path} className={location.pathname === item.path ? 'active' : ''}>
-                  {item.name}
-                </NavLink>
+                location.pathname === item.path ? (
+                  <ActiveNavLink to={item.path}>
+                    {item.name}
+                  </ActiveNavLink>
+                ) : (
+                  <NavLink to={item.path}>
+                    {item.name}
+                  </NavLink>
+                )
               )}
             </NavItem>
           ))}
@@ -445,9 +549,15 @@ const Navbar = () => {
             <MobileNavLinks>
               {navItems.map((item) => (
                 <li key={item.name}>
-                  <MobileNavLink to={item.path} className={location.pathname === item.path ? 'active' : ''}>
-                    {item.name}
-                  </MobileNavLink>
+                  {location.pathname === item.path ? (
+                    <ActiveMobileNavLink to={item.path}>
+                      {item.name}
+                    </ActiveMobileNavLink>
+                  ) : (
+                    <MobileNavLink to={item.path}>
+                      {item.name}
+                    </MobileNavLink>
+                  )}
                   {item.dropdown && (
                     <div style={{ marginLeft: '1rem', marginTop: '0.5rem' }}>
                       {item.dropdown.map((dropdownItem) => (

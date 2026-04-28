@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronUp } from 'react-icons/fa';
@@ -31,7 +32,46 @@ const ScrollButton = styled(motion.button)`
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const location = useLocation();
 
+  // Scroll to top when route changes
+  useEffect(() => {
+    // Force scroll to top immediately
+    window.scrollTo(0, 0);
+    
+    // Additional mobile-specific fixes
+    if (window.scrollY > 0) {
+      // Force immediate scroll to top
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+    
+    // Small delay to ensure it works on mobile
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
+  }, [location.pathname]);
+
+  // Additional effect to ensure scroll to top works on mobile
+  useEffect(() => {
+    const handleRouteChange = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    // Listen for route changes
+    const unlisten = () => {
+      handleRouteChange();
+    };
+
+    // Call immediately
+    handleRouteChange();
+
+    return unlisten;
+  }, [location.pathname]);
+
+  // Show/hide scroll button based on scroll position
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
