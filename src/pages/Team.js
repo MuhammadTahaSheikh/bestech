@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import SumairImage from '../assets/Sumair.jpg';
+import AsifImage from '../assets/Asif.jpg';
+import SalarImage from '../assets/Salar.jpg';
+import MubsherImage from '../assets/Mubsher Saeed.jpg';
+import AbdulRafayImage from '../assets/Abdul Rafay Razzaq.jpg';
+import AqibImage from '../assets/Aqib.jpg';
+import HassanImage from '../assets/Hassan Shoail.jpg';
+import AhmadImage from '../assets/Ahmad.jpg';
+import HumayunImage from '../assets/Humayun.jpg';
+import ArslanImage from '../assets/Arslan.jpg';
+import HamzaImage from '../assets/M Hamza.jpg';
+import MutahirImage from '../assets/Mutahir-ul-haq.jpg';
+import OsamaImage from '../assets/Osama Razzaq.jpg';
+import { fetchTeamMembers, normalizeTeamMemberForTeamPage } from '../utils/cmsApi';
 import { 
   FaLinkedin, 
   FaTwitter, 
@@ -624,6 +638,24 @@ const DepartmentMembers = styled.p`
 const Team = () => {
   const [selectedMember, setSelectedMember] = useState(null);
   const navigate = useNavigate();
+  const [cmsTeam, setCmsTeam] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const rows = await fetchTeamMembers();
+        if (!cancelled && Array.isArray(rows) && rows.length > 0) {
+          setCmsTeam(rows.map(normalizeTeamMemberForTeamPage));
+        }
+      } catch {
+        /* keep static roster */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleHireNow = (member) => {
     console.log('Navigating to hire page with member:', member);
@@ -632,34 +664,20 @@ const Team = () => {
     });
   };
 
-  const teamMembers = [
-    {
-      id: 1,
-      name: 'Muhammad Taha',
-      role: 'Software Engineer',
-      bio: 'Experienced software engineer with expertise in full-stack development and system architecture. Passionate about creating efficient and scalable solutions.',
-      avatar: 'MT',
-      image: '/taha.png',
-      skills: ['Enterprise Architecture', 'Cloud Computing', 'System Design', 'Team Leadership', 'Technical Strategy'],
-      social: {
-        linkedin: '#',
-        twitter: '#',
-        github: '#',
-        email: 'muhammad@bestechsolz.com'
-      }
-    },
+  const staticTeamMembers = [
     {
       id: 2,
       name: 'Sumair Fraz',
       role: 'CRM Specialist',
       bio: 'CRM specialist focused on customer relationship management and business process optimization. Expert in streamlining customer workflows and improving business efficiency.',
       avatar: 'SF',
+      image: SumairImage,
       skills: ['CRM Systems', 'Business Process', 'Customer Management', 'Data Analysis', 'Workflow Optimization'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'sumair@bestechsolz.com'
+        email: 'sumair@Bestech Vision.com'
       }
     },
     {
@@ -668,12 +686,13 @@ const Team = () => {
       role: 'CRM Specialist',
       bio: 'CRM specialist with expertise in customer data management and sales automation systems. Dedicated to improving customer experience through technology.',
       avatar: 'AS',
+      image: AsifImage,
       skills: ['Customer Data', 'Sales Automation', 'CRM Development', 'Process Improvement', 'System Integration'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'asif@bestechsolz.com'
+        email: 'asif@Bestech Vision.com'
       }
     },
     {
@@ -682,12 +701,13 @@ const Team = () => {
       role: 'Social Media Manager',
       bio: 'Social media manager responsible for digital marketing and brand presence across platforms. Creative strategist focused on engaging content and community building.',
       avatar: 'SK',
+      image: SalarImage,
       skills: ['Social Media', 'Digital Marketing', 'Content Strategy', 'Brand Management', 'Community Engagement'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'salar@bestechsolz.com'
+        email: 'salar@Bestech Vision.com'
       }
     },
     {
@@ -696,12 +716,13 @@ const Team = () => {
       role: 'App Developer',
       bio: 'Mobile app developer specializing in cross-platform applications and user experience design. Passionate about creating intuitive and engaging mobile experiences.',
       avatar: 'HM',
+      image: MubsherImage,
       skills: ['Mobile Development', 'Cross-Platform', 'User Experience', 'App Design', 'Performance Optimization'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'hafiz@bestechsolz.com'
+        email: 'hafiz@Bestech Vision.com'
       }
     },
     {
@@ -710,12 +731,13 @@ const Team = () => {
       role: 'Full Stack Developer',
       bio: 'Full stack developer with expertise in both frontend and backend technologies. Committed to building robust and scalable web applications.',
       avatar: 'AR',
+      image: AbdulRafayImage,
       skills: ['Full Stack', 'Web Development', 'Database Design', 'API Development', 'System Architecture'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'abdul@bestechsolz.com'
+        email: 'abdul@Bestech Vision.com'
       }
     },
     {
@@ -724,12 +746,13 @@ const Team = () => {
       role: 'Social Media',
       bio: 'Social media specialist focused on content creation and community engagement. Expert in building brand awareness and driving user engagement.',
       avatar: 'AQ',
+      image: AqibImage,
       skills: ['Content Creation', 'Social Media', 'Community Management', 'Digital Strategy', 'Brand Awareness'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'aqib@bestechsolz.com'
+        email: 'aqib@Bestech Vision.com'
       }
     },
     {
@@ -738,12 +761,13 @@ const Team = () => {
       role: 'CRM Developer',
       bio: 'CRM developer specializing in custom CRM solutions and database integration. Focused on creating tailored solutions for business needs.',
       avatar: 'HS',
+      image: HassanImage,
       skills: ['CRM Development', 'Database Integration', 'Custom Solutions', 'Business Logic', 'System Customization'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'hasan@bestechsolz.com'
+        email: 'hasan@Bestech Vision.com'
       }
     },
     {
@@ -752,12 +776,13 @@ const Team = () => {
       role: 'Software Engineer',
       bio: 'Software engineer with expertise in system development and technical problem solving. Dedicated to writing clean, efficient code and solving complex challenges.',
       avatar: 'AN',
+      image: AhmadImage,
       skills: ['Software Development', 'Problem Solving', 'Code Architecture', 'System Design', 'Technical Analysis'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'ahmed@bestechsolz.com'
+        email: 'ahmed@Bestech Vision.com'
       }
     },
     {
@@ -766,42 +791,92 @@ const Team = () => {
       role: 'Business Executive',
       bio: 'Business executive responsible for strategic planning and client relationship management. Focused on driving business growth and maintaining strong client partnerships.',
       avatar: 'HS',
+      image: HumayunImage,
       skills: ['Strategic Planning', 'Client Relations', 'Business Development', 'Project Management', 'Team Leadership'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'humayun@bestechsolz.com'
+        email: 'humayun@Bestech Vision.com'
       }
     },
     {
       id: 11,
-      name: 'Muhammad Rameez',
-      role: 'Business Executive',
-      bio: 'Business executive focused on business development and operational excellence. Committed to driving organizational success through strategic initiatives.',
-      avatar: 'MR',
-      skills: ['Business Development', 'Operational Excellence', 'Strategic Planning', 'Client Management', 'Performance Optimization'],
+      name: 'Arslan',
+      role: 'Software Engineer',
+      bio: 'Software engineer focused on building reliable and scalable web solutions. Works across frontend and backend features to deliver high-quality products.',
+      avatar: 'AR',
+      image: ArslanImage,
+      skills: ['Web Development', 'API Integration', 'Problem Solving', 'Code Quality', 'System Design'],
       social: {
         linkedin: '#',
         twitter: '#',
         github: '#',
-        email: 'rameez@bestechsolz.com'
+        email: 'arslan@Bestech Vision.com'
+      }
+    },
+    {
+      id: 12,
+      name: 'M Hamza',
+      role: 'Developer',
+      bio: 'Developer contributing to modern web application development and feature delivery. Focused on clean implementation and efficient collaboration.',
+      avatar: 'MH',
+      image: HamzaImage,
+      skills: ['Frontend Development', 'React', 'UI Implementation', 'Debugging', 'Team Collaboration'],
+      social: {
+        linkedin: '#',
+        twitter: '#',
+        github: '#',
+        email: 'hamza@Bestech Vision.com'
+      }
+    },
+    {
+      id: 13,
+      name: 'Mutahir-ul-haq',
+      role: 'Team Member',
+      bio: 'Team member supporting project execution and daily technical operations. Helps ensure smooth delivery and consistent quality.',
+      avatar: 'MU',
+      image: MutahirImage,
+      skills: ['Project Support', 'Technical Assistance', 'Quality Checks', 'Documentation', 'Coordination'],
+      social: {
+        linkedin: '#',
+        twitter: '#',
+        github: '#',
+        email: 'mutahir@Bestech Vision.com'
+      }
+    },
+    {
+      id: 14,
+      name: 'Osama Razzaq',
+      role: 'Team Member',
+      bio: 'Team member helping deliver client-focused solutions across ongoing projects. Contributes to planning, implementation, and follow-through.',
+      avatar: 'OR',
+      image: OsamaImage,
+      skills: ['Client Support', 'Execution', 'Teamwork', 'Delivery', 'Communication'],
+      social: {
+        linkedin: '#',
+        twitter: '#',
+        github: '#',
+        email: 'osama@Bestech Vision.com'
       }
     }
   ];
+
+  const teamMembers =
+    cmsTeam && cmsTeam.length > 0 ? cmsTeam : staticTeamMembers;
 
   const leadership = [
     {
       name: 'Alexandra Martinez',
       role: 'CEO & Founder',
-      bio: 'Former IBM Global Technology Services Executive with 22+ years in IT consulting and enterprise solutions. MBA from Wharton, led IT transformation initiatives for Fortune 500 companies. Founded BestechSolz Vision to deliver world-class IT services and solutions.',
+      bio: 'Former IBM Global Technology Services Executive with 22+ years in IT consulting and enterprise solutions. MBA from Wharton, led IT transformation initiatives for Fortune 500 companies. Founded Bestech Vision Vision to deliver world-class IT services and solutions.',
       avatar: 'AM',
       experience: '22+ years',
       projects: '800+',
       social: {
         linkedin: '#',
         twitter: '#',
-        email: 'alexandra@bestechsolz.com'
+        email: 'alexandra@Bestech Vision.com'
       }
     },
     {
@@ -814,7 +889,7 @@ const Team = () => {
       social: {
         linkedin: '#',
         twitter: '#',
-        email: 'robert@bestechsolz.com'
+        email: 'robert@Bestech Vision.com'
       }
     }
   ];
@@ -929,7 +1004,7 @@ const Team = () => {
                     <SkillTag key={skillIndex}>{skill}</SkillTag>
                   ))}
                 </MemberSkills>
-                <SocialLinks>
+                {/* <SocialLinks>
                   <SocialLink href={member.social.linkedin} target="_blank" rel="noopener noreferrer">
                     <FaLinkedin />
                   </SocialLink>
@@ -942,7 +1017,7 @@ const Team = () => {
                   <SocialLink href={`mailto:${member.social.email}`}>
                     <FaEnvelope />
                   </SocialLink>
-                </SocialLinks>
+                </SocialLinks> */}
                 <HireNowButton
                   onClick={() => handleHireNow(member)}
                   whileHover={{ scale: 1.05 }}

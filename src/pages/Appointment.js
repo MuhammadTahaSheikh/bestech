@@ -16,6 +16,7 @@ import {
   FaChevronDown,
   FaTimes
 } from 'react-icons/fa';
+import { submitAppointment } from '../utils/formApi';
 
 const AppointmentContainer = styled.div`
   min-height: 100vh;
@@ -284,6 +285,7 @@ const Input = styled.input`
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   font-size: 1rem;
+  color: #1f2937;
   transition: all 0.3s ease;
 
   &:focus {
@@ -299,6 +301,7 @@ const TextArea = styled.textarea`
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   font-size: 1rem;
+  color: #1f2937;
   min-height: 100px;
   resize: vertical;
   transition: all 0.3s ease;
@@ -508,11 +511,7 @@ const Appointment = () => {
     setIsSubmitting(true);
 
     try {
-      // Send email notification
       await sendBookingEmail();
-
-      // Simulate form submission delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
 
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -541,57 +540,21 @@ const Appointment = () => {
 
   const sendBookingEmail = async () => {
     const selectedMeetingTypeData = meetingTypes.find(type => type.id === selectedMeetingType);
-
-    // Create a mailto link that will open the user's email client
-    const emailSubject = `New Meeting Booking - ${formData.firstName} ${formData.lastName}`;
-    const emailBody = `
-New Meeting Booking - BestechSolz Vision
-
-CLIENT INFORMATION:
-Name: ${formData.firstName} ${formData.lastName}
-Email: ${formData.email}
-Phone: ${formData.phone || 'Not provided'}
-Company: ${formData.company || 'Not provided'}
-
-MEETING INFORMATION:
-Date: ${selectedDate.toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })}
-Time: ${selectedTime}
-Meeting Type: ${selectedMeetingTypeData.title}
-Duration: ${selectedMeetingTypeData.duration}
-
-${formData.message ? `PROJECT DESCRIPTION:
-${formData.message}
-
-` : ''}NEXT STEPS:
-- Confirm the meeting time with the client
-- Prepare meeting agenda based on their requirements
-- Send calendar invitation with meeting details
-- Follow up 24 hours before the meeting
-
-This booking was submitted through the BestechSolz Vision website contact form.
-    `.trim();
-
-    // Create mailto link
-    const mailtoLink = `mailto:mtahasheikh750@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-    
-    // Open the email client
-    window.open(mailtoLink, '_blank');
-    
-    // Also log to console for debugging
-    console.log('Meeting Booking Details:', {
-      client: `${formData.firstName} ${formData.lastName}`,
+    await submitAppointment({
+      name: `${formData.firstName} ${formData.lastName}`.trim(),
       email: formData.email,
       phone: formData.phone,
-      company: formData.company,
-      date: selectedDate.toLocaleDateString(),
-      time: selectedTime,
-      meetingType: selectedMeetingTypeData.title,
-      message: formData.message
+      company: formData.company || '',
+      meetingType: selectedMeetingTypeData?.title || 'Consultation',
+      preferredDate: selectedDate.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }),
+      preferredTime: selectedTime,
+      duration: selectedMeetingTypeData?.duration || '30 minutes',
+      projectDescription: formData.message || ''
     });
   };
 
@@ -692,7 +655,7 @@ This booking was submitted through the BestechSolz Vision website contact form.
                     <FaCheckCircle />
                     <h3>Meeting Booked Successfully!</h3>
                     <p>
-                      Thank you for booking a meeting with us. Your email client should have opened with pre-filled details.
+                      Thank you for booking a meeting with us. Your request has been sent successfully.
                     </p>
                     <div style={{ 
                       background: '#f0f9ff', 
@@ -723,7 +686,6 @@ This booking was submitted through the BestechSolz Vision website contact form.
                       <strong>Next Steps:</strong>
                     </p>
                     <ul style={{ textAlign: 'left', marginTop: '10px' }}>
-                      <li>Send the pre-filled email to confirm your meeting</li>
                       <li>We'll review your request and get back to you within 24 hours</li>
                       <li>You'll receive a calendar invitation once confirmed</li>
                     </ul>
@@ -849,7 +811,7 @@ This booking was submitted through the BestechSolz Vision website contact form.
               </ContactIcon>
               <ContactText>
                 <ContactLabel>Email Us</ContactLabel>
-                <ContactValue>mtahasheikh750@gmail.com</ContactValue>
+                <ContactValue>info@bestechvision.com</ContactValue>
               </ContactText>
             </ContactItem>
             <ContactItem>
@@ -858,7 +820,7 @@ This booking was submitted through the BestechSolz Vision website contact form.
               </ContactIcon>
               <ContactText>
                 <ContactLabel>Call Us</ContactLabel>
-                <ContactValue>+1 (555) 123-4567</ContactValue>
+                <ContactValue>+92 3114315611</ContactValue>
               </ContactText>
             </ContactItem>
             <ContactItem>
@@ -867,7 +829,7 @@ This booking was submitted through the BestechSolz Vision website contact form.
               </ContactIcon>
               <ContactText>
                 <ContactLabel>Visit Us</ContactLabel>
-                <ContactValue>123 Tech Street, IT City</ContactValue>
+                <ContactValue>375 Airline Housing Society, Lahore, Pakistan</ContactValue>
               </ContactText>
             </ContactItem>
             <ContactItem>

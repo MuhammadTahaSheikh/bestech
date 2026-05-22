@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight, FaQuoteLeft } from 'react-icons/fa';
 import LazyImage from './LazyImage';
+import { loadTestimonials } from '../utils/testimonialsStorage';
 
 const TestimonialCarouselContainer = styled.section`
   padding: ${props => props.theme.spacing['4xl']} 0;
@@ -495,51 +496,7 @@ const NavigationButton = styled.button`
 const TestimonialCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef(null);
-
-  const testimonials = [
-    {
-      text: "Honestly, I was skeptical at first but these guys really know their stuff. They fixed our entire IT mess and saved us a ton of money. The team was always available when we needed them and explained everything in simple terms.",
-      author: "Nic Christofis",
-      position: "IT Manager, Local Business Solutions",
-      avatar: "/client1.jpeg",
-      rating: 5
-    },
-    {
-      text: "Working with this team was amazing! They built our custom software exactly how we wanted it, and it actually works better than we expected. The whole process was smooth and they kept us updated every step of the way.",
-      author: "Voila",
-      position: "Project Manager, Tech Startup",
-      avatar: "/client2.jpeg",
-      rating: 5
-    },
-    {
-      text: "I can't recommend them enough! They helped us get our security up to standard and made sure we were compliant. The team was professional, patient, and really understood our needs. Worth every penny!",
-      author: "Negin",
-      position: "Operations Director, Healthcare Services",
-      avatar: "/client3.jpeg",
-      rating: 5
-    },
-    {
-      text: "These guys are absolutely amazing! They took our outdated systems and completely modernized everything. The transformation was incredible and our productivity has skyrocketed. Couldn't be happier!",
-      author: "Xavien",
-      position: "IT Director, Tech Solutions Inc",
-      avatar: "/client4.jpeg",
-      rating: 5
-    },
-    {
-      text: "The digital transformation initiative led by BestechSolz Vision revolutionized our customer experience. Their innovative solutions and dedicated support team delivered results that exceeded our KPIs by 60%.",
-      author: "James Wilson",
-      position: "CEO, E-commerce Solutions Inc",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format",
-      rating: 5
-    },
-    {
-      text: "Working with BestechSolz Vision was a game-changer for our startup. Their technical expertise and strategic guidance helped us scale from 10 to 1000+ users in just 6 months.",
-      author: "Emily Johnson",
-      position: "Founder & CTO, TechStart Innovations",
-      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face&auto=format",
-      rating: 5
-    }
-  ];
+  const testimonials = loadTestimonials();
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);

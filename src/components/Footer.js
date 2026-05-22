@@ -12,6 +12,7 @@ import {
   FaMapMarkerAlt,
   FaChevronUp
 } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 
 const FooterContainer = styled.footer`
   background: ${props => props.theme.colors.dark};
@@ -153,13 +154,13 @@ const BackToTop = styled.button`
 const Logo = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.1rem;
   margin-bottom: 1rem;
 `;
 
 const LogoImage = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 140px;
+  height: 140px;
   object-fit: contain;
   border-radius: 6px;
 `;
@@ -215,25 +216,23 @@ const Footer = () => {
             viewport={{ once: true }}
           >
             <Logo>
-              {/* <LogoImage src="/bestech.png" alt="Bestech Vision" /> */}
+              {/* { <LogoImage src="/bestechw.png" alt="Bestech Vision" /> } */}
               Bestech Vision
             </Logo>
             <p>
-              BestechSolz Vision is a premier technology consulting firm specializing in 
-              enterprise-grade solutions that drive digital transformation and accelerate 
-              business growth for Fortune 500 companies worldwide.
+            Bestech Vision is a leading technology consulting firm delivering enterprisegrade solutions that drive digital transformation and accelerate global business growth for Fortune 500 companies.
             </p>
             <SocialLinks>
-              <SocialLink href="https://www.facebook.com/bestechsolz/" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <SocialLink href="https://www.facebook.com/BestechVision/" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                 <FaFacebook />
               </SocialLink>
-              <SocialLink href="https://www.twitter.com/bestechsolz" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
-                <FaTwitter />
+              <SocialLink href="https://www.twitter.com/BestechVision" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                <FaXTwitter />
               </SocialLink>
-              <SocialLink href="https://www.linkedin.com/company/bestechsolz" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <SocialLink href="https://www.linkedin.com/company/BestechVision" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin />
               </SocialLink>
-              <SocialLink href="https://www.instagram.com/bestechsolz/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <SocialLink href="https://www.instagram.com/BestechVision/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                 <FaInstagram />
               </SocialLink>
             </SocialLinks>
@@ -278,7 +277,7 @@ const Footer = () => {
               </ContactItem>
               <ContactItem>
                 <FaEnvelope />
-                <span>contact@bestechsolz.com</span>
+                <span>info@bestechvision.com</span>
               </ContactItem>
             </ContactInfo>
           </FooterSection>

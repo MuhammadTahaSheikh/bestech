@@ -15,10 +15,20 @@ import {
   FaWhatsapp,
   FaTelegram
 } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import { submitContact } from '../utils/formApi';
 
 const ContactContainer = styled.div`
   min-height: 100vh;
   padding-top: 2rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding-top: 1.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding-top: 1rem;
+  }
 `;
 
 const HeroSection = styled.section`
@@ -28,6 +38,14 @@ const HeroSection = styled.section`
   text-align: center;
   position: relative;
   overflow: hidden;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 5rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 4rem 0;
+  }
 `;
 
 const HeroBackground = styled.div`
@@ -46,6 +64,14 @@ const Container = styled.div`
   padding: 0 2rem;
   position: relative;
   z-index: 2;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0 1rem;
+  }
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -54,8 +80,16 @@ const HeroTitle = styled(motion.h1)`
   margin-bottom: 1.5rem;
   line-height: 1.2;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 3rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
     font-size: 2.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    font-size: 2rem;
   }
 `;
 
@@ -65,11 +99,27 @@ const HeroSubtitle = styled(motion.p)`
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 1.15rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1rem;
+  }
 `;
 
 const ContactSection = styled.section`
   padding: 6rem 0;
   background: white;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 5rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 4rem 0;
+  }
 `;
 
 const ContactGrid = styled.div`
@@ -78,7 +128,11 @@ const ContactGrid = styled.div`
   gap: 4rem;
   margin-bottom: 4rem;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    gap: 2.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
@@ -97,6 +151,27 @@ const ContactInfo = styled.div`
     color: ${props => props.theme.colors.gray[600]};
     line-height: 1.6;
     margin-bottom: 2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    h2 {
+      font-size: 2.1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
   }
 `;
 
@@ -121,6 +196,12 @@ const ContactCard = styled(motion.div)`
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 1.25rem;
+    gap: 1rem;
+    align-items: flex-start;
+  }
 `;
 
 const ContactIcon = styled.div`
@@ -134,6 +215,12 @@ const ContactIcon = styled.div`
   color: white;
   font-size: 1.5rem;
   flex-shrink: 0;
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
 `;
 
 const ContactDetails = styled.div`
@@ -147,6 +234,17 @@ const ContactDetails = styled.div`
   p {
     color: ${props => props.theme.colors.gray[600]};
     margin: 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    h4 {
+      font-size: 1.1rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+      word-break: break-word;
+    }
   }
 `;
 
@@ -191,6 +289,16 @@ const ContactForm = styled.form`
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid ${props => props.theme.colors.gray[200]};
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 2rem;
+    border-radius: 16px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
 `;
 
 const FormTitle = styled.h3`
@@ -199,6 +307,10 @@ const FormTitle = styled.h3`
   color: ${props => props.theme.colors.dark};
   margin-bottom: 1.5rem;
   text-align: center;
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.4rem;
+  }
 `;
 
 const FormGrid = styled.div`
@@ -207,7 +319,7 @@ const FormGrid = styled.div`
   gap: 1.5rem;
   margin-bottom: 1.5rem;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     grid-template-columns: 1fr;
   }
 `;
@@ -231,6 +343,7 @@ const Input = styled.input`
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
+  color: ${props => props.theme.colors.dark};
 
   &:focus {
     outline: none;
@@ -241,6 +354,11 @@ const Input = styled.input`
   &::placeholder {
     color: ${props => props.theme.colors.gray[400]};
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.85rem;
+    font-size: 0.95rem;
+  }
 `;
 
 const TextArea = styled.textarea`
@@ -250,6 +368,7 @@ const TextArea = styled.textarea`
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
+  color: ${props => props.theme.colors.dark};
   resize: vertical;
   min-height: 120px;
   font-family: inherit;
@@ -263,6 +382,12 @@ const TextArea = styled.textarea`
   &::placeholder {
     color: ${props => props.theme.colors.gray[400]};
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.85rem;
+    font-size: 0.95rem;
+    min-height: 100px;
+  }
 `;
 
 const Select = styled.select`
@@ -272,12 +397,18 @@ const Select = styled.select`
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
+  color: ${props => props.theme.colors.dark};
   cursor: pointer;
 
   &:focus {
     outline: none;
     border-color: ${props => props.theme.colors.primary};
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.85rem;
+    font-size: 0.95rem;
   }
 `;
 
@@ -308,6 +439,11 @@ const SubmitButton = styled.button`
     cursor: not-allowed;
     transform: none;
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.9rem 1.25rem;
+    font-size: 1rem;
+  }
 `;
 
 const SuccessMessage = styled(motion.div)`
@@ -325,6 +461,14 @@ const SuccessMessage = styled(motion.div)`
 const MapSection = styled.section`
   padding: 6rem 0;
   background: ${props => props.theme.colors.light};
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 5rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 4rem 0;
+  }
 `;
 
 const MapContainer = styled.div`
@@ -337,11 +481,28 @@ const MapContainer = styled.div`
   color: ${props => props.theme.colors.gray[600]};
   font-size: 1.2rem;
   border: 1px solid ${props => props.theme.colors.gray[300]};
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    height: 340px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    height: 260px;
+    border-radius: 12px;
+  }
 `;
 
 const FAQSection = styled.section`
   padding: 6rem 0;
   background: white;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 5rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 4rem 0;
+  }
 `;
 
 const FAQGrid = styled.div`
@@ -349,6 +510,16 @@ const FAQGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    grid-template-columns: 1fr;
+    margin-top: 2rem;
+  }
 `;
 
 const FAQItem = styled(motion.div)`
@@ -362,6 +533,10 @@ const FAQItem = styled(motion.div)`
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 1.25rem;
+  }
 `;
 
 const FAQQuestion = styled.h4`
@@ -369,11 +544,52 @@ const FAQQuestion = styled.h4`
   font-weight: 600;
   color: ${props => props.theme.colors.dark};
   margin-bottom: 1rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.1rem;
+  }
 `;
 
 const FAQAnswer = styled.p`
   color: ${props => props.theme.colors.gray[600]};
   line-height: 1.6;
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 0.95rem;
+  }
+`;
+
+const SectionHeading = styled(motion.h2)`
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.6rem;
+  }
+`;
+
+const SectionSubheading = styled(motion.p)`
+  text-align: center;
+  font-size: 1.2rem;
+  color: #6b7280;
+  margin-bottom: 3rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 1.05rem;
+    margin-bottom: 2.25rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 0.95rem;
+    margin-bottom: 1.75rem;
+  }
 `;
 
 const Contact = () => {
@@ -400,26 +616,35 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        company: '',
-        service: '',
-        message: ''
+
+    try {
+      await submitContact({
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        email: formData.email,
+        phone: formData.phone || '',
+        company: formData.company || '',
+        service: formData.service || '',
+        message: formData.message
       });
-    }, 3000);
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          company: '',
+          service: '',
+          message: ''
+        });
+      }, 3000);
+    } catch (error) {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }
   };
 
   const contactInfo = [
@@ -431,23 +656,28 @@ const Contact = () => {
     {
       icon: <FaPhone />,
       title: 'Phone Number',
-      details: '03114315611'
+      details: '+92-311-4315611'
     },
     {
       icon: <FaEnvelope />,
       title: 'Email Address',
-      details: 'contact@bestechsolz.com'
+      details: 'info@bestechvision.com'
     },
     
   ];
 
   const socialLinks = [
-    { icon: <FaLinkedin />, url: 'https://www.linkedin.com/company/bestechsolz', label: 'LinkedIn' },
-    { icon: <FaTwitter />, url: 'https://www.twitter.com/bestechsolz', label: 'Twitter' },
-    { icon: <FaFacebook />, url: 'https://www.facebook.com/bestechsolz/', label: 'Facebook' },
-    { icon: <FaInstagram />, url: 'https://www.instagram.com/bestechsolz/', label: 'Instagram' },
-    { icon: <FaWhatsapp />, url: 'https://wa.me/923114315611', label: 'WhatsApp' },
-    { icon: <FaTelegram />, url: 'https://t.me/bestechsolz', label: 'Telegram' }
+    { icon: <FaLinkedin />, url: 'https://www.linkedin.com/company/bestechvision', label: 'LinkedIn' },
+    { icon: <FaXTwitter />, url: 'https://x.com/BestechVision', label: 'X' },
+    { icon: <FaFacebook />, url: 'https://www.facebook.com/bestechVision', label: 'Facebook' },
+    { icon: <FaInstagram />, url: 'https://www.instagram.com/bestechvision/', label: 'Instagram' },
+    //{ icon: <FaWhatsapp />, url: 'https://wa.me/923114315611', label: 'WhatsApp' },
+    {
+      icon: <FaWhatsapp />,
+      url: "https://wa.me/923114315611?text=Hi%20Bestech%20Vision,%20I%20want%20to%20discuss%20a%20project",
+      label: "Chat with Bestech Vision on WhatsApp",
+    },
+    { icon: <FaTelegram />, url: 'https://t.me/BestechVision', label: 'Telegram' }
   ];
 
   const faqs = [
@@ -704,27 +934,25 @@ const Contact = () => {
 
       <MapSection>
         <Container>
-          <motion.h2
-            style={{ textAlign: 'center', fontSize: '2.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '1rem' }}
+          <SectionHeading
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
             Find Us
-          </motion.h2>
-          <motion.p
-            style={{ textAlign: 'center', fontSize: '1.2rem', color: '#6b7280', marginBottom: '3rem' }}
+          </SectionHeading>
+          <SectionSubheading
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
             Visit our office or get directions
-          </motion.p>
+          </SectionSubheading>
           <MapContainer>
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3403.8665921632!2d74.25909387638207!3d31.445339474248406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3919019ef46a8b83%3A0xac7173a28804fd26!2s375%2C%20Airline%20Society%2C%20Lahore%2C%2054782%2C%20Pakistan!5e0!3m2!1sen!2s!4v1760126024801!5m2!1sen!2s" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1011.9763159041022!2d74.26173275221313!3d31.445272492413054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x494386a0c091ab3f%3A0x32aeddb03351b523!2sBestechVison!5e0!3m2!1sen!2s!4v1778087546180!5m2!1sen!2s" 
               width="100%" 
               height="100%" 
               style={{border: 0}} 
@@ -738,24 +966,22 @@ const Contact = () => {
 
       <FAQSection>
         <Container>
-          <motion.h2
-            style={{ textAlign: 'center', fontSize: '2.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '1rem' }}
+          <SectionHeading
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
             Frequently Asked Questions
-          </motion.h2>
-          <motion.p
-            style={{ textAlign: 'center', fontSize: '1.2rem', color: '#6b7280', marginBottom: '3rem' }}
+          </SectionHeading>
+          <SectionSubheading
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
             Common questions about our services and process
-          </motion.p>
+          </SectionSubheading>
           <FAQGrid>
             {faqs.map((faq, index) => (
               <FAQItem

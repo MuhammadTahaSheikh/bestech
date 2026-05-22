@@ -49,9 +49,9 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // Email configuration
-$to = 'mtahasheikh750@gmail.com';
-$subject = 'New Appointment Booking - BestechSolz Vision';
-$headers = "From: noreply@bestechsolz.com\r\n";
+$to = 'info@bestechvision.com';
+$subject = 'New Appointment Booking - Bestech Vision';
+$headers = "From: noreply@bestechvision.com\r\n";
 $headers .= "Reply-To: $email\r\n";
 $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
@@ -75,7 +75,7 @@ $email_body = "
     <div class='container'>
         <div class='header'>
             <h2>New Appointment Booking</h2>
-            <p>BestechSolz Vision Website</p>
+            <p>Bestech Vision Vision Website</p>
         </div>
         <div class='content'>
             <div class='urgent'>
@@ -124,7 +124,7 @@ $email_body = "
             </div>
         </div>
         <div class='footer'>
-            <p>This appointment was booked through the BestechSolz Vision website.</p>
+            <p>This appointment was booked through the Bestech Vision Vision website.</p>
             <p>Please contact the client to confirm the meeting details.</p>
         </div>
     </div>

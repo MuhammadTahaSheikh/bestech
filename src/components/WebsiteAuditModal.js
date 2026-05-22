@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import { submitContact } from '../utils/formApi';
 import { 
   FaTimes,
   FaEnvelope,
@@ -108,6 +109,7 @@ const Input = styled.input`
   font-size: 1rem;
   transition: all 0.3s ease;
   background: #f9fafb;
+  color: #1f2937;
 
   &:focus {
     outline: none;
@@ -180,6 +182,7 @@ const WebsiteAuditModal = ({ isOpen, onClose }) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
+  const [errorText, setErrorText] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -193,6 +196,7 @@ const WebsiteAuditModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+    setErrorText('');
 
     // Basic validation
     if (!formData.name || !formData.email || !formData.phone || !formData.website) {
@@ -205,13 +209,38 @@ const WebsiteAuditModal = ({ isOpen, onClose }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setSubmitStatus('error');
+      setErrorText('Please enter a valid email address.');
       setIsSubmitting(false);
       return;
     }
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const rawWebsite = formData.website.trim();
+      const normalizedWebsite = /^https?:\/\//i.test(rawWebsite)
+        ? rawWebsite
+        : `https://${rawWebsite}`;
+
+      // Validate website URL before sending
+      try {
+        // eslint-disable-next-line no-new
+        new URL(normalizedWebsite);
+      } catch {
+        throw new Error('Please enter a valid website URL (e.g. yourdomain.com).');
+      }
+
+      await submitContact({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        company: 'Website Audit Request',
+        service: 'website-audit',
+        message: [
+          'Website Audit Request',
+          `Website: ${normalizedWebsite}`,
+          `Phone: ${formData.phone.trim() || 'Not provided'}`
+        ].join('\n')
+      });
+
       setSubmitStatus('success');
       
       // Reset form after success
@@ -219,9 +248,11 @@ const WebsiteAuditModal = ({ isOpen, onClose }) => {
         setFormData({ name: '', email: '', phone: '', website: '' });
         onClose();
         setSubmitStatus(null);
+        setErrorText('');
       }, 2000);
     } catch (error) {
       setSubmitStatus('error');
+      setErrorText(error?.message || 'Failed to submit audit request. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -230,6 +261,7 @@ const WebsiteAuditModal = ({ isOpen, onClose }) => {
   const handleClose = () => {
     onClose();
     setSubmitStatus(null);
+    setErrorText('');
   };
 
   // Lock body scroll when modal is open and ensure proper positioning
@@ -332,11 +364,11 @@ const WebsiteAuditModal = ({ isOpen, onClose }) => {
                   Website URL
                 </Label>
                 <Input
-                  type="url"
+                  type="text"
                   name="website"
                   value={formData.website}
                   onChange={handleInputChange}
-                  placeholder="https://yourwebsite.com"
+                  placeholder="yourwebsite.com"
                   required
                 />
               </FormGroup>
@@ -377,7 +409,7 @@ const WebsiteAuditModal = ({ isOpen, onClose }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                 >
-                  Please fill in all fields correctly and try again.
+                  {errorText || 'Please fill in all fields correctly and try again.'}
                 </ErrorMessage>
               )}
             </Form>

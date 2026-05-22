@@ -1,23 +1,38 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { motion } from 'framer-motion';
 
-// Components
+// Components (always rendered — load eagerly)
 import Navbar from './components/Navbar';
+import AdminSubNavbar, { ADMIN_SUBNAV_HEIGHT_PX } from './components/AdminSubNavbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import ChatSupport from './components/ChatSupport';
+import LoadingSpinner from './components/LoadingSpinner';
+import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
-// Pages
-import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import Portfolio from './pages/Portfolio';
-import Team from './pages/Team';
-import Contact from './pages/Contact';
-import Appointment from './pages/Appointment';
-import HireTeamMember from './pages/HireTeamMember';
+// Pages — code-split into separate chunks for smaller initial bundle
+const Home            = lazy(() => import('./pages/Home'));
+const About           = lazy(() => import('./pages/About'));
+const Services        = lazy(() => import('./pages/Services'));
+const Portfolio       = lazy(() => import('./pages/Portfolio'));
+const Team            = lazy(() => import('./pages/Team'));
+const Contact         = lazy(() => import('./pages/Contact'));
+const Appointment     = lazy(() => import('./pages/Appointment'));
+const Careers         = lazy(() => import('./pages/Careers'));
+const HireTeamMember  = lazy(() => import('./pages/HireTeamMember'));
+const Blog            = lazy(() => import('./pages/Blog'));
+const CaseStudy       = lazy(() => import('./pages/CaseStudy'));
+const Support         = lazy(() => import('./pages/Support'));
+const AdminSignIn     = lazy(() => import('./pages/AdminSignIn'));
+const AdminDashboard  = lazy(() => import('./pages/AdminDashboard'));
+const AdminBlog       = lazy(() => import('./pages/AdminBlog'));
+const AdminTeam       = lazy(() => import('./pages/AdminTeam'));
+const AdminPortfolio  = lazy(() => import('./pages/AdminPortfolio'));
+const AdminServices   = lazy(() => import('./pages/AdminServices'));
+const AdminTestimonials = lazy(() => import('./pages/AdminTestimonials'));
 
 // Theme
 const theme = {
@@ -101,7 +116,6 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${props => props.theme.colors.white};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
 
@@ -112,20 +126,9 @@ const GlobalStyle = createGlobalStyle`
     margin-bottom: 0.5em;
   }
 
-  h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
-  }
-
-  h2 {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    font-weight: 600;
-  }
-
-  h3 {
-    font-size: clamp(1.25rem, 3vw, 1.875rem);
-    font-weight: 600;
-  }
+  h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; }
+  h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+  h3 { font-size: clamp(1.25rem, 3vw, 1.875rem); }
 
   p {
     margin-bottom: 1rem;
@@ -135,7 +138,7 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
-    transition: all 0.3s ease;
+    transition: color 0.2s ease;
   }
 
   button {
@@ -144,12 +147,9 @@ const GlobalStyle = createGlobalStyle`
     background: none;
     font-family: inherit;
     font-size: inherit;
-    transition: all 0.3s ease;
   }
 
-  ul, ol {
-    list-style: none;
-  }
+  ul, ol { list-style: none; }
 
   img {
     max-width: 100%;
@@ -162,36 +162,20 @@ const GlobalStyle = createGlobalStyle`
     font-size: inherit;
   }
 
-  /* Focus styles for accessibility */
-  *:focus {
+  *:focus-visible {
     outline: 2px solid ${props => props.theme.colors.primary};
     outline-offset: 2px;
   }
 
-  /* Smooth scrolling for all elements */
-  * {
-    scroll-behavior: smooth;
-  }
-
   /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: ${props => props.theme.colors.gray[100]};
-  }
-
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: ${props => props.theme.colors.gray[100]}; }
   ::-webkit-scrollbar-thumb {
     background: ${props => props.theme.colors.gray[300]};
     border-radius: 4px;
   }
+  ::-webkit-scrollbar-thumb:hover { background: ${props => props.theme.colors.gray[400]}; }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: ${props => props.theme.colors.gray[400]};
-  }
-
-  /* Selection styles */
   ::selection {
     background: ${props => props.theme.colors.primary};
     color: white;
@@ -199,14 +183,28 @@ const GlobalStyle = createGlobalStyle`
 
   /* Responsive typography */
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    html {
-      font-size: 14px;
-    }
+    html { font-size: 14px; }
   }
 
   @media (min-width: ${props => props.theme.breakpoints.xl}) {
-    html {
-      font-size: 18px;
+    html { font-size: 18px; }
+  }
+
+  /* Respect prefers-reduced-motion for accessibility & performance */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Disable expensive backdrop-filter blur on low-end mobile */
+  @media (max-width: ${props => props.theme.breakpoints.md}) and (hover: none) {
+    * {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
     }
   }
 `;
@@ -219,60 +217,95 @@ const AppContainer = styled.div`
 
 const MainContent = styled(motion.main)`
   flex: 1;
-  padding-top: 80px; /* Account for fixed navbar */
+  padding-top: ${(p) =>
+    p.$adminBar
+      ? `calc(80px + ${ADMIN_SUBNAV_HEIGHT_PX}px)`
+      : '80px'};
+  transition: padding-top 0.25s ease;
 `;
 
+// Simplified page transition — no y-shift to avoid layout shifts on mobile
 const pageVariants = {
-  initial: {
-    opacity: 0,
-    y: 20
-  },
-  in: {
-    opacity: 1,
-    y: 0
-  },
-  out: {
-    opacity: 0,
-    y: -20
-  }
+  initial: { opacity: 0 },
+  in:      { opacity: 1 },
+  out:     { opacity: 0 }
 };
 
 const pageTransition = {
   type: 'tween',
-  ease: 'anticipate',
-  duration: 0.5
+  ease: 'easeOut',
+  duration: 0.2
 };
+
+function MainWithPadding({ children }) {
+  const { user, booting } = useAuth();
+  const adminBar = Boolean(user && !booting);
+  return (
+    <MainContent
+      $adminBar={adminBar}
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+    >
+      {children}
+    </MainContent>
+  );
+}
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Router>
-        <AppContainer>
-          <Navbar />
-          <MainContent
-            initial="initial"
-            animate="in"
-            exit="out"
-            variants={pageVariants}
-            transition={pageTransition}
-          >
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/hire" element={<HireTeamMember />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/appointment" element={<Appointment />} />
-            </Routes>
-          </MainContent>
-          <Footer />
-          <ScrollToTop />
-          <ChatSupport />
-        </AppContainer>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <AppContainer>
+            <Navbar />
+            <AdminSubNavbar />
+            <MainWithPadding>
+              <Suspense fallback={<LoadingSpinner height="60vh" text="Loading..." />}>
+                <Routes>
+                  <Route path="/"              element={<Home />} />
+                  <Route path="/about"         element={<About />} />
+                  <Route path="/services"      element={<Services />} />
+                  <Route path="/portfolio"     element={<Portfolio />} />
+                  <Route path="/team"          element={<Team />} />
+                  <Route path="/hire"          element={<HireTeamMember />} />
+                  <Route path="/contact"       element={<Contact />} />
+                  <Route path="/appointment"   element={<Appointment />} />
+                  <Route path="/careers"       element={<Careers />} />
+                  <Route path="/blog"          element={<Blog />} />
+                  <Route path="/case-studies"  element={<CaseStudy />} />
+                  <Route path="/support"       element={<Support />} />
+                  <Route path="/admin/signin"  element={<AdminSignIn />} />
+                  <Route path="/admin" element={
+                    <ProtectedRoute><AdminDashboard /></ProtectedRoute>
+                  } />
+                  <Route path="/admin/blog" element={
+                    <ProtectedRoute><AdminBlog /></ProtectedRoute>
+                  } />
+                  <Route path="/admin/team" element={
+                    <ProtectedRoute><AdminTeam /></ProtectedRoute>
+                  } />
+                  <Route path="/admin/portfolio" element={
+                    <ProtectedRoute><AdminPortfolio /></ProtectedRoute>
+                  } />
+                  <Route path="/admin/services" element={
+                    <ProtectedRoute><AdminServices /></ProtectedRoute>
+                  } />
+                  <Route path="/admin/testimonials" element={
+                    <ProtectedRoute><AdminTestimonials /></ProtectedRoute>
+                  } />
+                </Routes>
+              </Suspense>
+            </MainWithPadding>
+            <Footer />
+            <ScrollToTop />
+            <ChatSupport />
+          </AppContainer>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -13,6 +13,24 @@ import {
   FaFilter,
   FaTimes
 } from 'react-icons/fa';
+import { fetchPortfolioProjects } from '../utils/cmsApi';
+
+const PORTFOLIO_ICON_MAP = {
+  code: FaCode,
+  users: FaUsers,
+  rocket: FaRocket,
+  cloud: FaCloud,
+  mobile: FaMobile,
+  shield: FaShieldAlt
+};
+
+function decoratePortfolioFromApi(p) {
+  const Icon = PORTFOLIO_ICON_MAP[p.iconKey] || FaCode;
+  return {
+    ...p,
+    image: React.createElement(Icon)
+  };
+}
 
 const PortfolioContainer = styled.div`
   min-height: 100vh;
@@ -371,6 +389,24 @@ const ModalLink = styled.a`
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [cmsProjects, setCmsProjects] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const rows = await fetchPortfolioProjects();
+        if (!cancelled && Array.isArray(rows) && rows.length > 0) {
+          setCmsProjects(rows.map(decoratePortfolioFromApi));
+        }
+      } catch {
+        /* fallback to static projects */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const filters = [
     { id: 'all', label: 'All Projects', icon: <FaFilter /> },
@@ -380,7 +416,7 @@ const Portfolio = () => {
     { id: 'automation', label: 'RPA/AI', icon: <FaCloud /> }
   ];
 
-  const projects = [
+  const staticProjects = [
     {
       id: 1,
       title: 'Stop ShopREI - Real Estate Lead Generation Platform',
@@ -508,6 +544,9 @@ const Portfolio = () => {
       githubUrl: '#'
     }
   ];
+
+  const projects =
+    cmsProjects && cmsProjects.length > 0 ? cmsProjects : staticProjects;
 
   const filteredProjects = projects.filter(project => 
     activeFilter === 'all' || project.category === activeFilter

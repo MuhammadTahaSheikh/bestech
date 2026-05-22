@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
@@ -20,6 +20,35 @@ import {
   FaChartLine,
   FaRobot
 } from 'react-icons/fa';
+import { fetchCmsServices } from '../utils/cmsApi';
+
+const SERVICE_ICON_MAP = {
+  code: FaCode,
+  rocket: FaRocket,
+  mobile: FaMobile,
+  users: FaUsers,
+  database: FaDatabase,
+  chart: FaChartLine,
+  robot: FaRobot,
+  cog: FaCog,
+  cloud: FaCloud,
+  shield: FaShieldAlt,
+  laptop: FaLaptopCode,
+  server: FaServer,
+  lock: FaLock,
+  network: FaNetworkWired
+};
+
+function decorateServiceFromApi(row) {
+  const Icon = SERVICE_ICON_MAP[row.iconKey] || FaCode;
+  return {
+    id: row.slug || row.id,
+    icon: React.createElement(Icon),
+    title: row.title,
+    description: row.description,
+    features: Array.isArray(row.features) ? row.features : []
+  };
+}
 
 const ServicesContainer = styled.div`
   min-height: 100vh;
@@ -369,8 +398,26 @@ const CTAButton = styled(Link)`
 
 const Services = () => {
   const [activeService, setActiveService] = useState(null);
+  const [cmsServices, setCmsServices] = useState(null);
 
-  const services = [
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const rows = await fetchCmsServices();
+        if (!cancelled && Array.isArray(rows) && rows.length > 0) {
+          setCmsServices(rows.map(decorateServiceFromApi));
+        }
+      } catch {
+        /* static list */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const staticServices = [
     {
       id: 'software-development',
       icon: <FaCode />,
@@ -470,6 +517,9 @@ const Services = () => {
       ]
     }
   ];
+
+  const services =
+    cmsServices && cmsServices.length > 0 ? cmsServices : staticServices;
 
   const processSteps = [
     {

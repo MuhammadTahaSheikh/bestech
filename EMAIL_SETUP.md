@@ -1,4 +1,4 @@
-# Email Setup Guide for BestechSolz Vision
+# Email Setup Guide for Bestech Vision Vision
 
 ## Current Status
 The appointment booking form is now set up to send emails directly to `mtahasheikh750@gmail.com` when someone books a meeting.

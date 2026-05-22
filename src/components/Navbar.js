@@ -3,6 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext';
+import { ADMIN_SUBNAV_HEIGHT_PX } from './AdminSubNavbar';
+import { fetchCmsServices } from '../utils/cmsApi';
 
 const Nav = styled(motion.nav)`
   position: fixed;
@@ -100,7 +103,7 @@ const Logo = styled(Link)`
 
 const LogoImage = styled.img`
   width: 180px;
-  height: 60px;
+  height: 180px;
   object-fit: contain;
   border-radius: 8px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
@@ -114,17 +117,22 @@ const LogoImage = styled.img`
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     width: 160px;
-    height: 55px;
+    height: auto;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    width: 140px;
-    height: 50px;
+    width: 165px;
+    height: auto;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    width: 120px;
-    height: 45px;
+    width: 150px;
+    height: auto;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    width: 138px;
+    height: auto;
   }
 `;
 
@@ -301,7 +309,7 @@ const MobileMenuButton = styled.button`
 
 const MobileMenu = styled(motion.div)`
   position: fixed;
-  top: 80px;
+  top: ${(p) => 80 + (p.$adminOffset ? ADMIN_SUBNAV_HEIGHT_PX : 0)}px;
   left: 0;
   right: 0;
   background: white;
@@ -419,7 +427,10 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [cmsServiceDropdown, setCmsServiceDropdown] = useState(null);
   const location = useLocation();
+  const { user, booting } = useAuth();
+  const adminOffset = Boolean(user && !booting);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -434,23 +445,52 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   }, [location]);
 
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const rows = await fetchCmsServices();
+        if (!cancelled && Array.isArray(rows) && rows.length > 0) {
+          const mapped = rows.map((row) => ({
+            name: row.title,
+            path: `/services#${row.slug || row.id || ''}`
+          }));
+          setCmsServiceDropdown(mapped.filter((item) => item.path !== '/services#'));
+        }
+      } catch {
+        /* keep static dropdown */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const staticServiceDropdown = [
+    { name: 'Software Development', path: '/services#software-development' },
+    { name: 'Web Development', path: '/services#web-development' },
+    { name: 'App Development', path: '/services#app-development' },
+    { name: 'Social Media Management', path: '/services#social-media' },
+    { name: 'CRM Solutions', path: '/services#crm-solutions' },
+    { name: 'Graphic Design', path: '/services#graphic-design' },
+    { name: 'AI Bot Development', path: '/services#ai-bot-development' }
+  ];
+
+  const servicesDropdownItems =
+    cmsServiceDropdown && cmsServiceDropdown.length > 0
+      ? cmsServiceDropdown
+      : staticServiceDropdown;
+
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { 
       name: 'Services', 
       path: '/services',
-      dropdown: [
-        { name: 'Software Development', path: '/services#software-development' },
-        { name: 'Web Development', path: '/services#web-development' },
-        { name: 'App Development', path: '/services#app-development' },
-        { name: 'Social Media Management', path: '/services#social-media' },
-        { name: 'CRM Solutions', path: '/services#crm-solutions' },
-        { name: 'Graphic Design', path: '/services#graphic-design' },
-        { name: 'AI Bot Development', path: '/services#ai-bot-development' }
-      ]
+      dropdown: servicesDropdownItems
     },
     { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Blog', path: '/blog' },
     { name: 'Team', path: '/team' },
     { name: 'Contact', path: '/contact' }
   ];
@@ -459,7 +499,7 @@ const Navbar = () => {
     <Nav scrolled={scrolled} initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.5 }}>
       <NavContainer>
         <Logo to="/">
-          <LogoImage src="/logo.jpeg" alt="Bestech Vision" />
+          <LogoImage src="/logo.png" alt="Bestech Vision" />
         </Logo>
 
         <NavLinks role="navigation" aria-label="Main navigation">
@@ -538,6 +578,7 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <MobileMenu
+            $adminOffset={adminOffset}
             id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}

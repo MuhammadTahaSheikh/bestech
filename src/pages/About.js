@@ -18,6 +18,10 @@ import {
 const AboutContainer = styled.div`
   min-height: 100vh;
   padding-top: 2rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding-top: 1rem;
+  }
 `;
 
 const HeroSection = styled.section`
@@ -27,6 +31,18 @@ const HeroSection = styled.section`
   text-align: center;
   position: relative;
   overflow: hidden;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 5rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 4rem 0;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 3rem 0;
+  }
 `;
 
 const HeroBackground = styled.div`
@@ -45,6 +61,14 @@ const Container = styled.div`
   padding: 0 2rem;
   position: relative;
   z-index: 2;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0 1rem;
+  }
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -53,8 +77,16 @@ const HeroTitle = styled(motion.h1)`
   margin-bottom: 1.5rem;
   line-height: 1.2;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: 3rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     font-size: 2.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 2rem;
   }
 `;
 
@@ -64,11 +96,24 @@ const HeroSubtitle = styled(motion.p)`
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 1.1rem;
+    max-width: 100%;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1rem;
+  }
 `;
 
 const ContentSection = styled.section`
   padding: 6rem 0;
   background: white;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 4rem 0;
+  }
 `;
 
 const SectionTitle = styled(motion.h2)`
@@ -77,6 +122,14 @@ const SectionTitle = styled(motion.h2)`
   font-weight: 700;
   color: ${props => props.theme.colors.dark};
   margin-bottom: 1rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.75rem;
+  }
 `;
 
 const SectionSubtitle = styled(motion.p)`
@@ -87,6 +140,11 @@ const SectionSubtitle = styled(motion.p)`
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: 1.05rem;
+    margin-bottom: 3rem;
+  }
 `;
 
 const TwoColumnGrid = styled.div`
@@ -96,18 +154,26 @@ const TwoColumnGrid = styled.div`
   align-items: center;
   margin-bottom: 4rem;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    gap: 2.5rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
 `;
 
-const TextContent = styled.div`
+const TextContent = styled(motion.div)`
   h3 {
     font-size: 2rem;
     font-weight: 600;
     color: ${props => props.theme.colors.dark};
     margin-bottom: 1.5rem;
+
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
+      font-size: 1.75rem;
+    }
   }
 
   p {
@@ -115,13 +181,19 @@ const TextContent = styled.div`
     line-height: 1.7;
     color: ${props => props.theme.colors.gray[600]};
     margin-bottom: 1.5rem;
+
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
+      font-size: 1rem;
+      line-height: 1.65;
+    }
   }
 `;
 
-const VisualContent = styled.div`
+const VisualContent = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 const FeatureCard = styled(motion.div)`
@@ -131,10 +203,16 @@ const FeatureCard = styled(motion.div)`
   text-align: center;
   border: 1px solid ${props => props.theme.colors.gray[200]};
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 500px;
 
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 1.5rem;
   }
 `;
 
@@ -149,6 +227,13 @@ const FeatureIcon = styled.div`
   margin: 0 auto 1.5rem;
   color: white;
   font-size: 2rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    font-size: 1.75rem;
+  }
 `;
 
 const FeatureTitle = styled.h4`
@@ -166,12 +251,20 @@ const FeatureDescription = styled.p`
 const ValuesSection = styled.section`
   padding: 6rem 0;
   background: ${props => props.theme.colors.light};
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 4rem 0;
+  }
 `;
 
 const ValuesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const ValueCard = styled(motion.div)`
@@ -186,6 +279,14 @@ const ValueCard = styled(motion.div)`
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 1.5rem;
+  }
 `;
 
 const ValueIcon = styled.div`
@@ -199,6 +300,12 @@ const ValueIcon = styled.div`
   margin: 0 auto 1.5rem;
   color: white;
   font-size: 2.5rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    width: 85px;
+    height: 85px;
+    font-size: 2rem;
+  }
 `;
 
 const ValueTitle = styled.h3`
@@ -217,6 +324,10 @@ const StatsSection = styled.section`
   padding: 6rem 0;
   background: ${props => props.theme.colors.primary};
   color: white;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 4rem 0;
+  }
 `;
 
 const StatsGrid = styled.div`
@@ -224,6 +335,15 @@ const StatsGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 3rem;
   text-align: center;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    gap: 2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
 `;
 
 const StatItem = styled(motion.div)`
@@ -232,17 +352,33 @@ const StatItem = styled(motion.div)`
     font-weight: 700;
     margin-bottom: 0.5rem;
     color: white;
+
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
+      font-size: 2.4rem;
+    }
+
+    @media (max-width: ${props => props.theme.breakpoints.sm}) {
+      font-size: 2rem;
+    }
   }
 
   p {
     font-size: 1.1rem;
     opacity: 0.9;
+
+    @media (max-width: ${props => props.theme.breakpoints.sm}) {
+      font-size: 1rem;
+    }
   }
 `;
 
 const TimelineSection = styled.section`
   padding: 6rem 0;
   background: white;
+
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 4rem 0;
+  }
 `;
 
 const Timeline = styled.div`
@@ -260,7 +396,7 @@ const Timeline = styled.div`
     background: ${props => props.theme.colors.primary};
     transform: translateX(-50%);
 
-    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
       left: 2rem;
     }
   }
@@ -275,20 +411,20 @@ const TimelineItem = styled(motion.div)`
   &:nth-child(odd) {
     flex-direction: row;
 
-    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
       flex-direction: column;
       align-items: flex-start;
-      margin-left: 4rem;
+      margin-left: 3.5rem;
     }
   }
 
   &:nth-child(even) {
     flex-direction: row-reverse;
 
-    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
       flex-direction: column;
       align-items: flex-start;
-      margin-left: 4rem;
+      margin-left: 3.5rem;
     }
   }
 `;
@@ -301,8 +437,9 @@ const TimelineContent = styled.div`
   width: 45%;
   position: relative;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     width: 100%;
+    padding: 1.5rem;
   }
 
   &::before {
@@ -314,7 +451,7 @@ const TimelineContent = styled.div`
     border: 15px solid transparent;
     transform: translateY(-50%);
 
-    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
       display: none;
     }
   }
@@ -341,9 +478,11 @@ const TimelineYear = styled.div`
   transform: translateX(-50%);
   z-index: 2;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    left: 2rem;
-    transform: translateX(-50%);
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    position: relative;
+    left: auto;
+    transform: none;
+    margin-bottom: 0.85rem;
   }
 `;
 
@@ -352,11 +491,19 @@ const TimelineTitle = styled.h4`
   font-weight: 600;
   color: ${props => props.theme.colors.dark};
   margin-bottom: 0.5rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.15rem;
+  }
 `;
 
 const TimelineDescription = styled.p`
   color: ${props => props.theme.colors.gray[600]};
   line-height: 1.6;
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 0.95rem;
+  }
 `;
 
 const About = () => {
@@ -404,7 +551,7 @@ const About = () => {
     {
       year: '2019',
       title: 'Company Founded',
-      description: 'BestechSolz Vision was established with a vision to revolutionize the IT industry through innovative solutions.'
+      description: 'Bestech Vision Vision was established with a vision to revolutionize the IT industry through innovative solutions.'
     },
     {
       year: '2020',
@@ -443,7 +590,7 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            About BestechSolz Vision
+            About Bestech Vision Vision
           </HeroTitle>
           <HeroSubtitle
             initial={{ opacity: 0, y: 30 }}
@@ -469,7 +616,7 @@ const About = () => {
               <h3>Our Story</h3>
               <p>
                 Founded in 2019 by seasoned IT professionals with over 25 years of combined experience 
-                in software development, system administration, and IT consulting. BestechSolz Vision 
+                in software development, system administration, and IT consulting. Bestech Vision Vision 
                 was established to bridge the gap between complex technology requirements and practical 
                 business solutions, bringing expertise from leading IT companies including IBM, Oracle, and Cisco.
               </p>

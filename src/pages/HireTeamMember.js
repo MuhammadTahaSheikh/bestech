@@ -12,6 +12,7 @@ import {
   FaCheckCircle
 } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { submitHire } from '../utils/formApi';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -205,6 +206,7 @@ const Input = styled.input`
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
+  color: ${props => props.theme.colors.dark};
   font-family: inherit;
 
   &:focus {
@@ -230,6 +232,7 @@ const TextArea = styled.textarea`
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
+  color: ${props => props.theme.colors.dark};
   min-height: 150px;
   resize: vertical;
   font-family: inherit;
@@ -380,14 +383,13 @@ const HireTeamMember = () => {
     setSubmitStatus(null);
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Here you would typically send the data to your backend
-      console.log('Hiring inquiry submitted:', {
-        ...formData,
-        teamMember: selectedTeamMember?.name,
-        teamMemberRole: selectedTeamMember?.role
+      await submitHire({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        question: formData.question || '',
+        teamMember: selectedTeamMember?.name || 'Our Team',
+        teamMemberRole: selectedTeamMember?.role || 'Expert Professional'
       });
 
       setSubmitStatus('success');
@@ -454,7 +456,7 @@ const HireTeamMember = () => {
               transition={{ duration: 0.5 }}
             >
               <FaCheckCircle />
-              Thank you! We'll get back to you within 24 hours.
+              Thank you! Your inquiry has been sent successfully. We'll get back to you within 24 hours.
             </SuccessMessage>
           )}
 

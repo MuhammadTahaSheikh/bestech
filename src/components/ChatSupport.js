@@ -119,6 +119,7 @@ const ChatInput = styled.input`
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   font-size: 0.9rem;
+  color: #1f2937;
   outline: none;
   transition: border-color 0.2s ease;
 
@@ -165,8 +166,6 @@ const ChatSupport = () => {
   const handleChatSubmit = (e) => {
     e.preventDefault();
     if (chatMessage.trim()) {
-      // Here you would typically send the message to your chat service
-      console.log('Chat message:', chatMessage);
       setChatMessage('');
     }
   };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { 
   FaRocket, 
   FaCode, 
@@ -20,6 +20,35 @@ import {
 import WebsiteAuditModal from '../components/WebsiteAuditModal';
 import TestimonialCarousel from '../components/TestimonialCarousel';
 import TeamPreview from '../components/TeamPreview';
+import { fetchCmsServices } from '../utils/cmsApi';
+
+const HOME_SERVICE_ICON_MAP = {
+  code: FaCode,
+  rocket: FaRocket,
+  mobile: FaMobile,
+  users: FaUsers,
+  database: FaDatabase,
+  chart: FaChartLine,
+  robot: FaRobot
+};
+
+const TYPING_SERVICES = [
+  'Web Development',
+  'App Design & Development',
+  'UI/UX Design',
+  'Digital Marketing & SEO',
+  'Brand & IT Consultancy'
+];
+
+function decorateHomeServiceFromApi(row) {
+  const Icon = HOME_SERVICE_ICON_MAP[row.iconKey] || FaCode;
+  return {
+    id: row.slug || row.id || row.title,
+    icon: <Icon />,
+    title: row.title,
+    description: row.description
+  };
+}
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -27,15 +56,15 @@ const HomeContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  height: 100vh;
-  min-height: 600px;
-  max-height: 800px;
+  min-height: min(100svh, 800px);
+  height: auto;
   background: #0f172a;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
   margin: ${props => props.theme.spacing.xl};
+  padding: ${props => props.theme.spacing['3xl']} 0;
   border-radius: ${props => props.theme.borderRadius['3xl']};
   box-shadow: 
     0 20px 60px rgba(0, 0, 0, 0.3),
@@ -45,32 +74,26 @@ const HeroSection = styled.section`
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     margin: ${props => props.theme.spacing.lg};
-    height: 90vh;
-    min-height: 500px;
-    max-height: 700px;
+    min-height: min(90svh, 720px);
+    padding: ${props => props.theme.spacing['2xl']} 0;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     margin: ${props => props.theme.spacing.md};
-    height: 85vh;
-    min-height: 450px;
-    max-height: 600px;
+    min-height: 0;
+    padding: ${props => props.theme.spacing.xl} 0 ${props => props.theme.spacing['2xl']};
     border-radius: ${props => props.theme.borderRadius['2xl']};
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     margin: ${props => props.theme.spacing.sm};
-    height: 80vh;
-    min-height: 400px;
-    max-height: 550px;
+    padding: ${props => props.theme.spacing.lg} 0 ${props => props.theme.spacing.xl};
     border-radius: ${props => props.theme.borderRadius.xl};
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
     margin: ${props => props.theme.spacing.xs};
-    height: 75vh;
-    min-height: 350px;
-    max-height: 500px;
+    padding: ${props => props.theme.spacing.md} 0 ${props => props.theme.spacing.lg};
     border-radius: ${props => props.theme.borderRadius.lg};
   }
 `;
@@ -114,6 +137,7 @@ const Shape = styled(motion.div)`
   border-radius: 50%;
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
   filter: blur(1px);
+  will-change: transform;
 `;
 
 const CodeLines = styled.div`
@@ -134,6 +158,7 @@ const CodeLine = styled(motion.div)`
   font-size: 12px;
   color: #3b82f6;
   white-space: nowrap;
+  will-change: transform;
 `;
 
 const HeroContent = styled.div`
@@ -146,61 +171,73 @@ const HeroContent = styled.div`
   position: relative;
   z-index: 2;
   width: 100%;
-  height: 100%;
+  min-height: 0;
+  flex: 1;
   gap: ${props => props.theme.spacing['2xl']};
   overflow: hidden;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     gap: ${props => props.theme.spacing.xl};
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    padding: 0 ${props => props.theme.spacing.lg};
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    flex-direction: column;
-    text-align: center;
-    gap: ${props => props.theme.spacing['2xl']};
-    padding: 0 ${props => props.theme.spacing.lg};
-    justify-content: center;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
     gap: ${props => props.theme.spacing.xl};
     padding: 0 ${props => props.theme.spacing.md};
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
     gap: ${props => props.theme.spacing.lg};
+    padding: 0 ${props => props.theme.spacing.sm};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.xs}) {
+    gap: ${props => props.theme.spacing.md};
     padding: 0 ${props => props.theme.spacing.sm};
   }
 `;
 
 const HeroLeft = styled.div`
-  flex: 1;
-  max-width: 600px;
+  flex: 1 1 48%;
+  min-width: 0;
+  max-width: min(600px, 100%);
   z-index: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%;
-  overflow: hidden;
+  align-self: center;
+  overflow: visible;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    max-width: 100%;
+    width: 100%;
+  }
 `;
 
 const HeroRight = styled.div`
-  flex: 1;
+  flex: 1 1 48%;
+  min-width: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   z-index: 3;
-  height: 100%;
-  overflow: hidden;
+  overflow: visible;
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
     order: -1;
+    flex: 0 0 auto;
+    width: 100%;
   }
 `;
 
 const HeroText = styled.div`
   color: white;
+  width: 100%;
+  min-width: 0;
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -214,6 +251,9 @@ const HeroTitle = styled(motion.h1)`
   background-clip: text;
   letter-spacing: -0.03em;
   position: relative;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 
   &::after {
     content: '';
@@ -225,10 +265,14 @@ const HeroTitle = styled(motion.h1)`
     background: linear-gradient(90deg, #3b82f6, #8b5cf6);
     border-radius: 2px;
 
-    @media (max-width: ${props => props.theme.breakpoints.md}) {
+    @media (max-width: ${props => props.theme.breakpoints.lg}) {
       left: 50%;
       transform: translateX(-50%);
     }
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    font-size: clamp(2rem, 5vw, 3.25rem);
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
@@ -248,10 +292,14 @@ const HeroSubtitle = styled(motion.p)`
   color: rgba(255, 255, 255, 0.8);
   font-weight: 400;
   max-width: 500px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
     max-width: 100%;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
@@ -268,33 +316,41 @@ const HeroSubtitle = styled(motion.p)`
 const HighlightText = styled.span`
   color: #60a5fa;
   font-weight: 600;
+  display: inline-block;
+  margin-top: ${props => props.theme.spacing.xs};
 `;
 
 const TypingAnimation = styled.span`
   color: #60a5fa;
   font-weight: 600;
+  display: inline-block;
+  min-width: 24ch;
+  white-space: nowrap;
+  vertical-align: baseline;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    min-width: 20ch;
+  }
 `;
 
 const HeroButtons = styled(motion.div)`
   display: flex;
   gap: ${props => props.theme.spacing.md};
   flex-wrap: wrap;
+  max-width: 100%;
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
     justify-content: center;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
     gap: ${props => props.theme.spacing.sm};
-    flex-wrap: nowrap;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
     gap: ${props => props.theme.spacing.xs};
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
   }
 `;
 
@@ -408,30 +464,29 @@ const SecondaryButton = styled(Link)`
 
 const TechVisualization = styled.div`
   position: relative;
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  max-width: min(500px, 92vw);
+  aspect-ratio: 1;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    width: 400px;
-    height: 400px;
+    max-width: min(400px, 85vw);
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    width: 350px;
-    height: 350px;
+    max-width: min(350px, 82vw);
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    width: 300px;
-    height: 300px;
+    max-width: min(300px, 80vw);
   }
 
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    width: 250px;
-    height: 250px;
+    max-width: min(260px, 78vw);
   }
 `;
 
@@ -531,7 +586,7 @@ const OrbitingElement = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(10px);
+  will-change: transform;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     width: 65px;
@@ -1271,21 +1326,15 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [cmsServices, setCmsServices] = useState(null);
   const statsRef = React.useRef(null);
   const isStatsInView = useInView(statsRef, { once: true, threshold: 0.3 });
+  const shouldReduceMotion = useReducedMotion();
 
-  const typingServices = [
-    'Web Development',
-    'App Design & Development',
-    'UI/UX Design',
-    'Digital Marketing & SEO',
-    'Brand & IT Consultancy'
-  ];
-
-  // Detect mobile devices
+  // Detect narrow screens where hero omits the animated subtitle line
   useEffect(() => {
     const checkIsMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 992);
     };
     
     checkIsMobile();
@@ -1298,7 +1347,7 @@ const Home = () => {
   useEffect(() => {
     if (isMobile) {
       // On mobile, show the first service statically
-      setCurrentText(typingServices[0]);
+      setCurrentText(TYPING_SERVICES[0]);
       return;
     }
 
@@ -1306,25 +1355,41 @@ const Home = () => {
     const pauseTime = 2000;
 
     const timeout = setTimeout(() => {
-      if (!isDeleting && currentText === typingServices[currentIndex]) {
+      if (!isDeleting && currentText === TYPING_SERVICES[currentIndex]) {
         setTimeout(() => setIsDeleting(true), pauseTime);
       } else if (isDeleting && currentText === '') {
         setIsDeleting(false);
-        setCurrentIndex((prev) => (prev + 1) % typingServices.length);
+        setCurrentIndex((prev) => (prev + 1) % TYPING_SERVICES.length);
       } else {
         setCurrentText((prev) => 
           isDeleting 
             ? prev.slice(0, -1)
-            : typingServices[currentIndex].slice(0, prev.length + 1)
+            : TYPING_SERVICES[currentIndex].slice(0, prev.length + 1)
         );
       }
     }, typeSpeed);
 
     return () => clearTimeout(timeout);
-  }, [currentText, currentIndex, isDeleting, typingServices, isMobile]);
+  }, [currentText, currentIndex, isDeleting, isMobile]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const rows = await fetchCmsServices();
+        if (!cancelled && Array.isArray(rows) && rows.length > 0) {
+          setCmsServices(rows.map(decorateHomeServiceFromApi));
+        }
+      } catch {
+        /* keep static services */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const openModal = () => {
-    console.log('Opening modal...');
     setIsModalOpen(true);
   };
 
@@ -1369,6 +1434,9 @@ const Home = () => {
       description: 'Intelligent chatbots and AI-powered solutions to automate customer service, improve user experience, and streamline business operations with cutting-edge AI technology.'
     }
   ];
+
+  const homepageServices =
+    cmsServices && cmsServices.length > 0 ? cmsServices : services;
 
   // Function to get platform icon
   const getPlatformIcon = (platform) => {
@@ -1420,53 +1488,61 @@ const Home = () => {
       <HeroSection>
         <HeroBackground />
         <TechGrid />
-        <FloatingShapes>
-          <Shape
-            style={{ top: '20%', left: '10%', width: '60px', height: '60px' }}
-            animate={{ y: [0, -20, 0], rotate: [0, 180, 360] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <Shape
-            style={{ top: '60%', right: '15%', width: '40px', height: '40px' }}
-            animate={{ y: [0, 20, 0], rotate: [0, -180, -360] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <Shape
-            style={{ bottom: '30%', left: '20%', width: '80px', height: '80px' }}
-            animate={{ y: [0, -15, 0], rotate: [0, 90, 180] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
+        {/* Floating decorative shapes — disabled on mobile & reduced-motion */}
+        <FloatingShapes aria-hidden="true">
+          {!isMobile && !shouldReduceMotion && (
+            <>
+              <Shape
+                style={{ top: '20%', left: '10%', width: '60px', height: '60px' }}
+                animate={{ y: [0, -20, 0], rotate: [0, 180, 360] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <Shape
+                style={{ top: '60%', right: '15%', width: '40px', height: '40px' }}
+                animate={{ y: [0, 20, 0], rotate: [0, -180, -360] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <Shape
+                style={{ bottom: '30%', left: '20%', width: '80px', height: '80px' }}
+                animate={{ y: [0, -15, 0], rotate: [0, 90, 180] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </>
+          )}
         </FloatingShapes>
-        <CodeLines>
-          <CodeLine
-            style={{ top: '10%', left: '5%' }}
-            animate={{ x: [0, 100, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          >
-            &lt;div&gt;IT Solutions&lt;/div&gt;
-          </CodeLine>
-          <CodeLine
-            style={{ top: '30%', right: '10%' }}
-            animate={{ x: [0, -80, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            function innovate() &#123; return "future"; &#125;
-          </CodeLine>
-          <CodeLine
-            style={{ bottom: '20%', left: '15%' }}
-            animate={{ x: [0, 120, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          >
-            const technology = "cutting-edge";
-          </CodeLine>
-        </CodeLines>
+        {/* Decorative code lines — desktop only */}
+        {!isMobile && !shouldReduceMotion && (
+          <CodeLines aria-hidden="true">
+            <CodeLine
+              style={{ top: '10%', left: '5%' }}
+              animate={{ x: [0, 100, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              &lt;div&gt;IT Solutions&lt;/div&gt;
+            </CodeLine>
+            <CodeLine
+              style={{ top: '30%', right: '10%' }}
+              animate={{ x: [0, -80, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              function innovate() &#123; return "future"; &#125;
+            </CodeLine>
+            <CodeLine
+              style={{ bottom: '20%', left: '15%' }}
+              animate={{ x: [0, 120, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              const technology = "cutting-edge";
+            </CodeLine>
+          </CodeLines>
+        )}
         <HeroContent>
           <HeroLeft>
             <HeroText>
               <HeroTitle
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.4 }}
               >
                 Premier IT Solutions
                 {!isMobile && (
@@ -1477,18 +1553,18 @@ const Home = () => {
                 )}
               </HeroTitle>
               <HeroSubtitle
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
               >
-                BestechSolz Vision delivers cutting-edge IT infrastructure, software development, 
+                Bestech Vision delivers cutting-edge IT infrastructure, software development, 
                 and technology consulting services that drive innovation and operational excellence 
                 for enterprise clients worldwide.
               </HeroSubtitle>
               <HeroButtons
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
               >
                 <PrimaryButtonAsButton onClick={openModal}>
                   Get Free Website Audit
@@ -1504,13 +1580,18 @@ const Home = () => {
             <TechVisualization>
               <CentralHub
                 initial={{ scale: 0 }}
-                animate={{ 
+                animate={{
                   scale: 1,
-                  rotate: 360
+                  rotate: (!isMobile && !shouldReduceMotion) ? 360 : 0
                 }}
-                transition={{ 
-                  scale: { duration: 0.8, delay: 0.6 },
-                  rotate: { duration: 20, repeat: Infinity, ease: "linear", delay: 1 }
+                transition={{
+                  scale: { duration: 0.4, delay: 0.3 },
+                  rotate: {
+                    duration: 20,
+                    repeat: (!isMobile && !shouldReduceMotion) ? Infinity : 0,
+                    ease: "linear",
+                    delay: 0.7
+                  }
                 }}
               >
                 <HubIcon>
@@ -1521,66 +1602,66 @@ const Home = () => {
               <OrbitingElement
                 style={{ top: '10%', left: '50%', transform: 'translateX(-50%)' }}
                 initial={{ opacity: 0, scale: 0 }}
-                animate={{ 
-                  opacity: 1, 
+                animate={{
+                  opacity: 1,
                   scale: 1,
-                  y: [0, -10, 0]
+                  y: (!isMobile && !shouldReduceMotion) ? [0, -10, 0] : 0
                 }}
-                transition={{ 
-                  opacity: { duration: 0.8, delay: 0.8 },
-                  scale: { duration: 0.8, delay: 0.8 },
-                  y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }
+                transition={{
+                  opacity: { duration: 0.4, delay: 0.4 },
+                  scale:   { duration: 0.4, delay: 0.4 },
+                  y: { duration: 3, repeat: (!isMobile && !shouldReduceMotion) ? Infinity : 0, ease: "easeInOut" }
                 }}
               >
                 <ElementIcon><FaCode /></ElementIcon>
               </OrbitingElement>
-              
+
               <OrbitingElement
                 style={{ top: '50%', right: '10%', transform: 'translateY(-50%)' }}
                 initial={{ opacity: 0, scale: 0 }}
-                animate={{ 
-                  opacity: 1, 
+                animate={{
+                  opacity: 1,
                   scale: 1,
-                  x: [0, 10, 0]
+                  x: (!isMobile && !shouldReduceMotion) ? [0, 10, 0] : 0
                 }}
-                transition={{ 
-                  opacity: { duration: 0.8, delay: 1.0 },
-                  scale: { duration: 0.8, delay: 1.0 },
-                  x: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }
+                transition={{
+                  opacity: { duration: 0.4, delay: 0.5 },
+                  scale:   { duration: 0.4, delay: 0.5 },
+                  x: { duration: 4, repeat: (!isMobile && !shouldReduceMotion) ? Infinity : 0, ease: "easeInOut" }
                 }}
               >
                 <ElementIcon><FaCloud /></ElementIcon>
               </OrbitingElement>
-              
+
               <OrbitingElement
                 style={{ bottom: '10%', left: '50%', transform: 'translateX(-50%)' }}
                 initial={{ opacity: 0, scale: 0 }}
-                animate={{ 
-                  opacity: 1, 
+                animate={{
+                  opacity: 1,
                   scale: 1,
-                  y: [0, 10, 0]
+                  y: (!isMobile && !shouldReduceMotion) ? [0, 10, 0] : 0
                 }}
-                transition={{ 
-                  opacity: { duration: 0.8, delay: 1.2 },
-                  scale: { duration: 0.8, delay: 1.2 },
-                  y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }
+                transition={{
+                  opacity: { duration: 0.4, delay: 0.6 },
+                  scale:   { duration: 0.4, delay: 0.6 },
+                  y: { duration: 5, repeat: (!isMobile && !shouldReduceMotion) ? Infinity : 0, ease: "easeInOut" }
                 }}
               >
                 <ElementIcon><FaShieldAlt /></ElementIcon>
               </OrbitingElement>
-              
+
               <OrbitingElement
                 style={{ top: '50%', left: '10%', transform: 'translateY(-50%)' }}
                 initial={{ opacity: 0, scale: 0 }}
-                animate={{ 
-                  opacity: 1, 
+                animate={{
+                  opacity: 1,
                   scale: 1,
-                  x: [0, -10, 0]
+                  x: (!isMobile && !shouldReduceMotion) ? [0, -10, 0] : 0
                 }}
-                transition={{ 
-                  opacity: { duration: 0.8, delay: 1.4 },
-                  scale: { duration: 0.8, delay: 1.4 },
-                  x: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.5 }
+                transition={{
+                  opacity: { duration: 0.4, delay: 0.7 },
+                  scale:   { duration: 0.4, delay: 0.7 },
+                  x: { duration: 6, repeat: (!isMobile && !shouldReduceMotion) ? Infinity : 0, ease: "easeInOut" }
                 }}
               >
                 <ElementIcon><FaMobile /></ElementIcon>
@@ -1588,18 +1669,18 @@ const Home = () => {
 
               <TechCard
                 style={{ top: '5%', right: '5%' }}
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.6 }}
+                transition={{ duration: 0.4, delay: 0.8 }}
               >
-                <div>1000+ Projects</div>
+                <div>500+ Projects</div>
               </TechCard>
-              
+
               <TechCard
                 style={{ bottom: '5%', left: '5%' }}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.8 }}
+                transition={{ duration: 0.4, delay: 0.9 }}
               >
                 <div>99.9% Uptime</div>
               </TechCard>
@@ -1701,9 +1782,9 @@ const Home = () => {
             Comprehensive IT solutions to your business needs
           </SectionSubtitle>
           <ServicesGrid>
-            {services.map((service, index) => (
+            {homepageServices.map((service, index) => (
               <ServiceCard
-                key={service.title}
+                key={service.id || service.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}

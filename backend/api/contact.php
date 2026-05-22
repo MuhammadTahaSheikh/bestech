@@ -35,6 +35,7 @@ $name = htmlspecialchars(trim($input['name']));
 $email = filter_var(trim($input['email']), FILTER_SANITIZE_EMAIL);
 $phone = isset($input['phone']) ? htmlspecialchars(trim($input['phone'])) : '';
 $company = isset($input['company']) ? htmlspecialchars(trim($input['company'])) : '';
+$service = isset($input['service']) ? htmlspecialchars(trim($input['service'])) : '';
 $message = htmlspecialchars(trim($input['message']));
 
 // Validate email
@@ -45,9 +46,9 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // Email configuration
-$to = 'mtahasheikh750@gmail.com';
-$subject = 'New Contact Form Submission - BestechSolz Vision';
-$headers = "From: noreply@bestechsolz.com\r\n";
+$to = 'info@bestechvision.com';
+$subject = 'New Contact Form Submission - Bestech Vision';
+$headers = "From: noreply@bestechvision.com\r\n";
 $headers .= "Reply-To: $email\r\n";
 $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
@@ -70,7 +71,7 @@ $email_body = "
     <div class='container'>
         <div class='header'>
             <h2>New Contact Form Submission</h2>
-            <p>BestechSolz Vision Website</p>
+            <p>Bestech Vision Vision Website</p>
         </div>
         <div class='content'>
             <div class='field'>
@@ -90,6 +91,10 @@ $email_body = "
                 <div class='value'>" . ($company ?: 'Not provided') . "</div>
             </div>
             <div class='field'>
+                <div class='label'>Service:</div>
+                <div class='value'>" . ($service ?: 'Not selected') . "</div>
+            </div>
+            <div class='field'>
                 <div class='label'>Message:</div>
                 <div class='value'>$message</div>
             </div>
@@ -99,7 +104,7 @@ $email_body = "
             </div>
         </div>
         <div class='footer'>
-            <p>This email was sent from the BestechSolz Vision contact form.</p>
+            <p>This email was sent from the Bestech Vision Vision contact form.</p>
         </div>
     </div>
 </body>

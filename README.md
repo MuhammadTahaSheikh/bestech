@@ -1,6 +1,6 @@
-# BestechSolz Vision - Professional IT Company Website
+# Bestech Vision Vision - Professional IT Company Website
 
-A modern, animated React website for BestechSolz Vision, a professional IT solutions company. This website features a comprehensive set of pages including Home, About, Services, Portfolio, Team, Contact, and an Appointment booking system.
+A modern, animated React website for Bestech Vision Vision, a professional IT solutions company. This website features a comprehensive set of pages including Home, About, Services, Portfolio, Team, Contact, and an Appointment booking system.
 
 ## 🚀 Features
 
@@ -37,7 +37,7 @@ A modern, animated React website for BestechSolz Vision, a professional IT solut
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd bestechsolz-vision
+   cd Bestech Vision-vision
    ```
 
 2. **Install dependencies**
@@ -155,8 +155,8 @@ npm run build
 
 ## 📞 Contact Information
 
-- **Company**: BestechSolz Vision
-- **Email**: info@bestechsolz.com
+- **Company**: Bestech Vision Vision
+- **Email**: info@Bestech Vision.com
 - **Phone**: +1 (555) 123-4567
 - **Address**: 123 Tech Street, Digital City, DC 12345
 
@@ -181,6 +181,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-Built with ❤️ by BestechSolz Vision
+Built with ❤️ by Bestech Vision Vision
 
 

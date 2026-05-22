@@ -28,7 +28,7 @@ Create these meeting types in Calendly:
 
 ### 3. Get Your Calendly Username
 1. In Calendly, go to your profile
-2. Copy your username (e.g., `bestechsolz-vision`)
+2. Copy your username (e.g., `Bestech Vision-vision`)
 3. Replace `your-username` in the code with your actual username
 
 ### 4. Update the Code

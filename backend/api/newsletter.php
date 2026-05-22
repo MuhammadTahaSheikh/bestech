@@ -58,8 +58,8 @@ file_put_contents($subscribers_file, json_encode($subscribers, JSON_PRETTY_PRINT
 
 // Send confirmation email
 $to = $email;
-$subject = 'Welcome to BestechSolz Vision Newsletter!';
-$headers = "From: newsletter@bestechsolz.com\r\n";
+$subject = 'Welcome to Bestech Vision Vision Newsletter!';
+$headers = "From: newsletter@Bestech Vision.com\r\n";
 $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
 $email_body = "
@@ -76,7 +76,7 @@ $email_body = "
 <body>
     <div class='container'>
         <div class='header'>
-            <h2>Welcome to BestechSolz Vision!</h2>
+            <h2>Welcome to Bestech Vision Vision!</h2>
         </div>
         <div class='content'>
             <p>Thank you for subscribing to our newsletter!</p>
@@ -90,7 +90,7 @@ $email_body = "
             <p>We're excited to keep you informed about our latest developments!</p>
         </div>
         <div class='footer'>
-            <p>BestechSolz Vision - Your Trusted IT Solutions Partner</p>
+            <p>Bestech Vision Vision - Your Trusted IT Solutions Partner</p>
         </div>
     </div>
 </body>
@@ -102,7 +102,7 @@ mail($to, $subject, $email_body, $headers);
 
 // Notify admin
 $admin_email = 'mtahasheikh750@gmail.com';
-$admin_subject = 'New Newsletter Subscription - BestechSolz Vision';
+$admin_subject = 'New Newsletter Subscription - Bestech Vision Vision';
 $admin_body = "New newsletter subscription: $email\nTime: " . date('Y-m-d H:i:s');
 mail($admin_email, $admin_subject, $admin_body);
 
