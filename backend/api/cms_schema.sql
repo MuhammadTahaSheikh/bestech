@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS portfolio_projects (
   category_label VARCHAR(255) NOT NULL DEFAULT '',
   description TEXT NOT NULL,
   icon_key VARCHAR(64) NOT NULL DEFAULT 'code',
+  image_path VARCHAR(512) DEFAULT NULL,
   technologies_json JSON DEFAULT NULL,
   duration VARCHAR(100) NOT NULL DEFAULT '',
   team_size VARCHAR(100) NOT NULL DEFAULT '',

@@ -5,8 +5,12 @@
   RewriteEngine On
   RewriteBase /
   RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
+  # PHP API — never serve React for /api/*
+  RewriteRule ^api/ - [L]
+  # Serve real files (images, JS, CSS) directly
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+  # SPA fallback — also when a folder name matches a route (e.g. /team/)
   RewriteRule . /index.html [L]
 </IfModule>
 

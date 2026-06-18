@@ -32,6 +32,19 @@ function decoratePortfolioFromApi(p) {
   };
 }
 
+function renderProjectPreview(project) {
+  if (project.imageUrl) {
+    return (
+      <ProjectPreviewImg
+        src={project.imageUrl}
+        alt={project.title}
+        loading="lazy"
+      />
+    );
+  }
+  return project.image;
+}
+
 const PortfolioContainer = styled.div`
   min-height: 100vh;
   padding-top: 2rem;
@@ -157,7 +170,7 @@ const ProjectCard = styled(motion.div)`
 
 const ProjectImage = styled.div`
   height: 250px;
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  background: ${props => (props.$hasPreview ? '#f3f4f6' : 'linear-gradient(135deg, #3730a3, #581c87)')};
   position: relative;
   display: flex;
   align-items: center;
@@ -175,7 +188,17 @@ const ProjectImage = styled.div`
     bottom: 0;
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
     opacity: 0.3;
+    display: ${props => (props.$hasPreview ? 'none' : 'block')};
   }
+`;
+
+const ProjectPreviewImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  position: relative;
+  z-index: 1;
 `;
 
 const ProjectOverlay = styled.div`
@@ -330,12 +353,13 @@ const ModalClose = styled.button`
 
 const ModalImage = styled.div`
   height: 300px;
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  background: ${props => (props.$hasPreview ? '#f3f4f6' : 'linear-gradient(135deg, #3730a3, #581c87)')};
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 4rem;
+  overflow: hidden;
 `;
 
 const ModalBody = styled.div`
@@ -436,7 +460,8 @@ const Portfolio = () => {
         'Responsive design for all devices'
       ],
       liveUrl: 'https://stopshoprei.com/',
-      githubUrl: '#'
+      githubUrl: '#',
+      imageUrl: '/portfolio/stopshoprei.png'
     },
     {
       id: 2,
@@ -457,7 +482,8 @@ const Portfolio = () => {
         'Mobile-first approach'
       ],
       liveUrl: 'https://www.bobbyandafton.com/',
-      githubUrl: '#'
+      githubUrl: '#',
+      imageUrl: '/portfolio/bobby-afton.png'
     },
     {
       id: 3,
@@ -478,7 +504,8 @@ const Portfolio = () => {
         'Mobile responsive design'
       ],
       liveUrl: 'https://www.stupidcheaphouses.com/',
-      githubUrl: '#'
+      githubUrl: '#',
+      imageUrl: '/portfolio/stupid-cheap-houses.png'
     },
     {
       id: 4,
@@ -541,12 +568,80 @@ const Portfolio = () => {
         'Real-time market data updates'
       ],
       liveUrl: 'https://sevenpinesinvest.com/',
-      githubUrl: '#'
+      githubUrl: '#',
+      imageUrl: '/portfolio/seven-pines.png'
+    },
+    {
+      id: 7,
+      title: 'Bestech Lawyer CMS',
+      category: 'web',
+      categoryLabel: 'Legal Tech / CMS',
+      description: 'Content management platform built for law firms, enabling case workflows, client management, and secure document handling in one centralized dashboard.',
+      image: <FaShieldAlt />,
+      technologies: ['React', 'Firebase', 'CMS', 'Authentication', 'Responsive Design'],
+      duration: '4 months',
+      team: '4 developers',
+      features: [
+        'Law firm content and case management',
+        'Secure client and document workflows',
+        'Role-based admin dashboard',
+        'Mobile-responsive interface',
+        'Integrated authentication',
+        'Scalable CMS architecture'
+      ],
+      liveUrl: 'https://lawyer-ai-eight.vercel.app/',
+      githubUrl: 'https://github.com/MuhammadTahaSheikh/lawyer_ai',
+      imageUrl: '/portfolio/lawyer-cms.png'
+    },
+    {
+      id: 8,
+      title: 'BestechCare - Healthcare Platform',
+      category: 'web',
+      categoryLabel: 'Healthcare Web Development',
+      description: 'All-in-one healthcare platform for Pakistan — find top doctors and hospitals, book appointments, order lab tests, and get medicines delivered.',
+      image: <FaMobile />,
+      technologies: ['React', 'Next.js', 'Healthcare APIs', 'Booking System', 'Search'],
+      duration: '5 months',
+      team: '5 developers',
+      features: [
+        'Doctor search by speciality and location',
+        'In-clinic and video consultation booking',
+        'Hospital finder with location-based results',
+        'Lab test booking with discounts',
+        'Prescription medicine ordering',
+        'Doctor onboarding and practice growth tools'
+      ],
+      liveUrl: 'https://bestech-care.vercel.app/',
+      githubUrl: 'https://github.com/MuhammadTahaSheikh/InstaCare_backend',
+      imageUrl: '/portfolio/bestech-care.png'
+    },
+    {
+      id: 9,
+      title: 'BestechVision AI CRM - AutoFollow',
+      category: 'automation',
+      categoryLabel: 'RPA/AI Development',
+      description: 'AI-powered CRM for lead management and automated follow-up, helping sales teams track prospects, nurture pipelines, and close deals faster.',
+      image: <FaCloud />,
+      technologies: ['Next.js', 'AI/ML', 'CRM', 'Automation', 'REST APIs'],
+      duration: '4 months',
+      team: '4 developers',
+      features: [
+        'AI-driven lead scoring and follow-up',
+        'Automated outreach and nurture sequences',
+        'Real-time sales pipeline dashboard',
+        'Lead activity tracking and analytics',
+        'Team collaboration and role management',
+        'Integration-ready API architecture'
+      ],
+      liveUrl: 'https://auto-follow-frontend.vercel.app/dashboard',
+      githubUrl: 'https://github.com/MuhammadTahaSheikh/AutoFollow_frontend',
+      imageUrl: '/portfolio/autofollow-crm.png'
     }
   ];
 
-  const projects =
-    cmsProjects && cmsProjects.length > 0 ? cmsProjects : staticProjects;
+  const projects = (cmsProjects && cmsProjects.length > 0 ? cmsProjects : staticProjects)
+    .slice()
+    .sort((a, b) => b.id - a.id);
 
   const filteredProjects = projects.filter(project => 
     activeFilter === 'all' || project.category === activeFilter
@@ -618,8 +713,8 @@ const Portfolio = () => {
                   whileHover={{ scale: 1.02 }}
                   onClick={() => setSelectedProject(project)}
                 >
-                  <ProjectImage>
-                    {project.image}
+                  <ProjectImage $hasPreview={Boolean(project.imageUrl)}>
+                    {renderProjectPreview(project)}
                     <ProjectOverlay>
                       <ProjectLink href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                         <FaExternalLinkAlt />
@@ -676,8 +771,8 @@ const Portfolio = () => {
               <ModalClose onClick={() => setSelectedProject(null)}>
                 <FaTimes />
               </ModalClose>
-              <ModalImage>
-                {selectedProject.image}
+              <ModalImage $hasPreview={Boolean(selectedProject.imageUrl)}>
+                {renderProjectPreview(selectedProject)}
               </ModalImage>
               <ModalBody>
                 <ModalTitle>{selectedProject.title}</ModalTitle>
