@@ -1,0 +1,2 @@
+# Netlify / similar static hosts: rewrite all routes to index.html (HTTP 200).
+/* /index.html 200

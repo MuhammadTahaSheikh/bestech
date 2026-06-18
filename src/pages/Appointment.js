@@ -412,6 +412,7 @@ const Appointment = () => {
   const [selectedMeetingType, setSelectedMeetingType] = useState('consultation');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -509,14 +510,12 @@ const Appointment = () => {
     if (!selectedDate || !selectedTime) return;
 
     setIsSubmitting(true);
+    setSubmitError('');
 
     try {
       await sendBookingEmail();
-
-      setIsSubmitting(false);
       setIsSubmitted(true);
 
-      // Reset form after 3 seconds
       setTimeout(() => {
         setIsSubmitted(false);
         setSelectedDate(null);
@@ -529,12 +528,14 @@ const Appointment = () => {
           company: '',
           message: ''
         });
-      }, 3000);
+      }, 5000);
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error booking appointment:', error);
+      setSubmitError(
+        error?.message || 'Could not book your appointment. Please try again or contact us directly.'
+      );
+    } finally {
       setIsSubmitting(false);
-      // Still show success to user even if email fails
-      setIsSubmitted(true);
     }
   };
 
@@ -655,7 +656,7 @@ const Appointment = () => {
                     <FaCheckCircle />
                     <h3>Meeting Booked Successfully!</h3>
                     <p>
-                      Thank you for booking a meeting with us. Your request has been sent successfully.
+                      Thank you for booking a meeting with us. Check your inbox for a confirmation email shortly.
                     </p>
                     <div style={{ 
                       background: '#f0f9ff', 
@@ -707,6 +708,14 @@ const Appointment = () => {
                     </MeetingTypeCard>
                   ))}
                 </MeetingTypes>
+
+                {submitError && (
+                  <SuccessMessage
+                    style={{ background: '#fff5f5', borderColor: '#feb2b2', color: '#742a2a' }}
+                  >
+                    <p style={{ margin: 0 }}>{submitError}</p>
+                  </SuccessMessage>
+                )}
 
                 <form onSubmit={handleSubmit}>
                   <FormGroup>

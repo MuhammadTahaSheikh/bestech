@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * Copy this file to config.local.php on your server and set your n8n webhook URL.
+ * Do not commit config.local.php if it contains secrets.
+ */
+return [
+    // Production Webhook URL from n8n (Webhook node → Production URL)
+    // Test (manual only):  https://mtahasheikh.app.n8n.cloud/webhook-test/appointment-booking
+    // Live (website):      https://mtahasheikh.app.n8n.cloud/webhook/appointment-booking
+    'N8N_APPOINTMENT_WEBHOOK_URL' => 'https://mtahasheikh.app.n8n.cloud/webhook/appointment-booking',
+];
