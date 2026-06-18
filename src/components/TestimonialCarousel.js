@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useMemo, memo } from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaChevronLeft, FaChevronRight, FaQuoteLeft } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import LazyImage from './LazyImage';
 import { loadTestimonials } from '../utils/testimonialsStorage';
 
@@ -118,10 +118,9 @@ const CarouselWrapper = styled.div`
   }
 `;
 
-const TestimonialCard = styled(motion.div)`
+const TestimonialCard = styled.div`
   display: flex;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
+  background: rgba(15, 23, 42, 0.75);
   border-radius: 24px;
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.3),
@@ -258,8 +257,7 @@ const TestimonialSection = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.45);
   position: relative;
   z-index: 10;
   min-height: 500px;
@@ -428,8 +426,7 @@ const NavigationContainer = styled.div`
 `;
 
 const NavigationButton = styled.button`
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.55);
   border: 1px solid rgba(59, 130, 246, 0.6);
   border-radius: 12px;
   width: 50px;
@@ -495,8 +492,8 @@ const NavigationButton = styled.button`
 
 const TestimonialCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const carouselRef = useRef(null);
-  const testimonials = loadTestimonials();
+  const testimonials = useMemo(() => loadTestimonials(), []);
+  const current = testimonials[currentIndex];
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -505,10 +502,6 @@ const TestimonialCarousel = () => {
   const prevTestimonial = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
-
-
-  console.log('Current testimonial:', testimonials[currentIndex]);
-  console.log('Current index:', currentIndex);
 
   return (
     <TestimonialCarouselContainer>
@@ -529,36 +522,27 @@ const TestimonialCarousel = () => {
         </SectionSubtitle>
 
         <CarouselWrapper>
-          <TestimonialCard
-            key={currentIndex}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-          >
+          <TestimonialCard key={currentIndex}>
             <ImageSection>
               <ImageContainer>
                 <LazyImage
-                  src={testimonials[currentIndex].avatar}
-                  alt={testimonials[currentIndex].author}
+                  src={current.avatar}
+                  alt={current.author}
                   width="100%"
                   height="100%"
                   objectFit="cover"
                   borderRadius="20px"
                   placeholder="Loading image..."
-                  onError={() => {
-                    // Fallback to generated avatar
-                    return `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonials[currentIndex].author)}&size=300&background=3b82f6&color=ffffff&bold=true`;
-                  }}
                 />
               </ImageContainer>
             </ImageSection>
             
             <TestimonialSection>
-              <CustomerName>{testimonials[currentIndex].author}</CustomerName>
-              <CustomerTitle>{testimonials[currentIndex].position}</CustomerTitle>
-              <TestimonialText>"{testimonials[currentIndex].text}"</TestimonialText>
+              <CustomerName>{current.author}</CustomerName>
+              <CustomerTitle>{current.position}</CustomerTitle>
+              <TestimonialText>"{current.text}"</TestimonialText>
               <TestimonialRating>
-                {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
+                {[...Array(current.rating)].map((_, i) => (
                   <Star key={i}>★</Star>
                 ))}
               </TestimonialRating>
@@ -585,4 +569,4 @@ const TestimonialCarousel = () => {
   );
 };
 
-export default TestimonialCarousel;
+export default memo(TestimonialCarousel);

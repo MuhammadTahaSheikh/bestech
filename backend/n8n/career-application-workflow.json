@@ -1,0 +1,80 @@
+{
+  "name": "Bestech Vision - Career Application",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "career-application",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "r1a2b3c4-d5e6-7890-abcd-ef1111111111",
+      "name": "Career Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "bestech-career-application"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body ?? $input.first().json;\nconst item = { json: body, binary: {} };\n\nif (body.cvBase64) {\n  item.binary.cv = {\n    data: body.cvBase64,\n    mimeType: body.cvMimeType || 'application/octet-stream',\n    fileName: body.cvFileName || 'cv.pdf',\n  };\n}\n\nreturn [item];"
+      },
+      "id": "r2a2b3c4-d5e6-7890-abcd-ef2222222222",
+      "name": "Prepare CV attachment",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [280, 0]
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@bestechvision.com",
+        "toEmail": "info@bestechvision.com",
+        "subject": "=Career Application: {{ $json.fullName }} — {{ $json.position }}",
+        "emailFormat": "html",
+        "html": "=<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <style>\n    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; }\n    .container { max-width: 600px; margin: 0 auto; }\n    .header { background: #2563eb; color: #fff; padding: 24px; text-align: center; }\n    .content { padding: 24px; background: #f8fafc; }\n    .field { margin-bottom: 16px; }\n    .label { font-weight: bold; color: #1e40af; font-size: 13px; text-transform: uppercase; }\n    .value { margin-top: 4px; }\n    .footer { text-align: center; padding: 20px; color: #666; font-size: 13px; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h2 style=\"margin:0;\">New Career Application</h2>\n      <p style=\"margin:8px 0 0;\">Bestech Vision Website</p>\n    </div>\n    <div class=\"content\">\n      <div class=\"field\"><div class=\"label\">Full name</div><div class=\"value\">{{ $json.fullName }}</div></div>\n      <div class=\"field\"><div class=\"label\">Email</div><div class=\"value\"><a href=\"mailto:{{ $json.email }}\">{{ $json.email }}</a></div></div>\n      <div class=\"field\"><div class=\"label\">Phone</div><div class=\"value\">{{ $json.phone }}</div></div>\n      <div class=\"field\"><div class=\"label\">Position</div><div class=\"value\">{{ $json.position }}</div></div>\n      <div class=\"field\"><div class=\"label\">Experience</div><div class=\"value\">{{ $json.experience || 'Not provided' }}</div></div>\n      <div class=\"field\"><div class=\"label\">Cover letter</div><div class=\"value\">{{ $json.coverLetter || 'Not provided' }}</div></div>\n      <div class=\"field\"><div class=\"label\">CV file</div><div class=\"value\">{{ $json.cvFileName || 'Attached' }}</div></div>\n      <div class=\"field\"><div class=\"label\">Submitted at</div><div class=\"value\">{{ $json.submittedAt }}</div></div>\n    </div>\n    <div class=\"footer\">Sent via n8n from the Bestech Vision careers form.</div>\n  </div>\n</body>\n</html>",
+        "options": {
+          "attachments": "cv",
+          "replyTo": "={{ $json.email }}"
+        }
+      },
+      "id": "r3a2b3c4-d5e6-7890-abcd-ef3333333333",
+      "name": "Email info@bestechvision.com",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [560, 0]
+    }
+  ],
+  "connections": {
+    "Career Webhook": {
+      "main": [
+        [
+          {
+            "node": "Prepare CV attachment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare CV attachment": {
+      "main": [
+        [
+          {
+            "node": "Email info@bestechvision.com",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "career-application-v1",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

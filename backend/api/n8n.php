@@ -67,3 +67,39 @@ function sendToN8nWebhook(string $webhookUrl, array $payload): array
         'error' => ($status >= 200 && $status < 300) ? null : "HTTP $status",
     ];
 }
+
+/**
+ * POST to n8n when configured; exit on success/failure. Returns false if webhook URL is empty.
+ */
+function tryN8nFormSubmit(
+    string $webhookUrl,
+    array $payload,
+    string $logFile,
+    string $logLine,
+    string $successMessage,
+    string $errorMessage = 'Failed to submit form. Please try again later.'
+): bool {
+    if ($webhookUrl === '') {
+        return false;
+    }
+
+    $result = sendToN8nWebhook($webhookUrl, $payload);
+
+    if ($result['ok']) {
+        @file_put_contents($logFile, $logLine, FILE_APPEND | LOCK_EX);
+
+        http_response_code(200);
+        echo json_encode([
+            'success' => true,
+            'message' => $successMessage,
+        ]);
+        exit();
+    }
+
+    http_response_code(500);
+    echo json_encode([
+        'error' => $errorMessage,
+        'detail' => $result['error'] ?? 'n8n webhook failed',
+    ]);
+    exit();
+}

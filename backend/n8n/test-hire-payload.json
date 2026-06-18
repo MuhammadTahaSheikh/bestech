@@ -1,0 +1,10 @@
+{
+  "formType": "hire",
+  "name": "Alex Client",
+  "email": "alex.client@example.com",
+  "phone": "+1 555 444 3322",
+  "question": "We need a senior React developer for a 6-month project.",
+  "teamMember": "Muhammad Taha",
+  "teamMemberRole": "Lead Developer",
+  "submittedAt": "2026-06-18T16:30:00+00:00"
+}

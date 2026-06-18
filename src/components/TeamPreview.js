@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import SumairImage from '../assets/Sumair.jpg';
@@ -30,9 +30,7 @@ const TeamSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    background: rgba(255, 255, 255, 0.5);
     z-index: 0;
   }
 
@@ -291,12 +289,10 @@ const OverlayDescription = styled.p`
 const OverlayInner = styled.div`
   width: 92%;
   max-width: 245px;
-  background: rgba(46, 99, 200, 0.7);
+  background: rgba(46, 99, 200, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 12px 30px rgba(10, 22, 52, 0.28);
   padding: 1rem 0.9rem;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   border-radius: 4px;
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
@@ -523,6 +519,8 @@ const TeamPreview = () => {
                   <MemberImage 
                     src={member.image} 
                     alt={member.name}
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       e.target.style.display = 'none';
                     }}
@@ -551,4 +549,4 @@ const TeamPreview = () => {
   );
 };
 
-export default TeamPreview;
+export default memo(TeamPreview);

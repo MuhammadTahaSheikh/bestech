@@ -1,0 +1,77 @@
+{
+  "name": "Bestech Vision - Appointment Booking",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointment-booking",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "f8a3c2e1-4b5d-6a7e-8f90-1a2b3c4d5e6f",
+      "name": "Appointment Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "bestech-appointment-booking"
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@bestechvision.com",
+        "toEmail": "info@bestechvision.com",
+        "subject": "=New Appointment: {{ $json.body.name }} — {{ $json.body.preferredDate }} at {{ $json.body.preferredTime }}",
+        "emailFormat": "html",
+        "html": "=<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <style>\n    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; }\n    .container { max-width: 600px; margin: 0 auto; }\n    .header { background: #2563eb; color: #fff; padding: 24px; text-align: center; }\n    .content { padding: 24px; background: #f8fafc; }\n    .field { margin-bottom: 16px; }\n    .label { font-weight: bold; color: #1e40af; font-size: 13px; text-transform: uppercase; }\n    .value { margin-top: 4px; }\n    .urgent { background: #fef3c7; padding: 12px 16px; border-left: 4px solid #f59e0b; margin-bottom: 20px; }\n    .footer { text-align: center; padding: 20px; color: #666; font-size: 13px; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h2 style=\"margin:0;\">New Appointment Booking</h2>\n      <p style=\"margin:8px 0 0;\">Bestech Vision Website</p>\n    </div>\n    <div class=\"content\">\n      <div class=\"urgent\"><strong>Action required:</strong> Confirm this meeting with the client.</div>\n      <div class=\"field\"><div class=\"label\">Client name</div><div class=\"value\">{{ $json.body.name }}</div></div>\n      <div class=\"field\"><div class=\"label\">Email</div><div class=\"value\"><a href=\"mailto:{{ $json.body.email }}\">{{ $json.body.email }}</a></div></div>\n      <div class=\"field\"><div class=\"label\">Phone</div><div class=\"value\">{{ $json.body.phone || 'Not provided' }}</div></div>\n      <div class=\"field\"><div class=\"label\">Company</div><div class=\"value\">{{ $json.body.company || 'Not provided' }}</div></div>\n      <div class=\"field\"><div class=\"label\">Meeting type</div><div class=\"value\">{{ $json.body.meetingType }}</div></div>\n      <div class=\"field\"><div class=\"label\">Preferred date</div><div class=\"value\">{{ $json.body.preferredDate }}</div></div>\n      <div class=\"field\"><div class=\"label\">Preferred time</div><div class=\"value\">{{ $json.body.preferredTime }}</div></div>\n      <div class=\"field\"><div class=\"label\">Duration</div><div class=\"value\">{{ $json.body.duration || '30 minutes' }}</div></div>\n      <div class=\"field\"><div class=\"label\">Project description</div><div class=\"value\">{{ $json.body.projectDescription || 'Not provided' }}</div></div>\n      <div class=\"field\"><div class=\"label\">Booked at</div><div class=\"value\">{{ $json.body.bookedAt }}</div></div>\n    </div>\n    <div class=\"footer\">Sent via n8n from the Bestech Vision appointment form.</div>\n  </div>\n</body>\n</html>",
+        "options": {
+          "replyTo": "={{ $json.body.email }}"
+        }
+      },
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Email info@bestechvision.com",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [280, 0]
+    }
+  ],
+  "connections": {
+    "Appointment Webhook": {
+      "main": [
+        [
+          {
+            "node": "Email info@bestechvision.com",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "Appointment Webhook": [
+      {
+        "json": {
+          "formType": "appointment",
+          "name": "John Smith",
+          "email": "john.smith@example.com",
+          "phone": "+1 555 123 4567",
+          "company": "Acme Corp",
+          "meetingType": "Free Consultation",
+          "preferredDate": "Thursday, June 26, 2026",
+          "preferredTime": "10:00 AM",
+          "duration": "30 minutes",
+          "projectDescription": "Looking for a custom web app and mobile integration.",
+          "bookedAt": "2026-06-18T14:30:00+00:00"
+        }
+      }
+    ]
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c9d8e7f6-a5b4-4321-9876-543210fedcba",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

@@ -1,0 +1,13 @@
+{
+  "formType": "career",
+  "fullName": "Sam Applicant",
+  "email": "sam.applicant@example.com",
+  "phone": "+1 555 111 2233",
+  "position": "Frontend Developer",
+  "experience": "3 years React",
+  "coverLetter": "I am excited to join Bestech Vision.",
+  "cvFileName": "resume.pdf",
+  "cvMimeType": "application/pdf",
+  "cvBase64": "",
+  "submittedAt": "2026-06-18T16:30:00+00:00"
+}

@@ -1,0 +1,10 @@
+{
+  "formType": "contact",
+  "name": "Jane Doe",
+  "email": "jane.doe@example.com",
+  "phone": "+1 555 987 6543",
+  "company": "Example Inc",
+  "service": "web-development",
+  "message": "I would like to discuss a new website project.",
+  "submittedAt": "2026-06-18T16:30:00+00:00"
+}

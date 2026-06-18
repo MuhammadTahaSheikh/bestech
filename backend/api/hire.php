@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/n8n.php';
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
@@ -44,6 +46,27 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
+$n8nPayload = [
+    'formType' => 'hire',
+    'name' => $name,
+    'email' => $email,
+    'phone' => $phone,
+    'question' => $question,
+    'teamMember' => $teamMember,
+    'teamMemberRole' => $teamMemberRole,
+    'submittedAt' => date('c'),
+];
+
+tryN8nFormSubmit(
+    getN8nHireWebhookUrl(),
+    $n8nPayload,
+    __DIR__ . '/hire_log.txt',
+    date('Y-m-d H:i:s') . " - Hire (n8n): $name ($email) — $teamMember\n",
+    'Inquiry sent successfully.',
+    'Failed to send inquiry. Please try again later.'
+);
+
+// Fallback when n8n is not configured (legacy PHP mail)
 $to = 'info@bestechvision.com';
 $subject = 'New Hire Inquiry - Bestech Vision';
 $headers = "From: noreply@bestechvision.com\r\n";
@@ -87,12 +110,11 @@ if (mail($to, $subject, $email_body, $headers)) {
     http_response_code(200);
     echo json_encode([
         'success' => true,
-        'message' => 'Inquiry sent successfully.'
+        'message' => 'Inquiry sent successfully.',
     ]);
 } else {
     http_response_code(500);
     echo json_encode([
-        'error' => 'Failed to send inquiry. Please try again later.'
+        'error' => 'Failed to send inquiry. Please try again later.',
     ]);
 }
-?>

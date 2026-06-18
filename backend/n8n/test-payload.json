@@ -1,0 +1,13 @@
+{
+  "formType": "appointment",
+  "name": "John Smith",
+  "email": "john.smith@example.com",
+  "phone": "+1 555 123 4567",
+  "company": "Acme Corp",
+  "meetingType": "Free Consultation",
+  "preferredDate": "Thursday, June 26, 2026",
+  "preferredTime": "10:00 AM",
+  "duration": "30 minutes",
+  "projectDescription": "Looking for a custom web app and mobile integration.",
+  "bookedAt": "2026-06-18T14:30:00+00:00"
+}

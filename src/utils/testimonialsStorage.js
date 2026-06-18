@@ -28,20 +28,6 @@ export const defaultTestimonials = [
     position: 'IT Director, Tech Solutions Inc',
     avatar: '/client4.jpeg',
     rating: 5
-  },
-  {
-    text: 'The digital transformation initiative led by Bestech Vision Vision revolutionized our customer experience. Their innovative solutions and dedicated support team delivered results that exceeded our KPIs by 60%.',
-    author: 'James Wilson',
-    position: 'CEO, E-commerce Solutions Inc',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format',
-    rating: 5
-  },
-  {
-    text: 'Working with Bestech Vision Vision was a game-changer for our startup. Their technical expertise and strategic guidance helped us scale from 10 to 1000+ users in just 6 months.',
-    author: 'Emily Johnson',
-    position: 'Founder & CTO, TechStart Innovations',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face&auto=format',
-    rating: 5
   }
 ];
 

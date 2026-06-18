@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { 
   FaRocket, 
   FaCode, 
   FaMobile, 
-  FaCloud, 
-  FaShieldAlt, 
   FaUsers, 
   FaArrowRight,
   FaCheckCircle,
-  FaStar,
-  FaQuoteLeft,
   FaDatabase,
   FaChartLine,
   FaRobot
@@ -32,12 +28,10 @@ const HOME_SERVICE_ICON_MAP = {
   robot: FaRobot
 };
 
-const TYPING_SERVICES = [
-  'Web Development',
-  'App Design & Development',
-  'UI/UX Design',
-  'Digital Marketing & SEO',
-  'Brand & IT Consultancy'
+const HERO_FEATURES = [
+  'Custom software & web development',
+  'Cloud infrastructure & IT consulting',
+  'Dedicated support for enterprise clients'
 ];
 
 function decorateHomeServiceFromApi(row) {
@@ -56,302 +50,184 @@ const HomeContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  min-height: min(100svh, 800px);
-  height: auto;
   background: #0f172a;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  margin: ${props => props.theme.spacing.xl};
-  padding: ${props => props.theme.spacing['3xl']} 0;
-  border-radius: ${props => props.theme.borderRadius['3xl']};
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    margin: ${props => props.theme.spacing.lg};
-    min-height: min(90svh, 720px);
-    padding: ${props => props.theme.spacing['2xl']} 0;
-  }
+  padding: 5rem 0 4.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    margin: ${props => props.theme.spacing.md};
-    min-height: 0;
-    padding: ${props => props.theme.spacing.xl} 0 ${props => props.theme.spacing['2xl']};
-    border-radius: ${props => props.theme.borderRadius['2xl']};
+    padding: 3rem 0 2.5rem;
   }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    margin: ${props => props.theme.spacing.sm};
-    padding: ${props => props.theme.spacing.lg} 0 ${props => props.theme.spacing.xl};
-    border-radius: ${props => props.theme.borderRadius.xl};
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    margin: ${props => props.theme.spacing.xs};
-    padding: ${props => props.theme.spacing.md} 0 ${props => props.theme.spacing.lg};
-    border-radius: ${props => props.theme.borderRadius.lg};
-  }
-`;
-
-const HeroBackground = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-`;
-
-const TechGrid = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  opacity: 0.5;
-`;
-
-const FloatingShapes = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-`;
-
-const Shape = styled(motion.div)`
-  position: absolute;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
-  filter: blur(1px);
-  will-change: transform;
-`;
-
-const CodeLines = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  opacity: 0.1;
-`;
-
-const CodeLine = styled(motion.div)`
-  position: absolute;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  color: #3b82f6;
-  white-space: nowrap;
-  will-change: transform;
 `;
 
 const HeroContent = styled.div`
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 ${props => props.theme.spacing.xl};
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
   align-items: center;
-  justify-content: space-between;
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  min-height: 0;
-  flex: 1;
-  gap: ${props => props.theme.spacing['2xl']};
-  overflow: hidden;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    gap: ${props => props.theme.spacing.xl};
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
     text-align: center;
-    justify-content: center;
     padding: 0 ${props => props.theme.spacing.lg};
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    gap: ${props => props.theme.spacing.xl};
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
     padding: 0 ${props => props.theme.spacing.md};
   }
+`;
 
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    gap: ${props => props.theme.spacing.lg};
-    padding: 0 ${props => props.theme.spacing.sm};
-  }
+const HeroEyebrow = styled.span`
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #60a5fa;
+  margin-bottom: 1rem;
+`;
 
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    gap: ${props => props.theme.spacing.md};
-    padding: 0 ${props => props.theme.spacing.sm};
+const HeroTitle = styled.h1`
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+
+  span {
+    color: #60a5fa;
   }
 `;
 
-const HeroLeft = styled.div`
-  flex: 1 1 48%;
-  min-width: 0;
-  max-width: min(600px, 100%);
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-self: center;
-  overflow: visible;
+const HeroSubtitle = styled.p`
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: #94a3b8;
+  margin-bottom: 1.75rem;
+  max-width: 520px;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    max-width: 100%;
-    width: 100%;
-  }
-`;
-
-const HeroRight = styled.div`
-  flex: 1 1 48%;
-  min-width: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 3;
-  overflow: visible;
-
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    order: -1;
-    flex: 0 0 auto;
-    width: 100%;
-  }
-`;
-
-const HeroText = styled.div`
-  color: white;
-  width: 100%;
-  min-width: 0;
-`;
-
-const HeroTitle = styled(motion.h1)`
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 900;
-  line-height: 1.1;
-  margin-bottom: ${props => props.theme.spacing.lg};
-  background: linear-gradient(135deg, #ffffff 0%, #60a5fa 30%, #a78bfa 70%, #ec4899 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.03em;
-  position: relative;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 100px;
-    height: 4px;
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-    border-radius: 2px;
-
-    @media (max-width: ${props => props.theme.breakpoints.lg}) {
-      left: 50%;
-      transform: translateX(-50%);
-    }
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    font-size: clamp(2rem, 5vw, 3.25rem);
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    font-size: clamp(2rem, 8vw, 2.5rem);
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    font-size: clamp(1.8rem, 10vw, 2.2rem);
-    margin-bottom: ${props => props.theme.spacing.md};
-  }
-`;
-
-const HeroSubtitle = styled(motion.p)`
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
-  line-height: 1.6;
-  margin-bottom: ${props => props.theme.spacing['2xl']};
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 400;
-  max-width: 500px;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    max-width: 100%;
-    text-align: center;
     margin-left: auto;
     margin-right: auto;
   }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    font-size: clamp(0.9rem, 3vw, 1.1rem);
-    margin-bottom: ${props => props.theme.spacing.xl};
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    font-size: clamp(0.85rem, 3.5vw, 1rem);
-    margin-bottom: ${props => props.theme.spacing.lg};
-  }
 `;
 
-const HighlightText = styled.span`
-  color: #60a5fa;
-  font-weight: 600;
-  display: inline-block;
-  margin-top: ${props => props.theme.spacing.xs};
-`;
-
-const TypingAnimation = styled.span`
-  color: #60a5fa;
-  font-weight: 600;
-  display: inline-block;
-  min-width: 24ch;
-  white-space: nowrap;
-  vertical-align: baseline;
+const HeroFeatureList = styled.ul`
+  list-style: none;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    min-width: 20ch;
+    align-items: center;
   }
 `;
 
-const HeroButtons = styled(motion.div)`
+const HeroFeatureItem = styled.li`
   display: flex;
-  gap: ${props => props.theme.spacing.md};
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.9375rem;
+  color: #cbd5e1;
+
+  svg {
+    color: #3b82f6;
+    flex-shrink: 0;
+  }
+`;
+
+const HeroButtons = styled.div`
+  display: flex;
+  gap: 1rem;
   flex-wrap: wrap;
-  max-width: 100%;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     justify-content: center;
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    gap: ${props => props.theme.spacing.sm};
-  }
-
   @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    gap: ${props => props.theme.spacing.xs};
     flex-direction: column;
     align-items: stretch;
   }
+`;
+
+const PrimaryButtonAsButton = styled.button`
+  background: #2563eb;
+  color: white;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #1d4ed8;
+  }
+`;
+
+const SecondaryButton = styled(Link)`
+  background: transparent;
+  color: #e2e8f0;
+  padding: 0.875rem 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+`;
+
+const HeroStatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+`;
+
+const HeroStatCard = styled.div`
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+`;
+
+const HeroStatNumber = styled.div`
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+  line-height: 1;
+`;
+
+const HeroStatLabel = styled.div`
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  line-height: 1.4;
 `;
 
 const PrimaryButton = styled(Link)`
@@ -370,8 +246,6 @@ const PrimaryButton = styled(Link)`
     0 10px 25px rgba(55, 48, 163, 0.4),
     0 4px 12px rgba(88, 28, 135, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
   cursor: pointer;
 
   &:hover {
@@ -393,263 +267,12 @@ const PrimaryButton = styled(Link)`
   }
 `;
 
-const PrimaryButtonAsButton = styled.button`
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-  border: none;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-      0 15px 35px rgba(55, 48, 163, 0.5),
-      0 8px 20px rgba(88, 28, 135, 0.4);
-    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 0.875rem 1.5rem;
-    font-size: 0.95rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.9rem;
-  }
-`;
-
-const SecondaryButton = styled(Link)`
-  background: transparent;
-  color: white;
-  padding: 1rem 2rem;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 0.875rem 1.5rem;
-    font-size: 0.95rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.9rem;
-  }
-`;
-
-const TechVisualization = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: min(500px, 92vw);
-  aspect-ratio: 1;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    max-width: min(400px, 85vw);
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    max-width: min(350px, 82vw);
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    max-width: min(300px, 80vw);
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    max-width: min(260px, 78vw);
-  }
-`;
-
-const CentralHub = styled(motion.div)`
-  width: 200px;
-  height: 200px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
-  border: 2px solid rgba(59, 130, 246, 0.3);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  backdrop-filter: blur(10px);
-
-  &::before {
-    content: '';
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-    border-radius: 50%;
-    opacity: 0.8;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    width: 160px;
-    height: 160px;
-
-    &::before {
-      width: 80px;
-      height: 80px;
-    }
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    width: 140px;
-    height: 140px;
-
-    &::before {
-      width: 70px;
-      height: 70px;
-    }
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    width: 120px;
-    height: 120px;
-
-    &::before {
-      width: 60px;
-      height: 60px;
-    }
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    width: 100px;
-    height: 100px;
-
-    &::before {
-      width: 50px;
-      height: 50px;
-    }
-  }
-`;
-
-const HubIcon = styled.div`
-  font-size: 3rem;
-  color: white;
-  z-index: 2;
-  position: relative;
-
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    font-size: 2.5rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    font-size: 2rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    font-size: 1.8rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    font-size: 1.5rem;
-  }
-`;
-
-const OrbitingElement = styled(motion.div)`
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2));
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  will-change: transform;
-
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    width: 65px;
-    height: 65px;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    width: 55px;
-    height: 55px;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    width: 45px;
-    height: 45px;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    width: 40px;
-    height: 40px;
-  }
-`;
-
-const ElementIcon = styled.div`
-  font-size: 1.5rem;
-  color: #10b981;
-
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    font-size: 1.3rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    font-size: 1.1rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    font-size: 1rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.xs}) {
-    font-size: 0.9rem;
-  }
-`;
-
-const ConnectionLine = styled(motion.div)`
-  position: absolute;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-  opacity: 0.3;
-`;
-
-const TechCard = styled(motion.div)`
-  position: absolute;
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 12px;
-  padding: 1rem;
-  backdrop-filter: blur(10px);
-  color: white;
-  font-size: 0.8rem;
-  font-weight: 500;
-  text-align: center;
-  min-width: 120px;
-`;
+const HERO_STATS = [
+  { number: '500+', label: 'Projects Delivered' },
+  { number: '99.9%', label: 'Uptime Guarantee' },
+  { number: '13', label: 'Countries Served' },
+  { number: '4.9', label: 'Client Rating' }
+];
 
 const ServicesSection = styled.section`
   padding: ${props => props.theme.spacing['4xl']} 0;
@@ -665,9 +288,7 @@ const ServicesSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    background: rgba(255, 255, 255, 0.6);
     z-index: 0;
   }
 
@@ -743,9 +364,7 @@ const ServicesGrid = styled.div`
 `;
 
 const ServiceCard = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.88);
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 
@@ -796,9 +415,7 @@ const ServiceCard = styled(motion.div)`
 const ServiceIcon = styled.div`
   width: 70px;
   height: 70px;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
   display: flex;
   align-items: center;
@@ -1322,55 +939,9 @@ const Counter = ({ end, duration = 2000, isVisible }) => {
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentText, setCurrentText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [cmsServices, setCmsServices] = useState(null);
   const statsRef = React.useRef(null);
   const isStatsInView = useInView(statsRef, { once: true, threshold: 0.3 });
-  const shouldReduceMotion = useReducedMotion();
-
-  // Detect narrow screens where hero omits the animated subtitle line
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth <= 992);
-    };
-    
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
-
-  // Typing animation effect - only run on desktop
-  useEffect(() => {
-    if (isMobile) {
-      // On mobile, show the first service statically
-      setCurrentText(TYPING_SERVICES[0]);
-      return;
-    }
-
-    const typeSpeed = isDeleting ? 50 : 100;
-    const pauseTime = 2000;
-
-    const timeout = setTimeout(() => {
-      if (!isDeleting && currentText === TYPING_SERVICES[currentIndex]) {
-        setTimeout(() => setIsDeleting(true), pauseTime);
-      } else if (isDeleting && currentText === '') {
-        setIsDeleting(false);
-        setCurrentIndex((prev) => (prev + 1) % TYPING_SERVICES.length);
-      } else {
-        setCurrentText((prev) => 
-          isDeleting 
-            ? prev.slice(0, -1)
-            : TYPING_SERVICES[currentIndex].slice(0, prev.length + 1)
-        );
-      }
-    }, typeSpeed);
-
-    return () => clearTimeout(timeout);
-  }, [currentText, currentIndex, isDeleting, isMobile]);
 
   useEffect(() => {
     let cancelled = false;
@@ -1486,206 +1057,42 @@ const Home = () => {
     <>
     <HomeContainer>
       <HeroSection>
-        <HeroBackground />
-        <TechGrid />
-        {/* Floating decorative shapes — disabled on mobile & reduced-motion */}
-        <FloatingShapes aria-hidden="true">
-          {!isMobile && !shouldReduceMotion && (
-            <>
-              <Shape
-                style={{ top: '20%', left: '10%', width: '60px', height: '60px' }}
-                animate={{ y: [0, -20, 0], rotate: [0, 180, 360] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <Shape
-                style={{ top: '60%', right: '15%', width: '40px', height: '40px' }}
-                animate={{ y: [0, 20, 0], rotate: [0, -180, -360] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <Shape
-                style={{ bottom: '30%', left: '20%', width: '80px', height: '80px' }}
-                animate={{ y: [0, -15, 0], rotate: [0, 90, 180] }}
-                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </>
-          )}
-        </FloatingShapes>
-        {/* Decorative code lines — desktop only */}
-        {!isMobile && !shouldReduceMotion && (
-          <CodeLines aria-hidden="true">
-            <CodeLine
-              style={{ top: '10%', left: '5%' }}
-              animate={{ x: [0, 100, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            >
-              &lt;div&gt;IT Solutions&lt;/div&gt;
-            </CodeLine>
-            <CodeLine
-              style={{ top: '30%', right: '10%' }}
-              animate={{ x: [0, -80, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              function innovate() &#123; return "future"; &#125;
-            </CodeLine>
-            <CodeLine
-              style={{ bottom: '20%', left: '15%' }}
-              animate={{ x: [0, 120, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            >
-              const technology = "cutting-edge";
-            </CodeLine>
-          </CodeLines>
-        )}
         <HeroContent>
-          <HeroLeft>
-            <HeroText>
-              <HeroTitle
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-              >
-                Premier IT Solutions
-                {!isMobile && (
-                  <>
-                    <br />
-                    <HighlightText>Empowering <TypingAnimation>{currentText}</TypingAnimation></HighlightText>
-                  </>
-                )}
-              </HeroTitle>
-              <HeroSubtitle
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-              >
-                Bestech Vision delivers cutting-edge IT infrastructure, software development, 
-                and technology consulting services that drive innovation and operational excellence 
-                for enterprise clients worldwide.
-              </HeroSubtitle>
-              <HeroButtons
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.2 }}
-              >
-                <PrimaryButtonAsButton onClick={openModal}>
-                  Get Free Website Audit
-                  <FaArrowRight />
-                </PrimaryButtonAsButton>
-                <SecondaryButton to="/portfolio">
-                  View Our Work
-                </SecondaryButton>
-              </HeroButtons>
-            </HeroText>
-          </HeroLeft>
-          <HeroRight>
-            <TechVisualization>
-              <CentralHub
-                initial={{ scale: 0 }}
-                animate={{
-                  scale: 1,
-                  rotate: (!isMobile && !shouldReduceMotion) ? 360 : 0
-                }}
-                transition={{
-                  scale: { duration: 0.4, delay: 0.3 },
-                  rotate: {
-                    duration: 20,
-                    repeat: (!isMobile && !shouldReduceMotion) ? Infinity : 0,
-                    ease: "linear",
-                    delay: 0.7
-                  }
-                }}
-              >
-                <HubIcon>
-                  <FaRocket />
-                </HubIcon>
-              </CentralHub>
-              
-              <OrbitingElement
-                style={{ top: '10%', left: '50%', transform: 'translateX(-50%)' }}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  y: (!isMobile && !shouldReduceMotion) ? [0, -10, 0] : 0
-                }}
-                transition={{
-                  opacity: { duration: 0.4, delay: 0.4 },
-                  scale:   { duration: 0.4, delay: 0.4 },
-                  y: { duration: 3, repeat: (!isMobile && !shouldReduceMotion) ? Infinity : 0, ease: "easeInOut" }
-                }}
-              >
-                <ElementIcon><FaCode /></ElementIcon>
-              </OrbitingElement>
-
-              <OrbitingElement
-                style={{ top: '50%', right: '10%', transform: 'translateY(-50%)' }}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  x: (!isMobile && !shouldReduceMotion) ? [0, 10, 0] : 0
-                }}
-                transition={{
-                  opacity: { duration: 0.4, delay: 0.5 },
-                  scale:   { duration: 0.4, delay: 0.5 },
-                  x: { duration: 4, repeat: (!isMobile && !shouldReduceMotion) ? Infinity : 0, ease: "easeInOut" }
-                }}
-              >
-                <ElementIcon><FaCloud /></ElementIcon>
-              </OrbitingElement>
-
-              <OrbitingElement
-                style={{ bottom: '10%', left: '50%', transform: 'translateX(-50%)' }}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  y: (!isMobile && !shouldReduceMotion) ? [0, 10, 0] : 0
-                }}
-                transition={{
-                  opacity: { duration: 0.4, delay: 0.6 },
-                  scale:   { duration: 0.4, delay: 0.6 },
-                  y: { duration: 5, repeat: (!isMobile && !shouldReduceMotion) ? Infinity : 0, ease: "easeInOut" }
-                }}
-              >
-                <ElementIcon><FaShieldAlt /></ElementIcon>
-              </OrbitingElement>
-
-              <OrbitingElement
-                style={{ top: '50%', left: '10%', transform: 'translateY(-50%)' }}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  x: (!isMobile && !shouldReduceMotion) ? [0, -10, 0] : 0
-                }}
-                transition={{
-                  opacity: { duration: 0.4, delay: 0.7 },
-                  scale:   { duration: 0.4, delay: 0.7 },
-                  x: { duration: 6, repeat: (!isMobile && !shouldReduceMotion) ? Infinity : 0, ease: "easeInOut" }
-                }}
-              >
-                <ElementIcon><FaMobile /></ElementIcon>
-              </OrbitingElement>
-
-              <TechCard
-                style={{ top: '5%', right: '5%' }}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.8 }}
-              >
-                <div>500+ Projects</div>
-              </TechCard>
-
-              <TechCard
-                style={{ bottom: '5%', left: '5%' }}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.9 }}
-              >
-                <div>99.9% Uptime</div>
-              </TechCard>
-            </TechVisualization>
-          </HeroRight>
+          <div>
+            <HeroEyebrow>Trusted IT Partner</HeroEyebrow>
+            <HeroTitle>
+              Premier IT Solutions for <span>Modern Business</span>
+            </HeroTitle>
+            <HeroSubtitle>
+              Bestech Vision delivers IT infrastructure, software development,
+              and technology consulting that drives innovation for enterprise clients worldwide.
+            </HeroSubtitle>
+            <HeroFeatureList>
+              {HERO_FEATURES.map((feature) => (
+                <HeroFeatureItem key={feature}>
+                  <FaCheckCircle size={16} aria-hidden="true" />
+                  {feature}
+                </HeroFeatureItem>
+              ))}
+            </HeroFeatureList>
+            <HeroButtons>
+              <PrimaryButtonAsButton onClick={openModal}>
+                Get Free Website Audit
+                <FaArrowRight />
+              </PrimaryButtonAsButton>
+              <SecondaryButton to="/portfolio">
+                View Our Work
+              </SecondaryButton>
+            </HeroButtons>
+          </div>
+          <HeroStatsGrid>
+            {HERO_STATS.map((stat) => (
+              <HeroStatCard key={stat.label}>
+                <HeroStatNumber>{stat.number}</HeroStatNumber>
+                <HeroStatLabel>{stat.label}</HeroStatLabel>
+              </HeroStatCard>
+            ))}
+          </HeroStatsGrid>
         </HeroContent>
       </HeroSection>
 

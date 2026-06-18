@@ -33,3 +33,18 @@ function getN8nAppointmentWebhookUrl(): string
 {
     return trim(configValue('N8N_APPOINTMENT_WEBHOOK_URL'));
 }
+
+function getN8nContactWebhookUrl(): string
+{
+    return trim(configValue('N8N_CONTACT_WEBHOOK_URL'));
+}
+
+function getN8nHireWebhookUrl(): string
+{
+    return trim(configValue('N8N_HIRE_WEBHOOK_URL'));
+}
+
+function getN8nCareerWebhookUrl(): string
+{
+    return trim(configValue('N8N_CAREER_WEBHOOK_URL'));
+}

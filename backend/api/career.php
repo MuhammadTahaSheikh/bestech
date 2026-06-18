@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/n8n.php';
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
@@ -77,6 +79,46 @@ if (!move_uploaded_file($_FILES['cv']['tmp_name'], $stored_file_path)) {
     exit();
 }
 
+$attachment_mime = 'application/octet-stream';
+if ($extension === 'pdf') {
+    $attachment_mime = 'application/pdf';
+} elseif ($extension === 'doc') {
+    $attachment_mime = 'application/msword';
+} elseif ($extension === 'docx') {
+    $attachment_mime = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+}
+
+$cvContents = file_get_contents($stored_file_path);
+if ($cvContents === false) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Failed to read uploaded CV']);
+    exit();
+}
+
+$n8nPayload = [
+    'formType' => 'career',
+    'fullName' => $fullName,
+    'email' => $email,
+    'phone' => $phone,
+    'position' => $position,
+    'experience' => $experience,
+    'coverLetter' => $coverLetter,
+    'cvFileName' => $safe_file_name,
+    'cvMimeType' => $attachment_mime,
+    'cvBase64' => base64_encode($cvContents),
+    'submittedAt' => date('c'),
+];
+
+tryN8nFormSubmit(
+    getN8nCareerWebhookUrl(),
+    $n8nPayload,
+    __DIR__ . '/career_log.txt',
+    date('Y-m-d H:i:s') . " - Career (n8n): $fullName ($email) — $position\n",
+    'Application submitted successfully.',
+    'Failed to send application. Please try again later.'
+);
+
+// Fallback when n8n is not configured (legacy PHP mail)
 $to = 'info@bestechvision.com';
 $subject = 'New Career Application - Bestech Vision';
 $from = 'noreply@bestechvision.com';
@@ -120,16 +162,7 @@ $email_body = "
 </html>
 ";
 
-$attachment_content = chunk_split(base64_encode(file_get_contents($stored_file_path)));
-$attachment_mime = 'application/octet-stream';
-if ($extension === 'pdf') {
-    $attachment_mime = 'application/pdf';
-} elseif ($extension === 'doc') {
-    $attachment_mime = 'application/msword';
-} elseif ($extension === 'docx') {
-    $attachment_mime = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-}
-
+$attachment_content = chunk_split(base64_encode($cvContents));
 $message = "--$boundary\r\n";
 $message .= "Content-Type: text/html; charset=UTF-8\r\n";
 $message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
@@ -150,6 +183,5 @@ if (!mail($to, $subject, $message, $headers)) {
 http_response_code(200);
 echo json_encode([
     'success' => true,
-    'message' => 'Application submitted successfully'
+    'message' => 'Application submitted successfully',
 ]);
-?>
