@@ -82,8 +82,8 @@ try {
     ], 201);
 } catch (Throwable $e) {
     if ($imagePath) {
-        $p = __DIR__ . '/' . ltrim($imagePath, '/');
-        if (is_file($p)) {
+        $p = cms_upload_disk_path($imagePath);
+        if ($p !== '' && is_file($p)) {
             @unlink($p);
         }
     }

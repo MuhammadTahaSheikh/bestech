@@ -65,16 +65,88 @@ function blog_unique_slug($pdo, $title) {
     }
 }
 
-function blog_upload_dir() {
-    $dir = __DIR__ . '/uploads/blogs';
-    if (!is_dir($dir)) {
-        mkdir($dir, 0755, true);
+function cms_storage_root() {
+    $apiDir = __DIR__;
+    $webRoot = dirname($apiDir);
+
+    // Hostinger / production: keep uploads outside public_html so deploys don't delete them.
+    if (is_dir($webRoot . '/static') || is_file($webRoot . '/index.html')) {
+        $persistent = dirname($webRoot) . '/cms-uploads';
+        if (!is_dir($persistent)) {
+            @mkdir($persistent, 0755, true);
+        }
+        if (is_dir($persistent) && is_writable($persistent)) {
+            return $persistent;
+        }
+        return $webRoot;
     }
-    return $dir;
+
+    // Local dev: PHP in backend/api, CRA serves public/.
+    $publicRoot = dirname($webRoot) . '/public';
+    if (is_dir($publicRoot)) {
+        return $publicRoot;
+    }
+
+    return $webRoot;
+}
+
+/** @deprecated use cms_storage_root() */
+function cms_site_root() {
+    return cms_storage_root();
+}
+
+function cms_upload_disk_path($relativePath) {
+    if ($relativePath === '' || $relativePath === null) {
+        return '';
+    }
+    $path = cms_upload_relative_path($relativePath);
+    if ($path === '') {
+        return '';
+    }
+
+    $candidates = [
+        cms_storage_root() . '/' . $path,
+        cms_storage_root() . '/uploads/' . $path,
+        dirname(__DIR__) . '/uploads/' . $path,
+    ];
+
+    foreach ($candidates as $candidate) {
+        if (is_file($candidate)) {
+            return $candidate;
+        }
+    }
+
+    return $candidates[0];
+}
+
+function cms_upload_relative_path($relativePath) {
+    if ($relativePath === '' || $relativePath === null) {
+        return '';
+    }
+    $path = ltrim((string) $relativePath, '/');
+    if (strpos($path, 'api/uploads/') === 0) {
+        $path = substr($path, 4);
+    }
+    if (strpos($path, 'uploads/') === 0) {
+        $path = substr($path, 8);
+    }
+    return $path;
+}
+
+function cms_public_upload_url($relativePath) {
+    $path = cms_upload_relative_path($relativePath);
+    if ($path === '') {
+        return '';
+    }
+    return '/api/media.php?f=' . rawurlencode($path);
+}
+
+function blog_upload_dir() {
+    return cms_upload_dir('blogs');
 }
 
 function cms_upload_dir($subdir) {
-    $dir = __DIR__ . '/uploads/' . trim($subdir, '/');
+    $dir = cms_storage_root() . '/' . trim($subdir, '/');
     if (!is_dir($dir)) {
         mkdir($dir, 0755, true);
     }

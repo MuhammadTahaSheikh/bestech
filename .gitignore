@@ -11,9 +11,11 @@ backend/blog-api/node_modules
 # React build
 /build
 
-# Blog uploads (PHP API)
-/backend/api/uploads/blogs/*
-!/backend/api/uploads/blogs/.gitkeep
+# CMS uploads — keep folder structure, ignore uploaded files
+/public/uploads/blogs/*
+!/public/uploads/blogs/.gitkeep
+/public/uploads/team/*
+!/public/uploads/team/.gitkeep
 
 # Server-local API config (n8n webhook URL, etc.)
 /backend/api/config.local.php

@@ -27,8 +27,8 @@ try {
     $del = $pdo->prepare('DELETE FROM team_members WHERE id = :id');
     $del->execute(['id' => $id]);
     if (!empty($row['image_path'])) {
-        $path = __DIR__ . '/' . ltrim($row['image_path'], '/');
-        if (is_file($path)) {
+        $path = cms_upload_disk_path($row['image_path']);
+        if ($path !== '' && is_file($path)) {
             @unlink($path);
         }
     }

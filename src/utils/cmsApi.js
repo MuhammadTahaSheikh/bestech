@@ -5,7 +5,16 @@ function getApiBase() {
 export function assetUrl(value) {
   if (!value) return '';
   if (/^https?:\/\//i.test(value)) return value;
+  if (value.startsWith('/api/media.php?')) return value;
+  if (value.startsWith('/uploads/')) {
+    const rel = value.replace(/^\/uploads\//, '');
+    return `${getApiBase()}/media.php?f=${encodeURIComponent(rel)}`;
+  }
   if (value.startsWith('/')) return value;
+  if (value.startsWith('uploads/')) {
+    const rel = value.replace(/^uploads\//, '');
+    return `${getApiBase()}/media.php?f=${encodeURIComponent(rel)}`;
+  }
   return `${getApiBase()}/${value.replace(/^\/+/, '')}`;
 }
 

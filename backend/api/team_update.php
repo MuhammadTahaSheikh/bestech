@@ -95,8 +95,8 @@ try {
     ]);
 
     if ($newUploadPath && !empty($existing['image_path']) && $existing['image_path'] !== $newUploadPath) {
-        $oldFile = __DIR__ . '/' . ltrim($existing['image_path'], '/');
-        if (is_file($oldFile)) {
+        $oldFile = cms_upload_disk_path($existing['image_path']);
+        if ($oldFile !== '' && is_file($oldFile)) {
             @unlink($oldFile);
         }
     }

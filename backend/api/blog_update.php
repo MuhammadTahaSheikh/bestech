@@ -89,8 +89,8 @@ try {
     ]);
 
     if ($newUploadPath && !empty($existing['cover_image_path']) && $existing['cover_image_path'] !== $newUploadPath) {
-        $oldFile = __DIR__ . '/' . ltrim($existing['cover_image_path'], '/');
-        if (is_file($oldFile)) {
+        $oldFile = cms_upload_disk_path($existing['cover_image_path']);
+        if ($oldFile !== '' && is_file($oldFile)) {
             @unlink($oldFile);
         }
     }

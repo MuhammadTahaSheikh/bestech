@@ -5,6 +5,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     blog_json(['error' => 'Method not allowed'], 405);
 }
 
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Pragma: no-cache');
+
 function default_team_seed_rows() {
     return [
         ['name' => 'Sumair Fraz', 'role' => 'CRM Specialist', 'bio' => 'CRM specialist focused on customer relationship management and business process optimization. Expert in streamlining customer workflows and improving business efficiency.', 'avatar' => 'SF', 'skills' => ['CRM Systems', 'Business Process', 'Customer Management', 'Data Analysis', 'Workflow Optimization'], 'email' => 'sumair@bestechvision.com'],
@@ -74,7 +77,7 @@ try {
                 : $row['skills_json'];
             $skills = is_array($decoded) ? $decoded : [];
         }
-        $img = $row['image_path'] ? $row['image_path'] : '';
+        $img = $row['image_path'] ? cms_public_upload_url($row['image_path']) : '';
         $out[] = [
             'id' => (int)$row['id'],
             'name' => $row['name'],

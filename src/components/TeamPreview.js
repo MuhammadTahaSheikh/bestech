@@ -15,6 +15,7 @@ import HamzaImage from '../assets/M Hamza.jpg';
 import MutahirImage from '../assets/Mutahir-ul-haq.jpg';
 import OsamaImage from '../assets/Osama Razzaq.jpg';
 import { fetchTeamMembers, normalizeTeamMemberForPreview } from '../utils/cmsApi';
+import TeamMemberPhoto, { mergeTeamWithStaticImages } from './TeamMemberPhoto';
 
 const TeamSection = styled.section`
   padding: ${props => props.theme.spacing['4xl']} 0;
@@ -484,7 +485,9 @@ const TeamPreview = () => {
   ];
 
   const teamMembers =
-    cmsMembers && cmsMembers.length > 0 ? cmsMembers : staticTeamMembers;
+    cmsMembers && cmsMembers.length > 0
+      ? mergeTeamWithStaticImages(cmsMembers, staticTeamMembers)
+      : staticTeamMembers;
 
   return (
     <TeamSection>
@@ -515,19 +518,16 @@ const TeamPreview = () => {
               viewport={{ once: true }}
             >
               <MemberPhoto>
-                {member.image ? (
-                  <MemberImage 
-                    src={member.image} 
-                    alt={member.name}
-                    loading="lazy"
-                    decoding="async"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                    }}
-                  />
-                ) : (
-                  member.avatar
-                )}
+                <TeamMemberPhoto
+                  cmsImage={member.cmsImage}
+                  fallbackImage={member.imageFallback || member.image}
+                  alt={member.name}
+                  imageComponent={MemberImage}
+                  loading="lazy"
+                  decoding="async"
+                  avatar={member.avatar}
+                  showAvatarWhenEmpty={false}
+                />
                 <MemberOverlay>
                   <OverlayInner>
                     <OverlayDetails>

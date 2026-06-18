@@ -7,6 +7,8 @@
   RewriteRule ^index\.html$ - [L]
   # PHP API — never serve React for /api/*
   RewriteRule ^api/ - [L]
+  # CMS uploads — never fall back to React for /uploads/*
+  RewriteRule ^uploads/ - [L]
   # Serve real files (images, JS, CSS) directly
   RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule ^ - [L]

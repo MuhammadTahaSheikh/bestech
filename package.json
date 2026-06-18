@@ -20,7 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && npm run copy-api",
-    "copy-api": "rm -rf build/api && cp -R backend/api build/api && rm -f build/api/*_log.txt build/api/config.local.php",
+    "copy-api": "rsync -a --delete backend/api/ build/api/ && rm -f build/api/*_log.txt && test -f backend/api/config.local.php && cp backend/api/config.local.php build/api/config.local.php || true",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

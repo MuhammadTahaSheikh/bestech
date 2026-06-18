@@ -29,8 +29,8 @@ try {
     $del->execute(['id' => $row['id']]);
 
     if (!empty($row['cover_image_path'])) {
-        $filePath = __DIR__ . '/' . ltrim($row['cover_image_path'], '/');
-        if (is_file($filePath)) {
+        $filePath = cms_upload_disk_path($row['cover_image_path']);
+        if ($filePath !== '' && is_file($filePath)) {
             @unlink($filePath);
         }
     }

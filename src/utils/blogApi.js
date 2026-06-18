@@ -1,4 +1,4 @@
-import { getStoredToken } from './cmsApi';
+import { getStoredToken, assetUrl } from './cmsApi';
 
 function getApiBase() {
   return (process.env.REACT_APP_API_BASE || '/api').replace(/\/$/, '');
@@ -9,12 +9,7 @@ function authHeaders() {
   return t ? { Authorization: `Bearer ${t}` } : {};
 }
 
-export function assetUrl(value) {
-  if (!value) return '';
-  if (/^https?:\/\//i.test(value)) return value;
-  if (value.startsWith('/')) return value;
-  return `${getApiBase()}/${value.replace(/^\/+/, '')}`;
-}
+export { assetUrl };
 
 function parseJsonBody(text, requestUrl) {
   const trimmed = text.trimStart();

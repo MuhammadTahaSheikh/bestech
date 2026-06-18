@@ -23,7 +23,7 @@ try {
             'content' => $row['content'],
             'author' => $row['author'],
             'category' => $row['category'],
-            'coverImage' => $row['cover_image_path'] ?: '',
+            'coverImage' => $row['cover_image_path'] ? cms_public_upload_url($row['cover_image_path']) : '',
             'createdAt' => gmdate('c', strtotime($row['created_at']))
         ];
     }, $rows);

@@ -90,13 +90,13 @@ try {
         'content' => $row['content'],
         'author' => $row['author'],
         'category' => $row['category'],
-        'coverImage' => $row['cover_image_path'] ?: '',
+        'coverImage' => $row['cover_image_path'] ? cms_public_upload_url($row['cover_image_path']) : '',
         'createdAt' => gmdate('c', strtotime($row['created_at']))
     ], 201);
 } catch (Throwable $e) {
     if ($coverImagePath) {
-        $uploaded = __DIR__ . '/' . $coverImagePath;
-        if (is_file($uploaded)) {
+        $uploaded = cms_upload_disk_path($coverImagePath);
+        if ($uploaded !== '' && is_file($uploaded)) {
             @unlink($uploaded);
         }
     }

@@ -16,6 +16,7 @@ import HamzaImage from '../assets/M Hamza.jpg';
 import MutahirImage from '../assets/Mutahir-ul-haq.jpg';
 import OsamaImage from '../assets/Osama Razzaq.jpg';
 import { fetchTeamMembers, normalizeTeamMemberForTeamPage } from '../utils/cmsApi';
+import TeamMemberPhoto, { mergeTeamWithStaticImages } from '../components/TeamMemberPhoto';
 import { 
   FaLinkedin, 
   FaTwitter, 
@@ -863,7 +864,9 @@ const Team = () => {
   ];
 
   const teamMembers =
-    cmsTeam && cmsTeam.length > 0 ? cmsTeam : staticTeamMembers;
+    cmsTeam && cmsTeam.length > 0
+      ? mergeTeamWithStaticImages(cmsTeam, staticTeamMembers)
+      : staticTeamMembers;
 
   const leadership = [
     {
@@ -984,17 +987,25 @@ const Team = () => {
                 whileHover={{ scale: 1.02 }}
               >
                 <MemberAvatar>
-                  {member.image ? (
-                    <MemberImage 
-                      src={member.image} 
-                      alt={member.name}
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                      }}
-                    />
-                  ) : (
-                    member.avatar
-                  )}
+                  <TeamMemberPhoto
+                    cmsImage={member.cmsImage}
+                    fallbackImage={member.imageFallback || member.image}
+                    alt={member.name}
+                    imageComponent={MemberImage}
+                    avatar={
+                      <span
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '100%',
+                          height: '100%',
+                        }}
+                      >
+                        {member.avatar}
+                      </span>
+                    }
+                  />
                 </MemberAvatar>
                 <MemberName>{member.name}</MemberName>
                 <MemberRole>{member.role}</MemberRole>
