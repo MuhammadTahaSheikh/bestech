@@ -1,0 +1,7 @@
+{
+  "buildCommand": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
+  "outputDirectory": "build",
+  "rewrites": [
+    { "source": "/((?!static/|api/|favicon|logo|manifest|robots|sitemap|icons/|portfolio/|uploads/).*)", "destination": "/index.html" }
+  ]
+}
