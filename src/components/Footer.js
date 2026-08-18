@@ -13,6 +13,7 @@ import {
   FaChevronUp
 } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
+import { pageContainerStyles } from '../styles/brandStyles';
 
 const FooterContainer = styled.footer`
   background: ${props => props.theme.colors.dark};
@@ -22,9 +23,8 @@ const FooterContainer = styled.footer`
 `;
 
 const FooterContent = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  ${pageContainerStyles}
+  z-index: 1;
 `;
 
 const FooterGrid = styled.div`

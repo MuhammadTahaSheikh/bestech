@@ -14,6 +14,7 @@ import {
   FaShieldAlt,
   FaHeart
 } from 'react-icons/fa';
+import { pageHeroStyles, pageContainerStyles } from '../styles/brandStyles';
 
 const AboutContainer = styled.div`
   min-height: 100vh;
@@ -25,9 +26,8 @@ const AboutContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%);
-  color: white;
-  padding: 6rem 0;
+  ${pageHeroStyles}
+  padding: 5rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -56,19 +56,7 @@ const HeroBackground = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 2;
-
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 0 1.5rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 0 1rem;
-  }
+  ${pageContainerStyles}
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -219,7 +207,7 @@ const FeatureCard = styled(motion.div)`
 const FeatureIcon = styled.div`
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  background: ${props => props.theme.colors.primary};
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -292,7 +280,7 @@ const ValueCard = styled(motion.div)`
 const ValueIcon = styled.div`
   width: 100px;
   height: 100px;
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  background: ${props => props.theme.colors.primary};
   border-radius: 50%;
   display: flex;
   align-items: center;

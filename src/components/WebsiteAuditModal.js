@@ -113,9 +113,9 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #3b82f6;
+    border-color: ${props => props.theme.colors.primary};
     background: white;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 3px rgba(33, 11, 204, 0.12);
   }
 
   &::placeholder {
@@ -124,7 +124,7 @@ const Input = styled.input`
 `;
 
 const SubmitButton = styled.button`
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background: ${props => props.theme.colors.primary};
   color: white;
   padding: 1rem 2rem;
   border: none;
@@ -141,7 +141,8 @@ const SubmitButton = styled.button`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    background: ${props => props.theme.colors.secondary};
+    box-shadow: 0 8px 25px rgba(33, 11, 204, 0.35);
   }
 
   &:disabled {

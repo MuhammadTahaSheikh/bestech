@@ -38,6 +38,7 @@ import {
   FaChevronRight,
   FaBriefcase
 } from 'react-icons/fa';
+import { pageHeroStyles, pageContainerStyles } from '../styles/brandStyles';
 
 const TeamContainer = styled.div`
   min-height: 100vh;
@@ -45,9 +46,8 @@ const TeamContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%);
-  color: white;
-  padding: 6rem 0;
+  ${pageHeroStyles}
+  padding: 5rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -80,23 +80,7 @@ const HeroBackground = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 2;
-
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    padding: 0 1.5rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 0 1rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 0 0.75rem;
-  }
+  ${pageContainerStyles}
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -270,7 +254,7 @@ const TeamCard = styled(motion.div)`
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, #3730a3, #581c87);
+    background: ${props => props.theme.colors.primary};
   }
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
@@ -297,7 +281,7 @@ const TeamCard = styled(motion.div)`
 const MemberAvatar = styled.div`
   width: 120px;
   height: 120px;
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  background: ${props => props.theme.colors.primary};
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -441,7 +425,7 @@ const SocialLink = styled.a`
 `;
 
 const HireNowButton = styled(motion.button)`
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  background: ${props => props.theme.colors.primary};
   color: white;
   border: none;
   padding: 0.875rem 1.5rem;
@@ -508,14 +492,14 @@ const LeadershipCard = styled(motion.div)`
     left: 0;
     right: 0;
     height: 6px;
-    background: linear-gradient(135deg, #3730a3, #581c87);
+    background: ${props => props.theme.colors.primary};
   }
 `;
 
 const LeadershipAvatar = styled.div`
   width: 150px;
   height: 150px;
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  background: ${props => props.theme.colors.primary};
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -607,7 +591,7 @@ const DepartmentCard = styled(motion.div)`
 const DepartmentIcon = styled.div`
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  background: ${props => props.theme.colors.primary};
   border-radius: 20px;
   display: flex;
   align-items: center;

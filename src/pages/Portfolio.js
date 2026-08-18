@@ -14,6 +14,7 @@ import {
   FaTimes
 } from 'react-icons/fa';
 import { fetchPortfolioProjects } from '../utils/cmsApi';
+import { pageHeroStyles, pageContainerStyles } from '../styles/brandStyles';
 
 const PORTFOLIO_ICON_MAP = {
   code: FaCode,
@@ -51,9 +52,8 @@ const PortfolioContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%);
-  color: white;
-  padding: 6rem 0;
+  ${pageHeroStyles}
+  padding: 5rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -70,11 +70,7 @@ const HeroBackground = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 2;
+  ${pageContainerStyles}
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -170,7 +166,7 @@ const ProjectCard = styled(motion.div)`
 
 const ProjectImage = styled.div`
   height: 250px;
-  background: ${props => (props.$hasPreview ? '#f3f4f6' : 'linear-gradient(135deg, #3730a3, #581c87)')};
+  background: ${props => (props.$hasPreview ? '#f3f4f6' : props.theme.colors.primary)};
   position: relative;
   display: flex;
   align-items: center;
@@ -353,7 +349,7 @@ const ModalClose = styled.button`
 
 const ModalImage = styled.div`
   height: 300px;
-  background: ${props => (props.$hasPreview ? '#f3f4f6' : 'linear-gradient(135deg, #3730a3, #581c87)')};
+  background: ${props => (props.$hasPreview ? '#f3f4f6' : props.theme.colors.primary)};
   display: flex;
   align-items: center;
   justify-content: center;

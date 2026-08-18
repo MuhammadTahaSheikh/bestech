@@ -54,7 +54,7 @@ const Placeholder = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #dbeafe, #f1f5f9);
+  background: linear-gradient(135deg, rgba(33, 11, 204, 0.08), #ffffff);
   color: ${(props) => props.theme.colors.gray[600]};
   font-weight: 600;
 `;

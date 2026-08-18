@@ -16,23 +16,24 @@ const ChatContainer = styled.div`
 `;
 
 const ChatButton = styled(motion.button)`
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background: #210BCC;
   border: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 25px rgba(33, 11, 204, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
 
   &:hover {
-    transform: scale(1.1);
-    box-shadow: 0 12px 35px rgba(59, 130, 246, 0.6);
+    transform: scale(1.08);
+    background: #1909A3;
+    box-shadow: 0 12px 35px rgba(33, 11, 204, 0.45);
   }
 `;
 
@@ -60,7 +61,7 @@ const ChatWidget = styled(motion.div)`
 `;
 
 const ChatHeader = styled.div`
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background: #210BCC;
   padding: 1rem 1.5rem;
   color: white;
   display: flex;
@@ -101,7 +102,7 @@ const WelcomeMessage = styled.div`
   background: #f8f9fa;
   padding: 1rem;
   border-radius: 12px;
-  border-left: 4px solid #3b82f6;
+  border-left: 4px solid #210BCC;
   font-size: 0.9rem;
   color: #374151;
   line-height: 1.5;
@@ -124,7 +125,7 @@ const ChatInput = styled.input`
   transition: border-color 0.2s ease;
 
   &:focus {
-    border-color: #3b82f6;
+    border-color: #210BCC;
   }
 
   &::placeholder {
@@ -134,7 +135,7 @@ const ChatInput = styled.input`
 
 const SendButton = styled.button`
   padding: 0.75rem;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background: #210BCC;
   border: none;
   border-radius: 12px;
   color: white;
@@ -142,10 +143,11 @@ const SendButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease;
 
   &:hover {
     transform: scale(1.05);
+    background: #1909A3;
   }
 
   &:disabled {

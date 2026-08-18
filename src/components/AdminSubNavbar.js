@@ -3,12 +3,13 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
+import { NAVBAR_HEIGHT_PX } from '../constants/layout';
 
 const BAR_HEIGHT = '48px';
 
 const Bar = styled.nav`
   position: fixed;
-  top: 80px;
+  top: ${NAVBAR_HEIGHT_PX}px;
   left: 0;
   right: 0;
   z-index: 999;
@@ -19,7 +20,7 @@ const Bar = styled.nav`
     ${(p) => p.theme.colors.primary} 100%
   );
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 12px rgba(33, 11, 204, 0.2);
 `;
 
 const Inner = styled.div`
@@ -158,8 +159,6 @@ const adminLinks = [
   { to: '/admin/portfolio', label: 'Portfolio', end: false },
   { to: '/admin/services', label: 'Services', end: false }
 ];
-
-export const ADMIN_SUBNAV_HEIGHT_PX = 48;
 
 export default function AdminSubNavbar() {
   const { user, booting, logout } = useAuth();

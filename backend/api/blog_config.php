@@ -10,15 +10,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 date_default_timezone_set('UTC');
 
-/*
- * Copy this file for production and update DB credentials.
- * On Hostinger shared hosting, use your full prefixed DB name/user.
- */
-const BLOG_DB_HOST = 'localhost';
-const BLOG_DB_NAME = 'u916710688_bestechvision';
-const BLOG_DB_USER = 'u916710688_best_user';
-const BLOG_DB_PASS = 'Limton123@';
-const BLOG_DB_CHARSET = 'utf8mb4';
+function blog_db_settings(): array
+{
+    static $settings = null;
+    if ($settings !== null) {
+        return $settings;
+    }
+
+    $local = [];
+    $localPath = __DIR__ . '/config.local.php';
+    if (is_file($localPath)) {
+        $config = include $localPath;
+        if (is_array($config)) {
+            $local = $config;
+        }
+    }
+
+    $settings = [
+        'host' => $local['BLOG_DB_HOST'] ?? getenv('BLOG_DB_HOST') ?: '127.0.0.1',
+        'name' => $local['BLOG_DB_NAME'] ?? getenv('BLOG_DB_NAME') ?: 'bestechvision_db',
+        'user' => $local['BLOG_DB_USER'] ?? getenv('BLOG_DB_USER') ?: 'ai_user',
+        'pass' => $local['BLOG_DB_PASS'] ?? getenv('BLOG_DB_PASS') ?: '',
+        'charset' => $local['BLOG_DB_CHARSET'] ?? getenv('BLOG_DB_CHARSET') ?: 'utf8mb4',
+    ];
+
+    return $settings;
+}
 
 function blog_json($data, $status = 200) {
     http_response_code($status);
@@ -33,8 +50,9 @@ function blog_pdo() {
         return $pdo;
     }
 
-    $dsn = 'mysql:host=' . BLOG_DB_HOST . ';dbname=' . BLOG_DB_NAME . ';charset=' . BLOG_DB_CHARSET;
-    $pdo = new PDO($dsn, BLOG_DB_USER, BLOG_DB_PASS, [
+    $db = blog_db_settings();
+    $dsn = 'mysql:host=' . $db['host'] . ';dbname=' . $db['name'] . ';charset=' . $db['charset'];
+    $pdo = new PDO($dsn, $db['user'], $db['pass'], [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
     ]);

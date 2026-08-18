@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import { ADMIN_SUBNAV_HEIGHT_PX } from './AdminSubNavbar';
+import { ADMIN_SUBNAV_HEIGHT_PX, NAVBAR_HEIGHT_PX } from '../constants/layout';
 import { fetchCmsServices } from '../utils/cmsApi';
 
 const Nav = styled(motion.nav)`
@@ -22,34 +22,25 @@ const Nav = styled(motion.nav)`
 `;
 
 const NavContainer = styled.div`
-  width: 100%;
-  padding: 0 2rem;
+  max-width: ${props => props.theme.layout.containerMaxWidth};
+  margin: 0 auto;
+  padding: 0 ${props => props.theme.layout.containerPadding};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
+  height: ${NAVBAR_HEIGHT_PX}px;
   position: relative;
 
-  @media (max-width: 1440px) {
-    padding: 0 1.5rem;
-  }
-
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    padding: 0 1.25rem;
-  }
-
-  @media (max-width: 1024px) {
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     padding: 0 1rem;
-    justify-content: space-between;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     padding: 0 0.75rem;
-    justify-content: space-between;
   }
 `;
 
@@ -177,7 +168,8 @@ const NavLink = styled(Link)`
   color: ${props => props.theme.colors.dark};
   text-decoration: none;
   font-weight: 500;
-  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.875rem;
   border-radius: 8px;
   transition: all 0.3s ease;
   display: flex;
@@ -217,26 +209,27 @@ const ActiveNavLink = styled(NavLink)`
 `;
 
 const CTAButton = styled(Link)`
-  background: linear-gradient(135deg, ${props => props.theme.colors.primary} 0%, ${props => props.theme.colors.secondary} 100%);
+  background: ${props => props.theme.colors.primary};
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
+  font-size: 0.8125rem;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1), 0 2px 4px -1px rgba(37, 99, 235, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(33, 11, 204, 0.15), 0 2px 4px -1px rgba(33, 11, 204, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.1);
   flex-shrink: 0;
   white-space: nowrap;
   min-width: fit-content;
 
   &:hover {
-    background: linear-gradient(135deg, ${props => props.theme.colors.secondary} 0%, ${props => props.theme.colors.primary} 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    background: ${props => props.theme.colors.secondary};
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(33, 11, 204, 0.25);
   }
 
   &:focus {
@@ -309,7 +302,7 @@ const MobileMenuButton = styled.button`
 
 const MobileMenu = styled(motion.div)`
   position: fixed;
-  top: ${(p) => 80 + (p.$adminOffset ? ADMIN_SUBNAV_HEIGHT_PX : 0)}px;
+  top: ${(p) => NAVBAR_HEIGHT_PX + (p.$adminOffset ? ADMIN_SUBNAV_HEIGHT_PX : 0)}px;
   left: 0;
   right: 0;
   background: white;

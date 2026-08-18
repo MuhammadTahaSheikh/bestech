@@ -66,7 +66,7 @@ const Card = styled(motion.div)`
     left: 0;
     right: 0;
     height: 6px;
-    background: linear-gradient(135deg, #3730a3, #581c87);
+    background: ${props => props.theme.colors.primary};
   }
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
@@ -117,14 +117,14 @@ const TeamMemberCard = styled.div`
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, #3730a3, #581c87);
+    background: ${props => props.theme.colors.primary};
   }
 `;
 
 const MemberAvatar = styled.div`
   width: 100px;
   height: 100px;
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  background: ${props => props.theme.colors.primary};
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -254,7 +254,7 @@ const TextArea = styled.textarea`
 `;
 
 const SubmitButton = styled(motion.button)`
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  background: ${props => props.theme.colors.primary};
   color: white;
   border: none;
   padding: 1.25rem 2.5rem;

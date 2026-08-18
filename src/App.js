@@ -5,7 +5,8 @@ import { motion } from 'framer-motion';
 
 // Components (always rendered — load eagerly)
 import Navbar from './components/Navbar';
-import AdminSubNavbar, { ADMIN_SUBNAV_HEIGHT_PX } from './components/AdminSubNavbar';
+import AdminSubNavbar from './components/AdminSubNavbar';
+import { ADMIN_SUBNAV_HEIGHT_PX, NAVBAR_HEIGHT_PX } from './constants/layout';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import ChatSupport from './components/ChatSupport';
@@ -34,14 +35,15 @@ const AdminPortfolio  = lazy(() => import('./pages/AdminPortfolio'));
 const AdminServices   = lazy(() => import('./pages/AdminServices'));
 const AdminTestimonials = lazy(() => import('./pages/AdminTestimonials'));
 
-// Theme
+// Theme — Bestech brand: #210BCC (blue), #121316 (black), #000000, #ffffff
 const theme = {
   colors: {
-    primary: '#2563eb',
-    secondary: '#1e40af',
-    accent: '#3b82f6',
-    dark: '#1f2937',
-    light: '#f8fafc',
+    primary: '#210BCC',
+    secondary: '#1909A3',
+    accent: '#210BCC',
+    brandBlack: '#121316',
+    dark: '#121316',
+    light: '#ffffff',
     white: '#ffffff',
     gray: {
       50: '#f9fafb',
@@ -57,8 +59,12 @@ const theme = {
     }
   },
   fonts: {
-    primary: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-    heading: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+    primary: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    heading: '"Sora", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+  },
+  layout: {
+    containerMaxWidth: '1280px',
+    containerPadding: '2rem'
   },
   breakpoints: {
     xs: '480px',
@@ -219,8 +225,8 @@ const MainContent = styled(motion.main)`
   flex: 1;
   padding-top: ${(p) =>
     p.$adminBar
-      ? `calc(80px + ${ADMIN_SUBNAV_HEIGHT_PX}px)`
-      : '80px'};
+      ? `calc(${NAVBAR_HEIGHT_PX}px + ${ADMIN_SUBNAV_HEIGHT_PX}px)`
+      : `${NAVBAR_HEIGHT_PX}px`};
   transition: padding-top 0.25s ease;
 `;
 

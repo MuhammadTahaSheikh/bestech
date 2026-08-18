@@ -21,6 +21,7 @@ import {
   FaRobot
 } from 'react-icons/fa';
 import { fetchCmsServices } from '../utils/cmsApi';
+import { pageHeroStyles, pageContainerStyles, brandButtonStyles } from '../styles/brandStyles';
 
 const SERVICE_ICON_MAP = {
   code: FaCode,
@@ -56,9 +57,8 @@ const ServicesContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  background: linear-gradient(135deg, ${props => props.theme.colors.primary} 0%, ${props => props.theme.colors.accent} 100%);
-  color: white;
-  padding: 6rem 0;
+  ${pageHeroStyles}
+  padding: 5rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -75,11 +75,7 @@ const HeroBackground = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 2;
+  ${pageContainerStyles}
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -326,7 +322,7 @@ const TechName = styled.h4`
 `;
 
 const CTA = styled(motion.div)`
-  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%);
+  background: ${props => props.theme.colors.brandBlack};
   padding: 4rem 2rem;
   border-radius: 24px;
   text-align: center;
@@ -369,7 +365,7 @@ const CTA = styled(motion.div)`
 `;
 
 const CTAButton = styled(Link)`
-  background: linear-gradient(135deg, #3730a3 0%, #581c87 100%);
+  ${brandButtonStyles}
   color: white;
   padding: 1rem 2rem;
   border-radius: 16px;
@@ -392,7 +388,7 @@ const CTAButton = styled(Link)`
     box-shadow: 
       0 15px 35px rgba(55, 48, 163, 0.5),
       0 8px 20px rgba(88, 28, 135, 0.4);
-    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+    background: ${props => props.theme.colors.secondary};
   }
 `;
 

@@ -45,22 +45,23 @@ const TeamSection = styled.section`
 `;
 
 const Container = styled.div`
-  max-width: 1200px;
+  max-width: ${props => props.theme.layout.containerMaxWidth};
   margin: 0 auto;
-  padding: 0 ${props => props.theme.spacing.xl};
+  padding: 0 ${props => props.theme.layout.containerPadding};
   position: relative;
   z-index: 1;
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
-    padding: 0 ${props => props.theme.spacing.lg};
+    padding: 0 1.5rem;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 0 ${props => props.theme.spacing.md};
+    padding: 0 0.75rem;
   }
 `;
 
 const SectionTitle = styled(motion.h2)`
+  font-family: ${props => props.theme.fonts.heading};
   text-align: center;
   font-size: clamp(1.875rem, 4vw, 2.5rem);
   font-weight: 700;
@@ -154,8 +155,8 @@ const MemberPhoto = styled(motion.div)`
     z-index: 0;
     pointer-events: none;
     background:
-      linear-gradient(135deg, #2f6fd8 0%, #2f6fd8 48%, transparent 48%, transparent 100%) top left / 95px 95px no-repeat,
-      linear-gradient(315deg, #2f6fd8 0%, #2f6fd8 48%, transparent 48%, transparent 100%) bottom right / 95px 95px no-repeat;
+      linear-gradient(135deg, #210BCC 0%, #210BCC 48%, transparent 48%, transparent 100%) top left / 95px 95px no-repeat,
+      linear-gradient(315deg, #210BCC 0%, #210BCC 48%, transparent 48%, transparent 100%) bottom right / 95px 95px no-repeat;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.lg}) {

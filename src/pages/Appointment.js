@@ -17,17 +17,16 @@ import {
   FaTimes
 } from 'react-icons/fa';
 import { submitAppointment } from '../utils/formApi';
+import { pageHeroStyles, pageContainerStyles, brandButtonStyles } from '../styles/brandStyles';
 
 const AppointmentContainer = styled.div`
   min-height: 100vh;
-  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%);
+  ${pageHeroStyles}
   padding: 2rem 0;
 `;
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  ${pageContainerStyles}
 `;
 
 const Header = styled.div`
@@ -314,7 +313,7 @@ const TextArea = styled.textarea`
 `;
 
 const SubmitButton = styled.button`
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  ${brandButtonStyles}
   color: white;
   border: none;
   border-radius: 10px;
@@ -381,7 +380,7 @@ const ContactItem = styled.div`
 const ContactIcon = styled.div`
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  ${brandButtonStyles}
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -659,14 +658,14 @@ const Appointment = () => {
                       Thank you for booking a meeting with us. Check your inbox for a confirmation email shortly.
                     </p>
                     <div style={{ 
-                      background: '#f0f9ff', 
+                      background: 'rgba(33, 11, 204, 0.06)', 
                       padding: '15px', 
                       borderRadius: '8px', 
                       margin: '15px 0',
-                      border: '1px solid #3b82f6',
+                      border: '1px solid rgba(33, 11, 204, 0.2)',
                       textAlign: 'left'
                     }}>
-                      <h4 style={{ color: '#1e40af', margin: '0 0 10px 0' }}>Booking Summary:</h4>
+                      <h4 style={{ color: '#210BCC', margin: '0 0 10px 0' }}>Booking Summary:</h4>
                       <p><strong>Name:</strong> {formData.firstName} {formData.lastName}</p>
                       <p><strong>Email:</strong> {formData.email}</p>
                       <p><strong>Phone:</strong> {formData.phone || 'Not provided'}</p>

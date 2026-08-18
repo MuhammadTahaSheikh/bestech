@@ -17,6 +17,7 @@ import {
 } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { submitContact } from '../utils/formApi';
+import { pageHeroStyles, pageContainerStyles, brandButtonStyles } from '../styles/brandStyles';
 
 const ContactContainer = styled.div`
   min-height: 100vh;
@@ -32,9 +33,8 @@ const ContactContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%);
-  color: white;
-  padding: 6rem 0;
+  ${pageHeroStyles}
+  padding: 5rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -59,19 +59,7 @@ const HeroBackground = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 2;
-
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 0 1.5rem;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 0 1rem;
-  }
+  ${pageContainerStyles}
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -207,7 +195,7 @@ const ContactCard = styled(motion.div)`
 const ContactIcon = styled.div`
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  ${brandButtonStyles}
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -348,7 +336,7 @@ const Input = styled.input`
   &:focus {
     outline: none;
     border-color: ${props => props.theme.colors.primary};
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(33, 11, 204, 0.1);
   }
 
   &::placeholder {
@@ -376,7 +364,7 @@ const TextArea = styled.textarea`
   &:focus {
     outline: none;
     border-color: ${props => props.theme.colors.primary};
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(33, 11, 204, 0.1);
   }
 
   &::placeholder {
@@ -403,7 +391,7 @@ const Select = styled.select`
   &:focus {
     outline: none;
     border-color: ${props => props.theme.colors.primary};
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(33, 11, 204, 0.1);
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
@@ -413,7 +401,7 @@ const Select = styled.select`
 `;
 
 const SubmitButton = styled.button`
-  background: linear-gradient(135deg, #3730a3, #581c87);
+  ${brandButtonStyles}
   color: white;
   padding: 1rem 2rem;
   border: none;
@@ -431,7 +419,7 @@ const SubmitButton = styled.button`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 10px 25px rgba(33, 11, 204, 0.3);
   }
 
   &:disabled {
