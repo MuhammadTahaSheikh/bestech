@@ -1061,7 +1061,7 @@ const Home = () => {
           <div>
             <HeroEyebrow>Trusted IT Partner</HeroEyebrow>
             <HeroTitle>
-              Premier IT Solutions for taha <span>Modern Business</span>
+              Premier IT Solutions for <span>Modern Business</span>
             </HeroTitle>
             <HeroSubtitle>
               Bestech Vision delivers IT infrastructure, software development,
