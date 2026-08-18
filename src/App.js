@@ -9,6 +9,7 @@ import AdminSubNavbar from './components/AdminSubNavbar';
 import { ADMIN_SUBNAV_HEIGHT_PX, NAVBAR_HEIGHT_PX } from './constants/layout';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import MetaPixelTracker from './components/MetaPixelTracker';
 import ChatSupport from './components/ChatSupport';
 import LoadingSpinner from './components/LoadingSpinner';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -308,6 +309,7 @@ function App() {
             </MainWithPadding>
             <Footer />
             <ScrollToTop />
+            <MetaPixelTracker />
             <ChatSupport />
           </AppContainer>
         </Router>
