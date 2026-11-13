@@ -15,6 +15,8 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: ${props => props.objectFit || 'cover'};
+  object-position: ${props => props.objectPosition || 'center'};
+  display: block;
   transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: ${props => props.loaded ? 1 : 0};
   transform: ${props => props.loaded ? 'scale(1)' : 'scale(1.05)'};
@@ -68,7 +70,8 @@ const LazyImage = ({
   width, 
   height, 
   minHeight, 
-  objectFit, 
+  objectFit,
+  objectPosition,
   borderRadius,
   placeholder,
   onLoad,
@@ -125,6 +128,7 @@ const LazyImage = ({
           src={src}
           alt={alt}
           objectFit={objectFit}
+          objectPosition={objectPosition}
           loaded={loaded}
           onLoad={handleLoad}
           onError={handleError}

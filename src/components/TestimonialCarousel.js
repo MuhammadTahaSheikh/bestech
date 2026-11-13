@@ -77,13 +77,14 @@ const TestimonialCard = styled.div`
 `;
 
 const AvatarWrap = styled.div`
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 1.5rem;
   border: 2px solid rgba(33, 11, 204, 0.12);
   flex-shrink: 0;
+  background: #f3f4f6;
 `;
 
 const TestimonialText = styled.p`
@@ -196,9 +197,11 @@ const TestimonialCarousel = () => {
               <LazyImage
                 src={current.avatar}
                 alt={current.author}
-                width="100%"
-                height="100%"
+                width="72px"
+                height="72px"
+                minHeight="72px"
                 objectFit="cover"
+                objectPosition="center 20%"
                 borderRadius="50%"
                 placeholder=""
               />
