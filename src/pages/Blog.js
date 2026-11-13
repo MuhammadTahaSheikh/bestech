@@ -33,13 +33,20 @@ const Grid = styled.div`
   gap: 1.25rem;
 `;
 
-const Card = styled.article`
+const Card = styled(Link)`
   background: ${(props) => props.theme.colors.white};
   border-radius: 12px;
   box-shadow: ${(props) => props.theme.shadows.md};
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: ${(props) => props.theme.shadows.lg};
+  }
 `;
 
 const CoverImage = styled.img`
@@ -75,7 +82,13 @@ const Title = styled.h3`
 
 const Excerpt = styled.p`
   color: ${(props) => props.theme.colors.gray[700]};
-  margin-bottom: 0;
+  margin-bottom: 0.85rem;
+`;
+
+const ReadMore = styled.span`
+  color: ${(props) => props.theme.colors.primary};
+  font-weight: 600;
+  font-size: 0.95rem;
 `;
 
 const EmptyState = styled.div`
@@ -145,7 +158,7 @@ const Blog = () => {
         {!loading && !error && blogs.length > 0 ? (
           <Grid>
             {blogs.map((blog) => (
-              <Card key={blog.slug}>
+              <Card key={blog.slug} to={`/blog/${encodeURIComponent(blog.slug)}`}>
                 {blog.coverImage ? (
                   <CoverImage src={assetUrl(blog.coverImage)} alt={blog.title} />
                 ) : (
@@ -157,6 +170,7 @@ const Blog = () => {
                   </Meta>
                   <Title>{blog.title}</Title>
                   <Excerpt>{blog.excerpt}</Excerpt>
+                  <ReadMore>Read article</ReadMore>
                 </Body>
               </Card>
             ))}
